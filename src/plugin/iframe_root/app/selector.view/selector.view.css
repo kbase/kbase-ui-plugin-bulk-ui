@@ -1,0 +1,50 @@
+
+.side-nav {
+    float: left;
+}
+
+.side-nav card {
+    width: 21%;
+    position: fixed;
+}
+
+.quota {
+    width: 100%;
+}
+
+
+.import-status {
+    max-width: 25%;
+    display: inline-block;
+}
+
+file-tree {
+    display: block;
+    margin-left: -20px;
+}
+
+.file-tree-container {
+    margin-top: 35px;
+    height: calc(100% - 190px);
+    overflow-y: auto;
+}
+
+.file-table-container {
+    width: 75%;
+    float: right;
+}
+
+.color-ok {
+    color: #34B0D8;
+}
+
+.color-success {
+    color: #5DAB4C;
+}
+
+.type-selector {
+}
+
+.add-set-btn {
+    margin-right: 10px;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "kbase-ui-plugin-bulk-ui",
+  "description": "Bulk UI as a KBase UI Plugin",
+  "main": "main.js",
+  "authors": [
+    "Erik Pearson <eapearson@lbl.gov>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "2.3.2"
+  }
+}

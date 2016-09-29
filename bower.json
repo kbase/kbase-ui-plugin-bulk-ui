@@ -1,0 +1,34 @@
+{
+    "name": "kbase-ui-plugin-bulk-ui",
+    "description": "Bulk Data Upload UI integrated into kbase-ui as a plugin",
+    "author": [
+        "kbase"
+    ],
+    "keywords": [
+        "kbase",
+        "widget",
+        "data"
+    ],
+    "moduleType": "kbase-ui-plugin",
+    "main": "src/plugin/config.yml",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kbase/kbase-ui-plugin-bulk-ui"
+    },
+    "dependencies": {
+        "jquery": "^2.1.0",
+        "bluebird": "^3.0.0",
+        "bootstrap": "^3.3.0",
+        "numeral": "^1.5.0",
+        "kbase-common-js": "^1.0.0",
+        "kbase-ui-widget": "^1.0.0",
+        "kbase-service-clients-js": "^1.0.0",
+        "kbase-data-api-client-js": "^1.0.0"
+    },
+    "devDependencies": {
+    },
+    "ignore": [
+        ".gitignore"
+    ],
+    "license": "SEE LICENSE IN LICENSE"
+}

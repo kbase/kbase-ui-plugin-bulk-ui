@@ -1,0 +1,80 @@
+
+
+
+<div class="breadcrumbs">
+    <span *ngFor="let folder of pathList; let i = index">
+        <a *ngIf="i < pathList.length-1"
+           [routerLink]="['/browse', pathList.slice(0,i+1).join('/') | encode ]">
+            {{folder}}
+        </a>
+        {{i == pathList.length-1 ? folder : ''}}
+        {{i < pathList.length-1 ? '/' : ''}}
+    </span>
+</div>
+
+
+<table [dTable]="files" #table="dataTable" style="width: 100%;" >
+    <thead>
+        <tr>
+            <th *ngIf="selectedType">
+                <md-checkbox *ngIf="files"
+                            [checked]="allChecked"
+                            (click)="toggleCheckAll($event)"
+                            aria-label="Select all">
+                </md-checkbox>
+            </th>
+            <th><!--icon--></th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Mod Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let file of table.data">
+            <!--  [ngClass]="{disabled: (selectedType.allowedType == 'folder' && !file.isFolder) || (selectedType.allowedType == 'file' && file.isFolder)}"-->
+            <td *ngIf="selectedType" class="tiny-col">
+                <md-checkbox
+                    *ngIf="!file.isFolder"
+                    [checked]="file.checked || allChecked"
+                    (change)="toggleItem($event, file)">
+                </md-checkbox>
+            </td>
+            <td class="tiny-col">
+                <i class="material-icons file-icon" *ngIf="file.isFolder">folder_open</i>
+                <i class="material-icons file-icon" *ngIf="!file.isFolder">insert_drive_file</i>
+            </td>
+            <td>
+                <a *ngIf="file.isFolder" [routerLink]="['/browse', file.path | encode]">
+                    {{file.name}}
+                </a>
+
+                <span *ngIf="!file.isFolder">
+                    {{file.name}}
+                </span>
+            </td>
+            <td>{{file.size | readableSize}}</td>
+            <td>
+                <span *ngIf="file.uploadProgress">
+                    <md-progress-bar>
+                        <div [style.width]="file.uploadProgress+'%'"></div>
+                    </md-progress-bar>
+                </span>
+                <span *ngIf="!file.uploadProgress" >
+                    {{file.mtime ? (file.mtime|elapsedTime)  : 'starting upload...'}}
+                </span>
+            </td>
+        </tr>
+    </tbody>
+
+    <div *ngIf="table.data && !table.data.length" class="no-files-found text-muted">
+        No files found in "{{selectedPath}}"
+    </div>
+
+</table>
+
+<md-progress-circle *ngIf="!(files || error)" mode="indeterminate"></md-progress-circle>
+
+<div *ngIf="error" [innerHtml]="error" class="error">
+    {{error}}
+</div>
+

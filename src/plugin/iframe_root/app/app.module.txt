@@ -1,0 +1,93 @@
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
+
+import { HttpModule }    from '@angular/http';
+import { MdSidenavModule } from '@angular2-material/sidenav'
+import { MdButton } from '@angular2-material/button';
+import { MdProgressCircle } from '@angular2-material/progress-circle';
+
+import { routing }        from './app.routes';
+
+import { AppComponent }  from './app.comptest';
+import { FileTableComponent } from './file-table/file-table';
+import { ToolbarComponent } from './toolbar/toolbar';
+import { FileTreeComponent } from './file-tree/file-tree';
+
+import { SelectorView } from './selector.view/selector.view';
+import { EditMetaView } from './edit-meta.view/edit-meta.view';
+import { AboutView } from './about.view/about.view';
+import { StatusView } from './status.view/status.view';
+import { ImportDetailsView } from './import-details.view/import-details.view';
+import { JobLogView } from './job-log.view/job-log.view';
+import { HomeView } from './home.view/home.view';
+
+// pipes
+import { Encode, ElapsedTime, ReadableSize} from './services/pipes';
+
+import { DefaultSorter } from './grid/defaultSorter';
+import { DataTable } from './grid/dataTable';
+import { DataTableService } from './grid/dataTable.service';
+
+console.log('declarations', [
+        AppComponent,
+        SelectorView,
+        EditMetaView,
+        AboutView,
+        StatusView,
+        ImportDetailsView,
+        JobLogView,
+        FileTableComponent,
+        HomeView,
+        ToolbarComponent,
+        FileTreeComponent,
+        MdSidenavModule,
+        MdButton,
+        MdProgressCircle,
+        ElapsedTime,
+        Encode,
+        ElapsedTime,
+
+        DefaultSorter,
+        DataTable,
+        DataTableService
+    ]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        routing,
+        FormsModule,
+        HttpModule,
+        MdSidenavModule
+    ],
+    declarations: [
+        AppComponent,
+        SelectorView,
+        EditMetaView,
+        AboutView,
+        StatusView,
+        ImportDetailsView,
+        JobLogView,
+        FileTableComponent,
+        HomeView,
+        ToolbarComponent,
+        FileTreeComponent,
+        MdButton,
+        MdProgressCircle,
+        ElapsedTime,
+        Encode,
+        ElapsedTime,
+
+        DefaultSorter,
+        DataTable,
+        DataTableService
+    ],
+    bootstrap:    [ AppComponent ]
+})
+
+export class AppModule { 
+  constructor() {
+      console.log('yes, yhere');
+  }
+}

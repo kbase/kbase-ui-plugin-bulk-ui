@@ -1,0 +1,32 @@
+## Data API Demo Plugin
+---
+package:
+    name: data-api-demo
+    description: Widgets for the Data API
+    author: Erik Pearson
+    date: January 12, 2016
+source:
+    modules: []
+    styles: 
+        -
+            file: styles.css
+install:
+    widgets:
+        -
+            module: plugins/bulk-ui/modules/panel
+            id: kb_bulkUi_panel
+            type: factory              
+    routes:
+        -
+            path:
+                -
+                    bulk-ui
+            widget: kb_bulkUi_panel
+            authorization: true
+    menu:
+        -
+            name: bulk-ui
+            definition:
+                path: bulk-ui
+                label: Bulk UI
+                icon: database

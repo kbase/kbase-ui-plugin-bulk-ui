@@ -1,0 +1,240 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url(fonts/styles.css);
+@import url(angular2-material.css);
+
+/**
+ *  Master Styles
+ */
+
+html, body {
+    margin: 0;
+    background-color: #fbfbfb;
+    color: #333;
+    position: relative;
+    height: 100%;
+
+}
+
+.content {
+    xheight: calc(100% - 90px);
+    padding: 90px 20px 0px 20px;
+    overflow-y: auto;
+}
+
+card {
+    display: block;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin: 10px 0;
+    font: 14px 'OxygenRegular', Arial, sans-serif; /* narrative */
+}
+
+column {
+    width: 100%;
+}
+
+a { color: #0088cc; text-decoration: none; }
+a:hover { color: #2a6496; }
+a.no-link { color: #444; }
+
+hr {
+    background-color: #ddd;
+    height: 1px;
+    border: 0;
+}
+
+
+/**
+ *  Generic Classes
+ */
+
+/* positioning */
+
+.no-margin { margin: 0; }
+.pull-left { float: left; }
+.pull-right { float: right; }
+.vertical-center { vertical-align: middle; }
+.text-center { text-align: center; }
+.clearfix { overflow: auto; }
+.inline { display: inline;}
+
+.button-icon {
+    position: relative;
+    top: 6px;
+    width: 25px;
+}
+
+/* lists */
+ul.list-inline {
+    display: inline;
+}
+ul.list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* text */
+
+.help-text {
+    color: #aaa;
+    font-size: 1.3em;
+    margin: 7px 15px 0 15px;
+    display: inline-block;
+}
+
+.check-counter {
+    display: inline-block;
+    position:relative;
+    top: 10px;
+    right: 10px;
+}
+
+.error {
+    padding: 15px;
+    margin: 10px;
+    color: #bb5f5f;
+    background-color: #ffd3d3;
+    border: 2px solid #B30000;
+}
+
+/* icons */
+i.icon-small { font-size: .9em; }
+
+/* color */
+.text-muted { color: #aaa; }
+
+.queued { color: #00BCE0; }
+.in-progress { color: #96750E; }
+.completed { color: #007D1D; }
+.suspended { color: #B30000; }
+
+/* cursor and hover */
+.pointer:hover { cursor: pointer; }
+a.hover > i{ opacity: 0.7; }
+a.hover:hover > i{ opacity: 1.0; }
+
+
+/* kbase sidenav (global piece) */
+
+#kbase-sidenav ul {
+    margin-top: 10px;
+}
+
+#kbase-sidenav ul > li {
+    padding: 10px;
+}
+
+#kbase-sidenav ul > li > a {
+    width: 100%;
+    display: block;
+}
+
+/**
+ *  NG Material-specific things
+ */
+
+md-progress-circle {
+    width: 40px !important;
+}
+
+md-sidenav {
+    width: 200px;
+}
+
+md-content {
+    display:block;
+    position:relative;
+}
+
+my-app {
+    position: relative;
+}
+
+md-sidenav-layout {
+    height: 100%;
+}
+
+.md-checkbox-background,
+.md-primary[md-raised-button] {
+    background-color: #0088cc !important;
+}
+
+.md-primary[disabled][md-raised-button] {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+
+/**
+ *  standard table (to be replaced by dtable?)
+ */
+
+table.table {
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+table.table > thead > tr > th {
+    text-align: left;
+    padding: 9px;
+    border-bottom: 2px solid #ddd;
+}
+
+table.table > thead > tr > th:hover {
+    cursor: pointer;
+}
+
+table.table > tbody > tr:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+table.table > tbody > tr > td {
+    padding: 10px;
+}
+
+table.table {
+    width: 100%;
+}
+
+/**
+ *  drag and drop
+ */
+body.dnd-active:before {
+    content: " ";
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background: rgba(0, 136, 10, 0.37);
+    z-index: 9999;
+}
+/*
+.dnd-active {
+    border: 10px solid rgba(73, 187, 71, 5);
+}*/
+
+/**
+ *  progress bar
+ *  todo: componentize
+ */
+progress-bar {
+    display: block;
+    background: #e0e0e0;
+    width: 100%;
+    height: 20px;
+}
+
+progress-bar > div {
+    background: #0088cc;
+    height: 100%;
+    width: 2px;
+}
+
+/* everywhere else */
+* {
+    font-family: 'Roboto', sans-serif;
+}
