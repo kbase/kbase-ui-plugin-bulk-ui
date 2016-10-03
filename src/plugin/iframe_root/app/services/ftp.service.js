@@ -63,6 +63,9 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', 'rxjs/Subj
                         path: '/' + integration.getUsername()
                     };
                 }
+                getRootDirectory() {
+                    return this.integration.getConfig().services.ftp.root;
+                }
                 list(path) {
                     path = path ? path : '/' + this.integration.getUsername();
                     return this.http.get(this.ftpUrl + '/list/' + path, this.reqOptions)
@@ -82,6 +85,60 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', 'rxjs/Subj
                         .do(files => this.files[path] = files)
                         .catch(this.handleError);
                 }
+                // UJS import job state
+                listImports() {
+                    return this.http.get(this.ftpUrl + '/import-jobs', this.reqOptions)
+                        .map(result => {
+                        return result.json().result;
+                    })
+                        .catch(this.handleError);
+                }
+                createImportJob(jobIds, wsId, narrativeId) {
+                    console.log('creating import job', jobIds);
+                    let data = {
+                        narrativeObjectId: 'ws.' + wsId + '.obj.' + narrativeId,
+                        jobIds: jobIds
+                    };
+                    let headers = new http_1.Headers({
+                        'Authorization': this.auth.getToken(),
+                        'Content-Type': 'application/json'
+                    });
+                    var reqOptions = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post(this.ftpUrl + '/import-jobs', JSON.stringify(data), reqOptions)
+                        .map(result => {
+                        return result.json().result;
+                    })
+                        .catch(this.handleError);
+                }
+                deleteImport(jobId) {
+                    return this.http.delete(this.ftpUrl + '/import-job/' + jobId, this.reqOptions)
+                        .map(result => {
+                        console.log('deleted import job', result);
+                        return result.json().result;
+                    })
+                        .catch(this.handleError);
+                }
+                deleteImports(jobIds) {
+                    var reqs = jobIds.map((id) => { return this.deleteImport(id); });
+                    return Observable_1.Observable.forkJoin(reqs);
+                }
+                getImportInfo(jobId) {
+                    return this.http.get(this.ftpUrl + '/import-job/' + jobId, this.reqOptions)
+                        .map(result => {
+                        console.log('fetched import job info', result);
+                        return result.json().result;
+                    })
+                        .catch(this.handleError);
+                }
+                //deleteJob(jobId: string) {
+                // uses special bulkio token
+                //    return this.rpc.call('ujs', 'force_delete_job', [this.auth.getToken(), jobId], true)
+                //}
+                //deleteJobs(jobIds: string[]) {
+                //    var reqs = [];
+                //    jobIds.forEach(id => reqs.push( this.deleteJob(id) ) )
+                //    return Observable.forkJoin(reqs)
+                //}
                 setPath(path) {
                     this.selectedPath.next(path);
                 }

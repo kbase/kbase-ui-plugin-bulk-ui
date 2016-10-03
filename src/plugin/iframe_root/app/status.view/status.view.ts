@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
 import { JobService } from '../services/job.service'
+import { FtpService } from '../services/ftp.service'
 import { WorkspaceService } from '../services/workspace.service'
 import { Util } from '../services/util';
 import { KBaseConfig } from '../services/kbase-config.service';
@@ -91,6 +92,7 @@ export class StatusView {
 
     constructor(private jobService: JobService,
                 private wsService: WorkspaceService,
+                private ftpService: FtpService,
                 private _location: Location,
                 private util: Util,
                 private config: KBaseConfig) {
@@ -113,7 +115,7 @@ export class StatusView {
         // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
         // next get individual job status
         // Note: a service would be very useful here.
-        this.jobService.listImports()
+        this.ftpService.listImports()
             .subscribe(res => {
                 let realImports = [];
                 for (let i=0; i<res.length; i++) {
@@ -149,8 +151,6 @@ export class StatusView {
                 })
 
                 this.imports = realImports;
-
-                console.log('narrative object ids', narrativeObjIds)
 
                 this.getIndividualJobStatus(this.imports);
             })
@@ -213,14 +213,18 @@ export class StatusView {
 
     // delete fake import job, along with associated jobs
     deleteJob(meta) {
-        let jobIds = meta[12].split(',');
-        jobIds.push(meta[0]); // delete all ids, including import job
+        // "real" jobs are not deletable, so don't even try.
+        // we just remove the ujs record which holds the job ids
+        // for the bulkio service.
+        //let jobIds = meta[12].split(',');
+        //jobIds.push(meta[0]); // delete all ids, including import job
 
-        console.log('deleting', meta)
-        console.log('ids', jobIds)
-        this.jobService.deleteJobs(jobIds)
+        //console.log('deleting', meta)
+        //console.log('ids', jobIds)
+        this.ftpService.deleteImport(meta[0])
             .subscribe(res => {
                 console.log('res', res)
+                this.reload();
             })
     }
 

@@ -25075,7 +25075,7 @@ table.edit-sheet input {
                 // creates a bulk "job" that simply contains ids of jobs in description
                 // and narrative ws.1.obj.1 in status
                 createBulkJob(jobIds, wsId, narId) {
-                    this.jobService.createImportJob(jobIds, wsId, narId).subscribe(res => {
+                    this.ftp.createImportJob(jobIds, wsId, narId).subscribe(res => {
                         console.log('create import res', res);
                         this.router.navigate(['status']);
                     });
@@ -25115,7 +25115,7 @@ table.edit-sheet input {
                     this.files = files;
                 }
                 preprocessPairedReads() {
-                    let ftpRoot = '/data/bulktest';
+                    let ftpRoot = this.ftp.getRootDirectory();
                     let sets = Object.assign([], this.ftp.selectedSets);
                     console.log('sets', sets);
                     let rows = [];
@@ -25277,7 +25277,7 @@ $__System.register('2e', [], function (exports_1, context_1) {
     };
 });
 
-$__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exports_1, context_1) {
+$__System.register('1f', ['a', 'e', '2b', '19', '2c', '2e', '2f', '30'], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;
@@ -25291,7 +25291,7 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
     var __metadata = this && this.__metadata || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, job_service_1, workspace_service_1, util_1, kbase_config_service_1, pipes_1;
+    var core_1, common_1, job_service_1, ftp_service_1, workspace_service_1, util_1, kbase_config_service_1, pipes_1;
     var cssTemplate, htmlTemplate, StatusView;
     return {
         setters: [function (core_1_1) {
@@ -25300,6 +25300,8 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
             common_1 = common_1_1;
         }, function (job_service_1_1) {
             job_service_1 = job_service_1_1;
+        }, function (ftp_service_1_1) {
+            ftp_service_1 = ftp_service_1_1;
         }, function (workspace_service_1_1) {
             workspace_service_1 = workspace_service_1_1;
         }, function (util_1_1) {
@@ -25370,9 +25372,10 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
     </table>
 </card>`;
             StatusView = class StatusView {
-                constructor(jobService, wsService, _location, util, config) {
+                constructor(jobService, wsService, ftpService, _location, util, config) {
                     this.jobService = jobService;
                     this.wsService = wsService;
+                    this.ftpService = ftpService;
                     this._location = _location;
                     this.util = util;
                     this.config = config;
@@ -25392,7 +25395,7 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
                     // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
                     // next get individual job status
                     // Note: a service would be very useful here.
-                    this.jobService.listImports().subscribe(res => {
+                    this.ftpService.listImports().subscribe(res => {
                         let realImports = [];
                         for (let i = 0; i < res.length; i++) {
                             let jobInfo = res[i];
@@ -25418,7 +25421,6 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
                             if (a.timestamp < b.timestamp) return 1;else if (a.timestamp > b.timestamp) return -1;
                         });
                         this.imports = realImports;
-                        console.log('narrative object ids', narrativeObjIds);
                         this.getIndividualJobStatus(this.imports);
                     });
                 }
@@ -25457,12 +25459,16 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
                 }
                 // delete fake import job, along with associated jobs
                 deleteJob(meta) {
-                    let jobIds = meta[12].split(',');
-                    jobIds.push(meta[0]); // delete all ids, including import job
-                    console.log('deleting', meta);
-                    console.log('ids', jobIds);
-                    this.jobService.deleteJobs(jobIds).subscribe(res => {
+                    // "real" jobs are not deletable, so don't even try.
+                    // we just remove the ujs record which holds the job ids
+                    // for the bulkio service.
+                    //let jobIds = meta[12].split(',');
+                    //jobIds.push(meta[0]); // delete all ids, including import job
+                    //console.log('deleting', meta)
+                    //console.log('ids', jobIds)
+                    this.ftpService.deleteImport(meta[0]).subscribe(res => {
                         console.log('res', res);
+                        this.reload();
                     });
                 }
                 goBack() {
@@ -25473,13 +25479,13 @@ $__System.register('1f', ['a', 'e', '2b', '2c', '2e', '2f', '30'], function (exp
                 template: htmlTemplate,
                 styles: [cssTemplate],
                 providers: [job_service_1.JobService, workspace_service_1.WorkspaceService, common_1.Location, util_1.Util]
-            }), __metadata('design:paramtypes', [job_service_1.JobService, workspace_service_1.WorkspaceService, common_1.Location, util_1.Util, kbase_config_service_1.KBaseConfig])], StatusView);
+            }), __metadata('design:paramtypes', [job_service_1.JobService, workspace_service_1.WorkspaceService, ftp_service_1.FtpService, common_1.Location, util_1.Util, kbase_config_service_1.KBaseConfig])], StatusView);
             exports_1("StatusView", StatusView);
         }
     };
 });
 
-$__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
+$__System.register('20', ['a', '25', '2b', '19'], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;
@@ -25493,7 +25499,7 @@ $__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
     var __metadata = this && this.__metadata || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, job_service_1;
+    var core_1, router_1, job_service_1, ftp_service_1;
     var htmlTemplate, ImportDetailsView;
     return {
         setters: [function (core_1_1) {
@@ -25502,6 +25508,8 @@ $__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
             router_1 = router_1_1;
         }, function (job_service_1_1) {
             job_service_1 = job_service_1_1;
+        }, function (ftp_service_1_1) {
+            ftp_service_1 = ftp_service_1_1;
         }],
         execute: function () {
             htmlTemplate = `
@@ -25537,8 +25545,9 @@ $__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
 </card>
 `;
             ImportDetailsView = class ImportDetailsView {
-                constructor(route, jobService) {
+                constructor(route, jobService, ftpService) {
                     this.jobService = jobService;
+                    this.ftpService = ftpService;
                     this.loading = false;
                     route.params.subscribe(params => this.id = params['id']);
                 }
@@ -25550,7 +25559,7 @@ $__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
                     // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
                     // next get individual job status
                     // Note: a service would be very useful here.
-                    this.jobService.getJobInfo(this.id).subscribe(jobInfo => {
+                    this.ftpService.getImportInfo(this.id).subscribe(jobInfo => {
                         let jobIds = jobInfo[12].split(',');
                         this.jobService.checkJobs(jobIds).subscribe(jobs => {
                             this.jobs = jobs;
@@ -25562,7 +25571,7 @@ $__System.register('20', ['a', '25', '2b'], function (exports_1, context_1) {
             ImportDetailsView = __decorate([core_1.Component({
                 template: htmlTemplate,
                 providers: [job_service_1.JobService]
-            }), __metadata('design:paramtypes', [router_1.ActivatedRoute, job_service_1.JobService])], ImportDetailsView);
+            }), __metadata('design:paramtypes', [router_1.ActivatedRoute, job_service_1.JobService, ftp_service_1.FtpService])], ImportDetailsView);
             exports_1("ImportDetailsView", ImportDetailsView);
         }
     };
@@ -41348,7 +41357,7 @@ $__System.registerDynamic('171', ['10', '15', '36', '39', '3f', '42', '47', '4a'
 
   return module.exports;
 });
-$__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_1) {
+$__System.register('2b', ['a', '171', '2d', '1a', '19'], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;
@@ -41362,7 +41371,7 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
     var __metadata = this && this.__metadata || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, Rx_1, kbase_rpc_service_1, kbase_auth_service_1;
+    var core_1, Rx_1, kbase_rpc_service_1, kbase_auth_service_1, ftp_service_1;
     var JobService;
     return {
         setters: [function (core_1_1) {
@@ -41373,13 +41382,15 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
             kbase_rpc_service_1 = kbase_rpc_service_1_1;
         }, function (kbase_auth_service_1_1) {
             kbase_auth_service_1 = kbase_auth_service_1_1;
+        }, function (ftp_service_1_1) {
+            ftp_service_1 = ftp_service_1_1;
         }],
         execute: function () {
             JobService = class JobService {
-                constructor(rpc, auth) {
+                constructor(rpc, auth, ftp) {
                     this.rpc = rpc;
                     this.auth = auth;
-                    this.ftpRoot = '/data/bulktest';
+                    this.ftp = ftp;
                 }
                 runGenomeTransform(f, workspace) {
                     console.log('file', f);
@@ -41387,7 +41398,7 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
                         method: "genome_transform.genbank_to_genome",
                         service_ver: 'dev',
                         params: [{
-                            genbank_file_path: this.ftpRoot + f.path,
+                            genbank_file_path: this.ftp.getRootDirectory() + f.path,
                             workspace: workspace,
                             genome_id: f.meta.importName,
                             contigset_id: f.meta['contigsetName']
@@ -41409,7 +41420,7 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
                             workspace: workspace,
                             reads_id: f.meta.importName,
                             reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
-                            file_path_list: f['paths'] ? f['paths'] : [this.ftpRoot + f.path],
+                            file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory() + f.path],
                             insert_size: f.meta['insert_size'],
                             std_dev: f.meta['std_dev'],
                             sra: f.meta['sra'] ? "1" : "0" // expects strings instead of booleans
@@ -41422,16 +41433,6 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
                     files.forEach(file => reqs.push(this.runReadsImport(file, workspace)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
-                // special method that is not implemented in service
-                listImports() {
-                    let user = 'bulkio';
-                    console.log('calling list jobs with user:', user);
-                    return this.rpc.call('ujs', 'list_jobs', [[user], ''], true);
-                }
-                createImportJob(jobIds, wsId, narrativeId) {
-                    console.log('creating import job', jobIds);
-                    return this.rpc.call('ujs', 'create_and_start_job', [this.auth.token, 'ws.' + wsId + '.obj.' + narrativeId, jobIds.join(','), { ptype: 'percent' }, '9999-04-03T08:56:32+0000'], true);
-                }
                 checkJob(jobId) {
                     return this.rpc.call('njs', 'check_job', [jobId], true);
                 }
@@ -41440,37 +41441,23 @@ $__System.register('2b', ['a', '171', '2d', '1a'], function (exports_1, context_
                     jobIds.forEach(jobId => reqs.push(this.checkJob(jobId)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
-                // this must be used in conjunction with the
-                // fake jobs (which are created to store meta)
-                getJobInfo(jobId) {
-                    return this.rpc.call('ujs', 'get_job_info', [jobId], true);
-                }
                 getJobLogs(jobId) {
                     return this.rpc.call('njs', 'get_job_logs', { job_id: jobId, skip_lines: 0 });
-                }
-                deleteJob(jobId) {
-                    // uses special bulkio token
-                    return this.rpc.call('ujs', 'force_delete_job', [this.auth.getToken(), jobId], true);
-                }
-                deleteJobs(jobIds) {
-                    var reqs = [];
-                    jobIds.forEach(id => reqs.push(this.deleteJob(id)));
-                    return Rx_1.Observable.forkJoin(reqs);
                 }
                 /**
                  *  Unused methods
                  */
-                setState(jobId) {
-                    return this.rpc.call('ujs', 'set_state', ['bulkupload', jobId, ''], true);
-                }
-                listState() {
-                    return this.rpc.call('ujs', 'list_state', ['bulkupload', 0], true);
-                }
+                //setState(jobId: string){
+                //    return this.rpc.call('ujs', 'set_state', ['bulkupload', jobId, ''], true)
+                //}
+                //listState() {
+                //    return this.rpc.call('ujs', 'list_state', ['bulkupload', 0], true)
+                //}
                 getJobParams(jobId) {
                     return this.rpc.call('njs', 'get_job_params', [jobId], true);
                 }
             };
-            JobService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [kbase_rpc_service_1.KBaseRpc, kbase_auth_service_1.KBaseAuth])], JobService);
+            JobService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [kbase_rpc_service_1.KBaseRpc, kbase_auth_service_1.KBaseAuth, ftp_service_1.FtpService])], JobService);
             exports_1("JobService", JobService);
         }
     };
@@ -41914,6 +41901,9 @@ $__System.register('19', ['a', '17b', '15', '10', '103', '174', '173', '172', '2
                         path: '/' + integration.getUsername()
                     };
                 }
+                getRootDirectory() {
+                    return this.integration.getConfig().services.ftp.root;
+                }
                 list(path) {
                     path = path ? path : '/' + this.integration.getUsername();
                     return this.http.get(this.ftpUrl + '/list/' + path, this.reqOptions).map(res => {
@@ -41932,6 +41922,54 @@ $__System.register('19', ['a', '17b', '15', '10', '103', '174', '173', '172', '2
                         return folders.concat(files);
                     }).do(files => this.files[path] = files).catch(this.handleError);
                 }
+                // UJS import job state
+                listImports() {
+                    return this.http.get(this.ftpUrl + '/import-jobs', this.reqOptions).map(result => {
+                        return result.json().result;
+                    }).catch(this.handleError);
+                }
+                createImportJob(jobIds, wsId, narrativeId) {
+                    console.log('creating import job', jobIds);
+                    let data = {
+                        narrativeObjectId: 'ws.' + wsId + '.obj.' + narrativeId,
+                        jobIds: jobIds
+                    };
+                    let headers = new http_1.Headers({
+                        'Authorization': this.auth.getToken(),
+                        'Content-Type': 'application/json'
+                    });
+                    var reqOptions = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post(this.ftpUrl + '/import-jobs', JSON.stringify(data), reqOptions).map(result => {
+                        return result.json().result;
+                    }).catch(this.handleError);
+                }
+                deleteImport(jobId) {
+                    return this.http.delete(this.ftpUrl + '/import-job/' + jobId, this.reqOptions).map(result => {
+                        console.log('deleted import job', result);
+                        return result.json().result;
+                    }).catch(this.handleError);
+                }
+                deleteImports(jobIds) {
+                    var reqs = jobIds.map(id => {
+                        return this.deleteImport(id);
+                    });
+                    return Observable_1.Observable.forkJoin(reqs);
+                }
+                getImportInfo(jobId) {
+                    return this.http.get(this.ftpUrl + '/import-job/' + jobId, this.reqOptions).map(result => {
+                        console.log('fetched import job info', result);
+                        return result.json().result;
+                    }).catch(this.handleError);
+                }
+                //deleteJob(jobId: string) {
+                // uses special bulkio token
+                //    return this.rpc.call('ujs', 'force_delete_job', [this.auth.getToken(), jobId], true)
+                //}
+                //deleteJobs(jobIds: string[]) {
+                //    var reqs = [];
+                //    jobIds.forEach(id => reqs.push( this.deleteJob(id) ) )
+                //    return Observable.forkJoin(reqs)
+                //}
                 setPath(path) {
                     this.selectedPath.next(path);
                 }
@@ -62709,7 +62747,6 @@ $__System.register('181', ['7', '8', '187'], function (exports_1, context_1) {
                     console.log('stopping...');
                 }
                 go() {
-                    console.log('GOing', window);
                     this.messageManager.start();
                     var self = this;
                     this.messageManager.addPartner({

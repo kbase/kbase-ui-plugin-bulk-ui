@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/common', '../services/job.service', '../services/workspace.service', '../services/util', '../services/kbase-config.service', '../services/pipes'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', '../services/job.service', '../services/ftp.service', '../services/workspace.service', '../services/util', '../services/kbase-config.service', '../services/pipes'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, job_service_1, workspace_service_1, util_1, kbase_config_service_1, pipes_1;
+    var core_1, common_1, job_service_1, ftp_service_1, workspace_service_1, util_1, kbase_config_service_1, pipes_1;
     var cssTemplate, htmlTemplate, StatusView;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
             },
             function (job_service_1_1) {
                 job_service_1 = job_service_1_1;
+            },
+            function (ftp_service_1_1) {
+                ftp_service_1 = ftp_service_1_1;
             },
             function (workspace_service_1_1) {
                 workspace_service_1 = workspace_service_1_1;
@@ -96,9 +99,10 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
     </table>
 </card>`;
             StatusView = class StatusView {
-                constructor(jobService, wsService, _location, util, config) {
+                constructor(jobService, wsService, ftpService, _location, util, config) {
                     this.jobService = jobService;
                     this.wsService = wsService;
+                    this.ftpService = ftpService;
                     this._location = _location;
                     this.util = util;
                     this.config = config;
@@ -118,7 +122,7 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
                     // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
                     // next get individual job status
                     // Note: a service would be very useful here.
-                    this.jobService.listImports()
+                    this.ftpService.listImports()
                         .subscribe(res => {
                         let realImports = [];
                         for (let i = 0; i < res.length; i++) {
@@ -149,7 +153,6 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
                                 return -1;
                         });
                         this.imports = realImports;
-                        console.log('narrative object ids', narrativeObjIds);
                         this.getIndividualJobStatus(this.imports);
                     });
                 }
@@ -200,13 +203,17 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
                 }
                 // delete fake import job, along with associated jobs
                 deleteJob(meta) {
-                    let jobIds = meta[12].split(',');
-                    jobIds.push(meta[0]); // delete all ids, including import job
-                    console.log('deleting', meta);
-                    console.log('ids', jobIds);
-                    this.jobService.deleteJobs(jobIds)
+                    // "real" jobs are not deletable, so don't even try.
+                    // we just remove the ujs record which holds the job ids
+                    // for the bulkio service.
+                    //let jobIds = meta[12].split(',');
+                    //jobIds.push(meta[0]); // delete all ids, including import job
+                    //console.log('deleting', meta)
+                    //console.log('ids', jobIds)
+                    this.ftpService.deleteImport(meta[0])
                         .subscribe(res => {
                         console.log('res', res);
+                        this.reload();
                     });
                 }
                 goBack() {
@@ -224,7 +231,7 @@ System.register(['@angular/core', '@angular/common', '../services/job.service', 
                         util_1.Util
                     ]
                 }), 
-                __metadata('design:paramtypes', [job_service_1.JobService, workspace_service_1.WorkspaceService, common_1.Location, util_1.Util, kbase_config_service_1.KBaseConfig])
+                __metadata('design:paramtypes', [job_service_1.JobService, workspace_service_1.WorkspaceService, ftp_service_1.FtpService, common_1.Location, util_1.Util, kbase_config_service_1.KBaseConfig])
             ], StatusView);
             exports_1("StatusView", StatusView);
         }

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { JobService } from '../services/job.service';
+import { FtpService } from '../services/ftp.service';
 
 const htmlTemplate = `
 <card>
@@ -51,7 +52,11 @@ export class ImportDetailsView implements OnInit {
     loading: boolean = false;
     jobs;
 
-    constructor(route: ActivatedRoute, private jobService: JobService) {
+    constructor(
+        route: ActivatedRoute, 
+        private jobService: JobService,
+        private ftpService: FtpService
+        ) {
         route.params.subscribe(params => this.id = params['id'] )
     }
 
@@ -66,7 +71,7 @@ export class ImportDetailsView implements OnInit {
         // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
         // next get individual job status
         // Note: a service would be very useful here.
-        this.jobService.getJobInfo(this.id)
+        this.ftpService.getImportInfo(this.id)
             .subscribe(jobInfo => {
                 let jobIds = jobInfo[12].split(',')
 

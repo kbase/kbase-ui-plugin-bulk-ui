@@ -249,7 +249,7 @@ export class EditMetaView implements OnInit {
     // creates a bulk "job" that simply contains ids of jobs in description
     // and narrative ws.1.obj.1 in status
     createBulkJob(jobIds, wsId, narId) {
-        this.jobService.createImportJob(jobIds, wsId, narId)
+        this.ftp.createImportJob(jobIds, wsId, narId)
             .subscribe(res => {
                 console.log('create import res', res)
                 this.router.navigate(['status']);
@@ -307,7 +307,7 @@ export class EditMetaView implements OnInit {
     }
 
     preprocessPairedReads() {
-        let ftpRoot= '/data/bulktest';
+        let ftpRoot= this.ftp.getRootDirectory();
         let sets = Object.assign([], this.ftp.selectedSets);
         console.log('sets', sets)
 

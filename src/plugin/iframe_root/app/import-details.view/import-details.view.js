@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '../services/job.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../services/job.service', '../services/ftp.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '../services/job.service'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, job_service_1;
+    var core_1, router_1, job_service_1, ftp_service_1;
     var htmlTemplate, ImportDetailsView;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '@angular/router', '../services/job.service'],
             },
             function (job_service_1_1) {
                 job_service_1 = job_service_1_1;
+            },
+            function (ftp_service_1_1) {
+                ftp_service_1 = ftp_service_1_1;
             }],
         execute: function() {
             htmlTemplate = `
@@ -57,8 +60,9 @@ System.register(['@angular/core', '@angular/router', '../services/job.service'],
 </card>
 `;
             ImportDetailsView = class ImportDetailsView {
-                constructor(route, jobService) {
+                constructor(route, jobService, ftpService) {
                     this.jobService = jobService;
+                    this.ftpService = ftpService;
                     this.loading = false;
                     route.params.subscribe(params => this.id = params['id']);
                 }
@@ -70,7 +74,7 @@ System.register(['@angular/core', '@angular/router', '../services/job.service'],
                     // Fetch import jobs and filter out any jobs with non-leginimate-looking ids
                     // next get individual job status
                     // Note: a service would be very useful here.
-                    this.jobService.getJobInfo(this.id)
+                    this.ftpService.getImportInfo(this.id)
                         .subscribe(jobInfo => {
                         let jobIds = jobInfo[12].split(',');
                         this.jobService.checkJobs(jobIds)
@@ -88,7 +92,7 @@ System.register(['@angular/core', '@angular/router', '../services/job.service'],
                         job_service_1.JobService
                     ]
                 }), 
-                __metadata('design:paramtypes', [router_1.ActivatedRoute, job_service_1.JobService])
+                __metadata('design:paramtypes', [router_1.ActivatedRoute, job_service_1.JobService, ftp_service_1.FtpService])
             ], ImportDetailsView);
             exports_1("ImportDetailsView", ImportDetailsView);
         }
