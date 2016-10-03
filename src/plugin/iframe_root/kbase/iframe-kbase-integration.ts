@@ -79,8 +79,6 @@ export class KBase {
     }
 
     go() {
-        console.log('GOing', window);
-
         this.messageManager.start();
 
         var self = this;

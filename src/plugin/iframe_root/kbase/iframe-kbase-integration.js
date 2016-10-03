@@ -66,7 +66,6 @@ System.register(['./iframe-messages', './iframe-height-notifier', '../app/main']
                     console.log('stopping...');
                 }
                 go() {
-                    console.log('GOing', window);
                     this.messageManager.start();
                     var self = this;
                     this.messageManager.addPartner({
