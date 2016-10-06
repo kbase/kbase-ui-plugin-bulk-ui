@@ -21,6 +21,8 @@ define([
     function factory(config) {
         var container,
             runtime = config.runtime,
+            hostOrigin = getOrigin(),
+            iframeOrigin = getOrigin(),
             iframeMessages = IframeMessages.makeHost({
                 root: window,
                 name: 'panel'
@@ -39,13 +41,15 @@ define([
 //            container.querySelector('[data-element="stats"]').innerHTML = content;
 //        }
 
+        function getOrigin() {
+            return document.location.origin;
+        }
+
         function makeIframe() {
             var frameNumber = 1,
                 frameId = 'frame_' + frameNumber,
-                parentHost = 'http://localhost:8080',
-                iframeHost = 'http://localhost:8080',
                 iframeIndex = '/modules/plugins/bulk-ui/iframe_root/dist/index.html',
-                iframeUrl = iframeHost + iframeIndex,
+                iframeUrl = iframeOrigin + iframeIndex,
                 content = div({class: 'container-fluid', style: {
                         border: '0px blue dotted'
                     }}, [
@@ -53,7 +57,7 @@ define([
                     iframe({
                         dataFrame: 'frame_' + frameNumber,
                         dataParams: encodeURIComponent(JSON.stringify({
-                            parentHost: 'http://localhost:8080',
+                            parentHost: hostOrigin,
                             frameId: 'frame_' + frameNumber
                         })),
                         style: {
@@ -67,8 +71,8 @@ define([
                     })
                 ]);
             return {
-                parentHost: parentHost,
-                host: iframeHost,
+                parentHost: hostOrigin,
+                host: iframeOrigin,
                 frameNumber: frameNumber,
                 frameId: frameId,
                 content: content
@@ -103,7 +107,7 @@ define([
                         iframeMessages.addPartner({
                             name: message.frameId,
                             host: embeddedIframe.host,
-                            window: container.querySelector('[data-frame="frame_'+ embeddedIframe.frameNumber+'"]').contentWindow,
+                            window: container.querySelector('[data-frame="frame_'+ embeddedIframe.frameNumber+'"]').contentWindow
                         });
                         
                         // updateStats();
