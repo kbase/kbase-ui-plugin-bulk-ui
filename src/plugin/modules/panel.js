@@ -92,7 +92,7 @@ define([
             return Promise.try(function () {
                 var embeddedIframe = makeIframe();
                 
-                runtime.send('ui', 'setTitle', 'Bulk Upload');
+                runtime.send('ui', 'setTitle', 'Bulk Import');
 
                 container.innerHTML = embeddedIframe.content;
 
