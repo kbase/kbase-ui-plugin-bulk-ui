@@ -17,7 +17,7 @@ const htmlTemplate = `
         or, select a type to import:
     </div>
     <div class="help-text" *ngIf="selectedType.name == 'Genomes'" >
-        Next, select fasta files from below to import.
+        Next, select GBK files from below to import.
     </div>
     <div class="help-text" *ngIf="selectedType.name == 'Single-end Reads'" >
         Next, select single-end reads from below to import.
