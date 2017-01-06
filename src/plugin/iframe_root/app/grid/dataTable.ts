@@ -36,7 +36,6 @@ export class DataTable {
     }
 
     setSort(sortBy:string, sortOrder:string)  {
-        console.log('the data', this.data)
     }
 
 

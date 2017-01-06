@@ -156,7 +156,6 @@ export class SelectorView implements OnInit {
         this.ftp.selectedFileCount$.subscribe(count => this.selectedCount = count)
         this.ftp.selectedSetCount$.subscribe(count => {
             this.selectedSetCount = count;
-            console.log('updating count', this.selectedSetCount)
         })
     }
 
@@ -170,7 +169,6 @@ export class SelectorView implements OnInit {
     }
 
     onFolderSelect(folder) {
-        console.log('folder!', folder)
     }
 
     onSelectType(index) {
@@ -179,7 +177,6 @@ export class SelectorView implements OnInit {
     }
 
     addSet() {
-        console.log('calling ftp.addSet')
         this.ftp.addSet();
     }
 

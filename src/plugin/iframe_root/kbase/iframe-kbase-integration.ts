@@ -75,7 +75,6 @@ export class KBase {
     }
 
     stop(message:any) {
-        console.log('stopping...');
     }
 
     go() {

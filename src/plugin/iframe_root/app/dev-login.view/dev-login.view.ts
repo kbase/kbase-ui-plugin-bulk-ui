@@ -22,7 +22,6 @@ export class LoginComponent {
   }
   login() {
       this.message = 'Trying to log in ...';
-      console.log('attempt to login')
 
   }
   logout() {

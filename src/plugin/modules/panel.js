@@ -46,7 +46,7 @@ define([
         }
 
         function makeIframe() {
-            var frameNumber = 1,
+            var frameNumber = html.genId(),
                 frameId = 'frame_' + frameNumber,
                 iframeIndex = '/modules/plugins/bulk-ui/iframe_root/dist/index.html',
                 iframeUrl = iframeOrigin + iframeIndex,
@@ -83,7 +83,6 @@ define([
 
         function attach(node) {
             return Promise.try(function () {
-                console.log('in attach...');
                 container = node;
             });
         }
@@ -96,14 +95,16 @@ define([
 
                 container.innerHTML = embeddedIframe.content;
 
+                iframeMessages.start();
+
                 iframeMessages.listen({
                     name: 'ready',
                     handler: function (message) {
-                        console.log('GOT READY!', message);
                         if (message.frameId !== embeddedIframe.frameId) {
-                            console.error('Unexpected "ready"', message);
+                            console.error('Unexpected "ready"', message, message.frameId, embeddedIframe.frameId);
                             return;
                         }
+
                         iframeMessages.addPartner({
                             name: message.frameId,
                             host: embeddedIframe.host,
@@ -167,7 +168,8 @@ define([
 
         function stop() {
             return Promise.try(function () {
-
+                iframeMessages.stop();
+                container.innerHTML = '';
             });
         }
 

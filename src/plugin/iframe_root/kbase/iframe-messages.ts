@@ -17,12 +17,10 @@ export class IFrameMessages {
         this.listeners = new Map();
         this.awaitingResponse = new Map();
         this.id = new Date().getTime();
-        console.log('listeners', this.id, this.listeners);
     }
 
     start() {
         this.root.addEventListener('message', event => {
-            console.log('received', event);
             this.receive(event);
         }, false);
     }
@@ -33,16 +31,13 @@ export class IFrameMessages {
     }
 
     addPartner(config:any) {
-        console.log('adding partner', this.id, config, this.partners);
         this.partners.set(config.name, config);
-        console.log('added partner')
     }
 
     listen(listener) {
         if (!this.listeners.has(listener.name)) {
             this.listeners.set(listener.name, []);
         }
-        console.log('listening for', this.id, listener);        
         this.listeners.get(listener.name).push(listener);
     }
 
@@ -63,8 +58,6 @@ export class IFrameMessages {
                 console.error('Error handling response for message ', message, ex);
             }
         }
-
-        console.log('receiving message', this.id, this.listeners, event);
 
         if (this.listeners.get(message.name)) {
             this.listeners.get(message.name).forEach(function (listener) {

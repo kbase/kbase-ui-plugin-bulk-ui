@@ -176,8 +176,6 @@ export class EditMetaView implements OnInit {
         private auth: KBaseAuth) {
         this.user = auth.user;
 
-        console.log('selected?', ftp.selectedFiles);
-
         this.ftp.selectedPath$.subscribe(path => this.selectedPath = path)
     }
 
@@ -210,7 +208,6 @@ export class EditMetaView implements OnInit {
     }
 
     startImport() {
-        console.log('starting import!')
         this.importInProgress = true;
 
         let wsName = this.selectedNarrative.wsName,
@@ -221,25 +218,21 @@ export class EditMetaView implements OnInit {
         if (type === 'Genomes') {
             this.jobService.runGenomeTransforms(this.files, wsName)
                 .subscribe(ids => {
-                    console.log('genome import jobIds', ids)
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Single-end Reads") {
             this.jobService.runReadsImports(this.files, wsName)
                 .subscribe(ids => {
-                    console.log('reads import jobIds', ids);
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Interleaved Paired-end Reads") {
             this.jobService.runReadsImports(this.files, wsName)
                 .subscribe(ids => {
-                    console.log('reads import jobIds', ids);
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Paired-end Reads") {
             this.jobService.runReadsImports(this.files, wsName)
                 .subscribe(ids => {
-                    console.log('reads import jobIds', ids);
                     this.createBulkJob(ids, wsId, narId)
                 })
         }
@@ -251,7 +244,6 @@ export class EditMetaView implements OnInit {
     createBulkJob(jobIds, wsId, narId) {
         this.ftp.createImportJob(jobIds, wsId, narId)
             .subscribe(res => {
-                console.log('create import res', res)
                 this.router.navigate(['status']);
         })
     }
@@ -302,14 +294,12 @@ export class EditMetaView implements OnInit {
             }
         }
 
-        console.log('files!', files)
         this.files = files;
     }
 
     preprocessPairedReads() {
         let ftpRoot= this.ftp.getRootDirectory();
         let sets = Object.assign([], this.ftp.selectedSets);
-        console.log('sets', sets)
 
         let rows = []
         sets.forEach(set => {
@@ -322,28 +312,22 @@ export class EditMetaView implements OnInit {
             })
         })
 
-        console.log('rows', rows)
         this.files = rows;
     }
 
 
     showData() {
-        console.log('data to save', this.files)
     }
 
     selectCell(e) {
         this.cellSelection = true;
-        console.log('event', e, this.cellSelection)
-
     }
 
     mouseUp(e) {
         this.cellSelection = false;
-        console.log('event', e, this.cellSelection)
     }
 
     mouseOver(e) {
-        console.log('e', e);
         //this.renderer.setElementClass(e.fromElement, 'selected', true);
         //this.renderer.setElementClass(e.target, 'selected', true);
     }

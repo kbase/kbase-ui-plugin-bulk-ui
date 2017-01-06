@@ -197,14 +197,10 @@ export class FileTableComponent implements OnInit {
     toggleItem(toggle, file) {
         file.checked = toggle.checked;
 
-        console.log('toggled file', file.checked, file);
-
         if (toggle.checked == true)
             this.ftp.selectFile(file);
         else
             this.selectedFiles = this.ftp.unselectFile(file);
-
-        console.log('ftp?', toggle.checked, this.ftp.selectedFiles);
 
     }
 

@@ -8,7 +8,6 @@ export class Sorter {
     }
 
     sort(key, data, order?) {
-        console.log('order', order)
         if (order == 'asc') this.direction = 1;
 
         if (this.key === key)

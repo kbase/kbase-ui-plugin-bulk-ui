@@ -70,7 +70,6 @@ define([
 
         function sendMessage(partnerName, message) {
             var partner = getPartner(partnerName);
-            console.log('HOST: sendMessage: ', partnerName, message);
             message.from = name;
             partner.window.postMessage(message, partner.host);
         }
@@ -107,13 +106,20 @@ define([
                 name: name
             };
         }
+
+        function start() {
+            root.addEventListener('message', receiveMessage, false);
+        }
+
+        function stop() {
+            root.removeEventListener('message', receiveMessage);
+        }
         
 
-        
-        root.addEventListener('message', receiveMessage, false);
-
-
-        return {            
+        return {       
+            start: start,
+            stop: stop,
+     
             addPartner: addPartner,
             request: request,
             send: sendMessage,
