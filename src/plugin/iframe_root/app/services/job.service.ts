@@ -24,7 +24,6 @@ export class JobService {
     }
 
     runGenomeTransform(f: File,  workspace: string) {
-        console.log('file', f)
         let params = {
             method: "genome_transform.genbank_to_genome",
             service_ver: 'dev',
@@ -46,7 +45,6 @@ export class JobService {
     }
 
     runReadsImport(f: File,  workspace: string) {
-        console.log('file', f)
         let params = {
             method: "genome_transform.reads_to_assembly",
             service_ver: 'dev',

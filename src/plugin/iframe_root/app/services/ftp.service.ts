@@ -96,8 +96,6 @@ export class FtpService {
 
 
     createImportJob(jobIds: string[], wsId: number, narrativeId: number) {
-        console.log('creating import job', jobIds)
-
         let data = {
             narrativeObjectId: 'ws.' + wsId + '.obj.' + narrativeId,
             jobIds: jobIds
@@ -119,7 +117,6 @@ export class FtpService {
     deleteImport(jobId) {
         return this.http.delete(this.ftpUrl + '/import-job/' + jobId, this.reqOptions)
             .map(result => {
-                console.log('deleted import job', result);
                 return result.json().result;
             })
             .catch(this.handleError);
@@ -133,7 +130,6 @@ export class FtpService {
     getImportInfo(jobId) {
         return this.http.get(this.ftpUrl + '/import-job/' + jobId, this.reqOptions)
             .map(result => {
-                console.log('fetched import job info', result);
                 return result.json().result;
             })
             .catch(this.handleError);

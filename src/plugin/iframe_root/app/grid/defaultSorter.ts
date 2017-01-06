@@ -51,7 +51,6 @@ export class DefaultSorter implements OnInit {
     private sort() {
         this.sortOrder = this.sortOrder == 'asc' ? 'desc' : 'asc';
 
-        console.log('new sort order', this.sortBy, this.data, this.sortOrder);
         //this.sorter.magicSort(this.sortBy, data, this.sortOrder);
 
         //this.sorter.magicSort(this.sortBy, this.data, this.sortOrder);

@@ -13,7 +13,7 @@ var vendorBundleName = bundleHash + '.vendor.bundle.js';
 
 // This is main task for production use
 gulp.task('dist', function(done) {
-    runSequence('clean', 'compile_ts', 'bundle', 'copy_assets', 'copy_materialize_styles', function() {
+    runSequence('clean', 'compile_ts', 'bundle', 'copy_assets', 'copy_materialize_styles', 'clean:ts', function() {
         done();
     });
 });
@@ -74,6 +74,6 @@ gulp.task('clean:dist', function () {
 });
 
 gulp.task('clean:ts', function () {
-    return gulp.src(['./app/**/*.js', './app/**/*.js.map'], {read: false})
+    return gulp.src(['./app/**/*.js', './app/**/*.js.map', './kbase/**/*.js', './kbase/**/*.js.map'], {read: false})
         .pipe(clean());
 });

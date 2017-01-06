@@ -185,6 +185,11 @@ var define = $__System.amdDefine;
   var _hasOwnProperty = Function.call.bind(Object.prototype.hasOwnProperty);
   var ArrayIterator;
   var noop = function() {};
+  var OrigMap = globals.Map;
+  var origMapDelete = OrigMap && OrigMap.prototype['delete'];
+  var origMapGet = OrigMap && OrigMap.prototype.get;
+  var origMapHas = OrigMap && OrigMap.prototype.has;
+  var origMapSet = OrigMap && OrigMap.prototype.set;
   var Symbol = globals.Symbol || {};
   var symbolSpecies = Symbol.species || '@@species';
   var numberIsNaN = Number.isNaN || function isNaN(value) {
@@ -239,6 +244,12 @@ var define = $__System.amdDefine;
   }
   var Reflect = globals.Reflect;
   var $String = String;
+  var domAll = (typeof document === 'undefined' || !document) ? null : document.all;
+  var isNullOrUndefined = domAll == null ? function isNullOrUndefined(x) {
+    return x == null;
+  } : function isNullOrUndefinedAndNotDocumentAll(x) {
+    return x == null && x !== domAll;
+  };
   var ES = {
     Call: function Call(F, V) {
       var args = arguments.length > 2 ? arguments[2] : [];
@@ -248,7 +259,7 @@ var define = $__System.amdDefine;
       return _apply(F, V, args);
     },
     RequireObjectCoercible: function(x, optMessage) {
-      if (x == null) {
+      if (isNullOrUndefined(x)) {
         throw new TypeError(optMessage || 'Cannot call method on ' + x);
       }
       return x;
@@ -257,7 +268,7 @@ var define = $__System.amdDefine;
       if (x === void 0 || x === null || x === true || x === false) {
         return false;
       }
-      return typeof x === 'function' || typeof x === 'object';
+      return typeof x === 'function' || typeof x === 'object' || x === domAll;
     },
     ToObject: function(o, optMessage) {
       return Object(ES.RequireObjectCoercible(o, optMessage));
@@ -329,7 +340,7 @@ var define = $__System.amdDefine;
     },
     GetMethod: function(o, p) {
       var func = ES.ToObject(o)[p];
-      if (func === void 0 || func === null) {
+      if (isNullOrUndefined(func)) {
         return void 0;
       }
       if (!ES.IsCallable(func)) {
@@ -396,7 +407,7 @@ var define = $__System.amdDefine;
         throw new TypeError('Bad constructor');
       }
       var S = C[symbolSpecies];
-      if (S === void 0 || S === null) {
+      if (isNullOrUndefined(S)) {
         return defaultConstructor;
       }
       if (!ES.IsConstructor(S)) {
@@ -452,7 +463,7 @@ var define = $__System.amdDefine;
       });
       var searchShim = function search(regexp) {
         var O = ES.RequireObjectCoercible(this);
-        if (regexp !== null && typeof regexp !== 'undefined') {
+        if (!isNullOrUndefined(regexp)) {
           var searcher = ES.GetMethod(regexp, symbolSearch);
           if (typeof searcher !== 'undefined') {
             return ES.Call(searcher, regexp, [O]);
@@ -470,7 +481,7 @@ var define = $__System.amdDefine;
       });
       var replaceShim = function replace(searchValue, replaceValue) {
         var O = ES.RequireObjectCoercible(this);
-        if (searchValue !== null && typeof searchValue !== 'undefined') {
+        if (!isNullOrUndefined(searchValue)) {
           var replacer = ES.GetMethod(searchValue, symbolReplace);
           if (typeof replacer !== 'undefined') {
             return ES.Call(replacer, searchValue, [O, replaceValue]);
@@ -488,7 +499,7 @@ var define = $__System.amdDefine;
       });
       var splitShim = function split(separator, limit) {
         var O = ES.RequireObjectCoercible(this);
-        if (separator !== null && typeof separator !== 'undefined') {
+        if (!isNullOrUndefined(separator)) {
           var splitter = ES.GetMethod(separator, symbolSplit);
           if (typeof splitter !== 'undefined') {
             return ES.Call(splitter, separator, [O, limit]);
@@ -514,7 +525,7 @@ var define = $__System.amdDefine;
       });
       var matchShim = function match(regexp) {
         var O = ES.RequireObjectCoercible(this);
-        if (regexp !== null && typeof regexp !== 'undefined') {
+        if (!isNullOrUndefined(regexp)) {
           var matcher = ES.GetMethod(regexp, symbolMatch);
           if (typeof matcher !== 'undefined') {
             return ES.Call(matcher, regexp, [O]);
@@ -789,7 +800,7 @@ var define = $__System.amdDefine;
   };
   var nonWS = ['\u0085', '\u200b', '\ufffe'].join('');
   var nonWSregex = new RegExp('[' + nonWS + ']', 'g');
-  var isBadHexRegex = /^[\-+]0x[0-9a-f]+$/i;
+  var isBadHexRegex = /^[-+]0x[0-9a-f]+$/i;
   var hasStringTrimBug = nonWS.trim().length !== nonWS.length;
   defineProperty(String.prototype, 'trim', trimShim, hasStringTrimBug);
   var iteratorResult = function(x) {
@@ -1643,14 +1654,14 @@ var define = $__System.amdDefine;
       if (x === Infinity) {
         return x;
       }
-      return _log(x / E + _sqrt(x + 1) * _sqrt(x - 1) / E) + 1;
+      return _log((x / E) + (_sqrt(x + 1) * _sqrt(x - 1) / E)) + 1;
     },
     asinh: function asinh(value) {
       var x = Number(value);
       if (x === 0 || !globalIsFinite(x)) {
         return x;
       }
-      return x < 0 ? -asinh(-x) : _log(x + _sqrt(x * x + 1));
+      return x < 0 ? -asinh(-x) : _log(x + _sqrt((x * x) + 1));
     },
     atanh: function atanh(value) {
       var x = Number(value);
@@ -1682,7 +1693,7 @@ var define = $__System.amdDefine;
         result = Infinity;
       } else {
         result = _exp(_log(x) / 3);
-        result = (x / (result * result) + (2 * result)) / 3;
+        result = ((x / (result * result)) + (2 * result)) / 3;
       }
       return negate ? -result : result;
     },
@@ -1803,7 +1814,7 @@ var define = $__System.amdDefine;
       var al = a & 0xffff;
       var bh = (b >>> 16) & 0xffff;
       var bl = b & 0xffff;
-      return (al * bl) + (((ah * bl + al * bh) << 16) >>> 0) | 0;
+      return (al * bl) + ((((ah * bl) + (al * bh)) << 16) >>> 0) | 0;
     },
     fround: function fround(x) {
       var v = Number(x);
@@ -1815,7 +1826,7 @@ var define = $__System.amdDefine;
       if (abs < BINARY_32_MIN_VALUE) {
         return sign * roundTiesToEven(abs / BINARY_32_MIN_VALUE / BINARY_32_EPSILON) * BINARY_32_MIN_VALUE * BINARY_32_EPSILON;
       }
-      var a = (1 + BINARY_32_EPSILON / Number.EPSILON) * abs;
+      var a = (1 + (BINARY_32_EPSILON / Number.EPSILON)) * abs;
       var result = a - (a - abs);
       if (result > BINARY_32_MAX_VALUE || numberIsNaN(result)) {
         return sign * Infinity;
@@ -1828,14 +1839,14 @@ var define = $__System.amdDefine;
   defineProperty(Math, 'asinh', MathShims.asinh, Math.asinh(-1e7) !== -Math.asinh(1e7));
   defineProperty(Math, 'tanh', MathShims.tanh, Math.tanh(-2e-17) !== -2e-17);
   defineProperty(Math, 'acosh', MathShims.acosh, Math.acosh(Number.MAX_VALUE) === Infinity);
-  defineProperty(Math, 'cbrt', MathShims.cbrt, Math.abs(1 - Math.cbrt(1e-300) / 1e-100) / Number.EPSILON > 8);
+  defineProperty(Math, 'cbrt', MathShims.cbrt, Math.abs(1 - (Math.cbrt(1e-300) / 1e-100)) / Number.EPSILON > 8);
   defineProperty(Math, 'sinh', MathShims.sinh, Math.sinh(-2e-17) !== -2e-17);
   var expm1OfTen = Math.expm1(10);
   defineProperty(Math, 'expm1', MathShims.expm1, expm1OfTen > 22025.465794806719 || expm1OfTen < 22025.4657948067165168);
   var origMathRound = Math.round;
-  var roundHandlesBoundaryConditions = Math.round(0.5 - Number.EPSILON / 4) === 0 && Math.round(-0.5 + Number.EPSILON / 3.99) === 1;
+  var roundHandlesBoundaryConditions = Math.round(0.5 - (Number.EPSILON / 4)) === 0 && Math.round(-0.5 + (Number.EPSILON / 3.99)) === 1;
   var smallestPositiveNumberWhereRoundBreaks = inverseEpsilon + 1;
-  var largestPositiveNumberWhereRoundBreaks = 2 * inverseEpsilon - 1;
+  var largestPositiveNumberWhereRoundBreaks = (2 * inverseEpsilon) - 1;
   var roundDoesNotIncreaseIntegers = [smallestPositiveNumberWhereRoundBreaks, largestPositiveNumberWhereRoundBreaks].every(function(num) {
     return Math.round(num) === num;
   });
@@ -2379,11 +2390,11 @@ var define = $__System.amdDefine;
   var preservesInsertionOrder = testOrder(['z', 'a', 'bb']);
   var preservesNumericInsertionOrder = testOrder(['z', 1, 'a', '3', 2]);
   if (supportsDescriptors) {
-    var fastkey = function fastkey(key) {
-      if (!preservesInsertionOrder) {
+    var fastkey = function fastkey(key, skipInsertionOrderCheck) {
+      if (!skipInsertionOrderCheck && !preservesInsertionOrder) {
         return null;
       }
-      if (typeof key === 'undefined' || key === null) {
+      if (isNullOrUndefined(key)) {
         return '^' + ES.ToString(key);
       } else if (typeof key === 'string') {
         return '$' + key;
@@ -2415,7 +2426,7 @@ var define = $__System.amdDefine;
       } else {
         var iter,
             adder;
-        if (iterable !== null && typeof iterable !== 'undefined') {
+        if (!isNullOrUndefined(iterable)) {
           adder = map.set;
           if (!ES.IsCallable(adder)) {
             throw new TypeError('bad map');
@@ -2454,7 +2465,7 @@ var define = $__System.amdDefine;
       } else {
         var iter,
             adder;
-        if (iterable !== null && typeof iterable !== 'undefined') {
+        if (!isNullOrUndefined(iterable)) {
           adder = set.add;
           if (!ES.IsCallable(adder)) {
             throw new TypeError('bad set');
@@ -2544,8 +2555,9 @@ var define = $__System.amdDefine;
           var map = emulateES6construct(this, Map, Map$prototype, {
             _es6map: true,
             _head: null,
-            _storage: emptyObject(),
-            _size: 0
+            _map: OrigMap ? new OrigMap() : null,
+            _size: 0,
+            _storage: emptyObject()
           });
           var head = new MapEntry(null, null);
           head.next = head.prev = head;
@@ -2565,9 +2577,18 @@ var define = $__System.amdDefine;
         defineProperties(Map$prototype, {
           get: function get(key) {
             requireMapSlot(this, 'get');
-            var fkey = fastkey(key);
+            var entry;
+            var fkey = fastkey(key, true);
             if (fkey !== null) {
-              var entry = this._storage[fkey];
+              entry = this._storage[fkey];
+              if (entry) {
+                return entry.value;
+              } else {
+                return;
+              }
+            }
+            if (this._map) {
+              entry = origMapGet.call(this._map, key);
               if (entry) {
                 return entry.value;
               } else {
@@ -2584,9 +2605,12 @@ var define = $__System.amdDefine;
           },
           has: function has(key) {
             requireMapSlot(this, 'has');
-            var fkey = fastkey(key);
+            var fkey = fastkey(key, true);
             if (fkey !== null) {
               return typeof this._storage[fkey] !== 'undefined';
+            }
+            if (this._map) {
+              return origMapHas.call(this._map, key);
             }
             var head = this._head;
             var i = head;
@@ -2602,13 +2626,21 @@ var define = $__System.amdDefine;
             var head = this._head;
             var i = head;
             var entry;
-            var fkey = fastkey(key);
+            var fkey = fastkey(key, true);
             if (fkey !== null) {
               if (typeof this._storage[fkey] !== 'undefined') {
                 this._storage[fkey].value = value;
                 return this;
               } else {
                 entry = this._storage[fkey] = new MapEntry(key, value);
+                i = head.prev;
+              }
+            } else if (this._map) {
+              if (origMapHas.call(this._map, key)) {
+                origMapGet.call(this._map, key).value = value;
+              } else {
+                entry = new MapEntry(key, value);
+                origMapSet.call(this._map, key, entry);
                 i = head.prev;
               }
             }
@@ -2633,13 +2665,19 @@ var define = $__System.amdDefine;
             requireMapSlot(this, 'delete');
             var head = this._head;
             var i = head;
-            var fkey = fastkey(key);
+            var fkey = fastkey(key, true);
             if (fkey !== null) {
               if (typeof this._storage[fkey] === 'undefined') {
                 return false;
               }
               i = this._storage[fkey].prev;
               delete this._storage[fkey];
+            } else if (this._map) {
+              if (!origMapHas.call(this._map, key)) {
+                return false;
+              }
+              i = origMapGet.call(this._map, key).prev;
+              origMapDelete.call(this._map, key);
             }
             while ((i = i.next) !== head) {
               if (ES.SameValueZero(i.key, key)) {
@@ -2654,6 +2692,7 @@ var define = $__System.amdDefine;
           },
           clear: function clear() {
             requireMapSlot(this, 'clear');
+            this._map = OrigMap ? new OrigMap() : null;
             this._size = 0;
             this._storage = emptyObject();
             var head = this._head;
@@ -2836,12 +2875,11 @@ var define = $__System.amdDefine;
         return new Map([[1, 2]]).get(1) === 2;
       });
       if (!mapAcceptsArguments) {
-        var OrigMapNoArgs = globals.Map;
         globals.Map = function Map() {
           if (!(this instanceof Map)) {
             throw new TypeError('Constructor Map requires "new"');
           }
-          var m = new OrigMapNoArgs();
+          var m = new OrigMap();
           if (arguments.length > 0) {
             addIterableToMap(Map, m, arguments[0]);
           }
@@ -2849,9 +2887,9 @@ var define = $__System.amdDefine;
           Object.setPrototypeOf(m, globals.Map.prototype);
           return m;
         };
-        globals.Map.prototype = create(OrigMapNoArgs.prototype);
+        globals.Map.prototype = create(OrigMap.prototype);
         defineProperty(globals.Map.prototype, 'constructor', globals.Map, true);
-        Value.preserveToString(globals.Map, OrigMapNoArgs);
+        Value.preserveToString(globals.Map, OrigMap);
       }
       var testMap = new Map();
       var mapUsesSameValueZero = (function() {
@@ -2861,15 +2899,12 @@ var define = $__System.amdDefine;
       }());
       var mapSupportsChaining = testMap.set(1, 2) === testMap;
       if (!mapUsesSameValueZero || !mapSupportsChaining) {
-        var origMapSet = Map.prototype.set;
         overrideNative(Map.prototype, 'set', function set(k, v) {
           _call(origMapSet, this, k === 0 ? 0 : k, v);
           return this;
         });
       }
       if (!mapUsesSameValueZero) {
-        var origMapGet = Map.prototype.get;
-        var origMapHas = Map.prototype.has;
         defineProperties(Map.prototype, {
           get: function get(k) {
             return _call(origMapGet, this, k === 0 ? 0 : k);
@@ -2922,7 +2957,6 @@ var define = $__System.amdDefine;
         }
       }());
       if (globals.Map.length !== 0 || mapFailsToSupportSubclassing || !mapRequiresNew) {
-        var OrigMap = globals.Map;
         globals.Map = function Map() {
           if (!(this instanceof Map)) {
             throw new TypeError('Constructor Map requires "new"');
@@ -3372,7 +3406,7 @@ var define = $__System.amdDefine;
       }
       Zone.assertZonePatched = function() {
         if (global.Promise !== ZoneAwarePromise) {
-          throw new Error("Zone.js has detected that ZoneAwarePromise `(window|global).Promise` " + "has been overwritten.\n" + "Most likely cause is that a Promise polyfill has been loaded " + "after Zone.js (Polyfilling Promise api is not necessary when zone.js is loaded. " + "If you must load one, do so before loading zone.js.)");
+          throw new Error('Zone.js has detected that ZoneAwarePromise `(window|global).Promise` ' + 'has been overwritten.\n' + 'Most likely cause is that a Promise polyfill has been loaded ' + 'after Zone.js (Polyfilling Promise api is not necessary when zone.js is loaded. ' + 'If you must load one, do so before loading zone.js.)');
         }
       };
       Object.defineProperty(Zone, "current", {
@@ -3651,7 +3685,7 @@ var define = $__System.amdDefine;
         if (this.data && typeof this.data.handleId !== 'undefined') {
           return this.data.handleId;
         } else {
-          return this.toString();
+          return Object.prototype.toString.call(this);
         }
       };
       return ZoneTask;
@@ -3759,7 +3793,7 @@ var define = $__System.amdDefine;
           if (queue.length == 0 && state == REJECTED) {
             promise[symbolState] = REJECTED_NO_CATCH;
             try {
-              throw new Error("Uncaught (in promise): " + value);
+              throw new Error('Uncaught (in promise): ' + value + (value && value.stack ? '\n' + value.stack : ''));
             } catch (e) {
               var error_1 = e;
               error_1.rejection = value;
@@ -3820,8 +3854,8 @@ var define = $__System.amdDefine;
         var resolve;
         var reject;
         var promise = new this(function(res, rej) {
-          resolve = res;
-          reject = rej;
+          _a = [res, rej], resolve = _a[0], reject = _a[1];
+          var _a;
         });
         function onResolve(value) {
           promise && (promise = null || resolve(value));
@@ -3914,7 +3948,7 @@ var define = $__System.amdDefine;
         }, function() {
           return null;
         });
-        if (fetchPromise.constructor != NativePromise) {
+        if (fetchPromise.constructor != NativePromise && fetchPromise.constructor != ZoneAwarePromise) {
           patchThen(fetchPromise.constructor);
         }
       }
@@ -4060,7 +4094,7 @@ var define = $__System.amdDefine;
       }
       var validZoneHandler = false;
       try {
-        validZoneHandler = handler && handler.toString() === "[object FunctionWrapper]";
+        validZoneHandler = handler && handler.toString() === '[object FunctionWrapper]';
       } catch (e) {
         return;
       }
@@ -4189,7 +4223,7 @@ var define = $__System.amdDefine;
   }
   function patchMethod(target, name, patchFn) {
     var proto = target;
-    while (proto && !proto.hasOwnProperty(name)) {
+    while (proto && Object.getOwnPropertyNames(proto).indexOf(name) === -1) {
       proto = Object.getPrototypeOf(proto);
     }
     if (!proto && target[name]) {
@@ -4203,25 +4237,63 @@ var define = $__System.amdDefine;
     }
     return delegate;
   }
-  var WTF_ISSUE_555 = 'Anchor,Area,Audio,BR,Base,BaseFont,Body,Button,Canvas,Content,DList,Directory,Div,Embed,FieldSet,Font,Form,Frame,FrameSet,HR,Head,Heading,Html,IFrame,Image,Input,Keygen,LI,Label,Legend,Link,Map,Marquee,Media,Menu,Meta,Meter,Mod,OList,Object,OptGroup,Option,Output,Paragraph,Pre,Progress,Quote,Script,Select,Source,Span,Style,TableCaption,TableCell,TableCol,Table,TableRow,TableSection,TextArea,Title,Track,UList,Unknown,Video';
-  var NO_EVENT_TARGET = 'ApplicationCache,EventSource,FileReader,InputMethodContext,MediaController,MessagePort,Node,Performance,SVGElementInstance,SharedWorker,TextTrack,TextTrackCue,TextTrackList,WebKitNamedFlow,Window,Worker,WorkerGlobalScope,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload,IDBRequest,IDBOpenDBRequest,IDBDatabase,IDBTransaction,IDBCursor,DBIndex'.split(',');
-  var EVENT_TARGET = 'EventTarget';
-  function eventTargetPatch(_global) {
-    var apis = [];
-    var isWtf = _global['wtf'];
-    if (isWtf) {
-      apis = WTF_ISSUE_555.split(',').map(function(v) {
-        return 'HTML' + v + 'Element';
-      }).concat(NO_EVENT_TARGET);
-    } else if (_global[EVENT_TARGET]) {
-      apis.push(EVENT_TARGET);
-    } else {
-      apis = NO_EVENT_TARGET;
+  function patchTimer(window, setName, cancelName, nameSuffix) {
+    var setNative = null;
+    var clearNative = null;
+    setName += nameSuffix;
+    cancelName += nameSuffix;
+    var tasksByHandleId = {};
+    function scheduleTask(task) {
+      var data = task.data;
+      data.args[0] = function() {
+        task.invoke.apply(this, arguments);
+        delete tasksByHandleId[data.handleId];
+      };
+      data.handleId = setNative.apply(window, data.args);
+      tasksByHandleId[data.handleId] = task;
+      return task;
     }
-    for (var i = 0; i < apis.length; i++) {
-      var type = _global[apis[i]];
-      patchEventTargetMethods(type && type.prototype);
+    function clearTask(task) {
+      delete tasksByHandleId[task.data.handleId];
+      return clearNative(task.data.handleId);
     }
+    setNative = patchMethod(window, setName, function(delegate) {
+      return function(self, args) {
+        if (typeof args[0] === 'function') {
+          var zone = Zone.current;
+          var options = {
+            handleId: null,
+            isPeriodic: nameSuffix === 'Interval',
+            delay: (nameSuffix === 'Timeout' || nameSuffix === 'Interval') ? args[1] || 0 : null,
+            args: args
+          };
+          var task = zone.scheduleMacroTask(setName, args[0], options, scheduleTask, clearTask);
+          if (!task) {
+            return task;
+          }
+          var handle = task.data.handleId;
+          if (handle.ref && handle.unref) {
+            task.ref = handle.ref.bind(handle);
+            task.unref = handle.unref.bind(handle);
+          }
+          return task;
+        } else {
+          return delegate.apply(window, args);
+        }
+      };
+    });
+    clearNative = patchMethod(window, cancelName, function(delegate) {
+      return function(self, args) {
+        var task = typeof args[0] === 'number' ? tasksByHandleId[args[0]] : args[0];
+        if (task && typeof task.type === 'string') {
+          if (task.cancelFn && task.data.isPeriodic || task.runCount === 0) {
+            task.zone.cancelTask(task);
+          }
+        } else {
+          delegate.apply(window, args);
+        }
+      };
+    });
   }
   var _defineProperty = Object[zoneSymbol('defineProperty')] = Object.defineProperty;
   var _getOwnPropertyDescriptor = Object[zoneSymbol('getOwnPropertyDescriptor')] = Object.getOwnPropertyDescriptor;
@@ -4307,31 +4379,25 @@ var define = $__System.amdDefine;
       }
     }
   }
-  function registerElementPatch(_global) {
-    if (!isBrowser || !('registerElement' in _global.document)) {
-      return;
+  var WTF_ISSUE_555 = 'Anchor,Area,Audio,BR,Base,BaseFont,Body,Button,Canvas,Content,DList,Directory,Div,Embed,FieldSet,Font,Form,Frame,FrameSet,HR,Head,Heading,Html,IFrame,Image,Input,Keygen,LI,Label,Legend,Link,Map,Marquee,Media,Menu,Meta,Meter,Mod,OList,Object,OptGroup,Option,Output,Paragraph,Pre,Progress,Quote,Script,Select,Source,Span,Style,TableCaption,TableCell,TableCol,Table,TableRow,TableSection,TextArea,Title,Track,UList,Unknown,Video';
+  var NO_EVENT_TARGET = 'ApplicationCache,EventSource,FileReader,InputMethodContext,MediaController,MessagePort,Node,Performance,SVGElementInstance,SharedWorker,TextTrack,TextTrackCue,TextTrackList,WebKitNamedFlow,Window,Worker,WorkerGlobalScope,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload,IDBRequest,IDBOpenDBRequest,IDBDatabase,IDBTransaction,IDBCursor,DBIndex'.split(',');
+  var EVENT_TARGET = 'EventTarget';
+  function eventTargetPatch(_global) {
+    var apis = [];
+    var isWtf = _global['wtf'];
+    if (isWtf) {
+      apis = WTF_ISSUE_555.split(',').map(function(v) {
+        return 'HTML' + v + 'Element';
+      }).concat(NO_EVENT_TARGET);
+    } else if (_global[EVENT_TARGET]) {
+      apis.push(EVENT_TARGET);
+    } else {
+      apis = NO_EVENT_TARGET;
     }
-    var _registerElement = document.registerElement;
-    var callbacks = ['createdCallback', 'attachedCallback', 'detachedCallback', 'attributeChangedCallback'];
-    document.registerElement = function(name, opts) {
-      if (opts && opts.prototype) {
-        callbacks.forEach(function(callback) {
-          var source = 'Document.registerElement::' + callback;
-          if (opts.prototype.hasOwnProperty(callback)) {
-            var descriptor = Object.getOwnPropertyDescriptor(opts.prototype, callback);
-            if (descriptor && descriptor.value) {
-              descriptor.value = Zone.current.wrap(descriptor.value, source);
-              _redefineProperty(opts.prototype, callback, descriptor);
-            } else {
-              opts.prototype[callback] = Zone.current.wrap(opts.prototype[callback], source);
-            }
-          } else if (opts.prototype[callback]) {
-            opts.prototype[callback] = Zone.current.wrap(opts.prototype[callback], source);
-          }
-        });
-      }
-      return _registerElement.apply(document, [name, opts]);
-    };
+    for (var i = 0; i < apis.length; i++) {
+      var type = _global[apis[i]];
+      patchEventTargetMethods(type && type.prototype);
+    }
   }
   function apply(_global) {
     var WS = _global.WebSocket;
@@ -4408,7 +4474,7 @@ var define = $__System.amdDefine;
     var _loop_1 = function(i) {
       var property = eventNames[i];
       var onproperty = 'on' + property;
-      document.addEventListener(property, function(event) {
+      self.addEventListener(property, function(event) {
         var elt = event.target,
             bound,
             source;
@@ -4431,57 +4497,31 @@ var define = $__System.amdDefine;
       _loop_1(i);
     }
   }
-  function patchTimer(window, setName, cancelName, nameSuffix) {
-    var setNative = null;
-    var clearNative = null;
-    setName += nameSuffix;
-    cancelName += nameSuffix;
-    function scheduleTask(task) {
-      var data = task.data;
-      data.args[0] = task.invoke;
-      data.handleId = setNative.apply(window, data.args);
-      return task;
+  function registerElementPatch(_global) {
+    if (!isBrowser || !('registerElement' in _global.document)) {
+      return;
     }
-    function clearTask(task) {
-      return clearNative(task.data.handleId);
-    }
-    setNative = patchMethod(window, setName, function(delegate) {
-      return function(self, args) {
-        if (typeof args[0] === 'function') {
-          var zone = Zone.current;
-          var options = {
-            handleId: null,
-            isPeriodic: nameSuffix === 'Interval',
-            delay: (nameSuffix === 'Timeout' || nameSuffix === 'Interval') ? args[1] || 0 : null,
-            args: args
-          };
-          var task = zone.scheduleMacroTask(setName, args[0], options, scheduleTask, clearTask);
-          if (!task) {
-            return task;
+    var _registerElement = document.registerElement;
+    var callbacks = ['createdCallback', 'attachedCallback', 'detachedCallback', 'attributeChangedCallback'];
+    document.registerElement = function(name, opts) {
+      if (opts && opts.prototype) {
+        callbacks.forEach(function(callback) {
+          var source = 'Document.registerElement::' + callback;
+          if (opts.prototype.hasOwnProperty(callback)) {
+            var descriptor = Object.getOwnPropertyDescriptor(opts.prototype, callback);
+            if (descriptor && descriptor.value) {
+              descriptor.value = Zone.current.wrap(descriptor.value, source);
+              _redefineProperty(opts.prototype, callback, descriptor);
+            } else {
+              opts.prototype[callback] = Zone.current.wrap(opts.prototype[callback], source);
+            }
+          } else if (opts.prototype[callback]) {
+            opts.prototype[callback] = Zone.current.wrap(opts.prototype[callback], source);
           }
-          var handle = task.data.handleId;
-          if (handle.ref && handle.unref) {
-            task.ref = handle.ref.bind(handle);
-            task.unref = handle.unref.bind(handle);
-          }
-          return task;
-        } else {
-          return delegate.apply(window, args);
-        }
-      };
-    });
-    clearNative = patchMethod(window, cancelName, function(delegate) {
-      return function(self, args) {
-        var task = args[0];
-        if (task && typeof task.type === 'string') {
-          if (task.cancelFn && task.data.isPeriodic || task.runCount === 0) {
-            task.zone.cancelTask(task);
-          }
-        } else {
-          delegate.apply(window, args);
-        }
-      };
-    });
+        });
+      }
+      return _registerElement.apply(document, [name, opts]);
+    };
   }
   var set = 'set';
   var clear = 'clear';
@@ -4606,13 +4646,11 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             // feature test for Object.create support
             var supportsCreate = typeof Object.create === "function";
             // feature test for __proto__ support
-            var supportsProto = function () {
-                var sentinel = {};
-                function __() {}
-                __.prototype = sentinel;
-                var instance = new __();
-                return instance.__proto__ === sentinel;
-            }();
+            var supportsProto = { __proto__: [] } instanceof Array;
+            // feature test for Symbol support
+            var supportsSymbol = typeof Symbol === "function";
+            var toPrimitiveSymbol = supportsSymbol && typeof Symbol.toPrimitive !== "undefined" ? Symbol.toPrimitive : "@@toPrimitive";
+            var iteratorSymbol = supportsSymbol && typeof Symbol.iterator !== "undefined" ? Symbol.iterator : "@@iterator";
             // create an object in dictionary mode (a.k.a. "slow" mode in v8)
             var createDictionary = supportsCreate ? function () {
                 return MakeDictionary(Object.create(null));
@@ -4637,8 +4675,8 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             })(HashMap || (HashMap = {}));
             // Load global or shim versions of Map, Set, and WeakMap
             var functionPrototype = Object.getPrototypeOf(Function);
-            var _Map = typeof Map === "function" ? Map : CreateMapPolyfill();
-            var _Set = typeof Set === "function" ? Set : CreateSetPolyfill();
+            var _Map = typeof Map === "function" && typeof Map.prototype.entries === "function" ? Map : CreateMapPolyfill();
+            var _Set = typeof Set === "function" && typeof Set.prototype.entries === "function" ? Set : CreateSetPolyfill();
             var _WeakMap = typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
             // [[Metadata]] internal slot
             var Metadata = new _WeakMap();
@@ -4682,18 +4720,13 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *
               */
             function decorate(decorators, target, targetKey, targetDescriptor) {
-                if (!IsUndefined(targetDescriptor)) {
+                if (!IsUndefined(targetKey)) {
                     if (!IsArray(decorators)) throw new TypeError();
                     if (!IsObject(target)) throw new TypeError();
-                    if (IsUndefined(targetKey)) throw new TypeError();
-                    if (!IsObject(targetDescriptor)) throw new TypeError();
+                    if (!IsObject(targetDescriptor) && !IsUndefined(targetDescriptor) && !IsNull(targetDescriptor)) throw new TypeError();
+                    if (IsNull(targetDescriptor)) targetDescriptor = undefined;
                     targetKey = ToPropertyKey(targetKey);
-                    return DecoratePropertyWithDescriptor(decorators, target, targetKey, targetDescriptor);
-                } else if (!IsUndefined(targetKey)) {
-                    if (!IsArray(decorators)) throw new TypeError();
-                    if (!IsObject(target)) throw new TypeError();
-                    targetKey = ToPropertyKey(targetKey);
-                    return DecoratePropertyWithoutDescriptor(decorators, target, targetKey);
+                    return DecorateProperty(decorators, target, targetKey, targetDescriptor);
                 } else {
                     if (!IsArray(decorators)) throw new TypeError();
                     if (!IsConstructor(target)) throw new TypeError();
@@ -5091,133 +5124,317 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 for (var i = decorators.length - 1; i >= 0; --i) {
                     var decorator = decorators[i];
                     var decorated = decorator(target);
-                    if (!IsUndefined(decorated)) {
+                    if (!IsUndefined(decorated) && !IsNull(decorated)) {
                         if (!IsConstructor(decorated)) throw new TypeError();
                         target = decorated;
                     }
                 }
                 return target;
             }
-            function DecoratePropertyWithDescriptor(decorators, target, propertyKey, descriptor) {
+            function DecorateProperty(decorators, target, propertyKey, descriptor) {
                 for (var i = decorators.length - 1; i >= 0; --i) {
                     var decorator = decorators[i];
                     var decorated = decorator(target, propertyKey, descriptor);
-                    if (!IsUndefined(decorated)) {
+                    if (!IsUndefined(decorated) && !IsNull(decorated)) {
                         if (!IsObject(decorated)) throw new TypeError();
                         descriptor = decorated;
                     }
                 }
                 return descriptor;
             }
-            function DecoratePropertyWithoutDescriptor(decorators, target, propertyKey) {
-                for (var i = decorators.length - 1; i >= 0; --i) {
-                    var decorator = decorators[i];
-                    decorator(target, propertyKey);
-                }
-            }
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#getorcreatemetadatamap--o-p-create-
-            function GetOrCreateMetadataMap(target, targetKey, create) {
-                var targetMetadata = Metadata.get(target);
-                if (!targetMetadata) {
-                    if (!create) return undefined;
+            function GetOrCreateMetadataMap(O, P, Create) {
+                var targetMetadata = Metadata.get(O);
+                if (IsUndefined(targetMetadata)) {
+                    if (!Create) return undefined;
                     targetMetadata = new _Map();
-                    Metadata.set(target, targetMetadata);
+                    Metadata.set(O, targetMetadata);
                 }
-                var keyMetadata = targetMetadata.get(targetKey);
-                if (!keyMetadata) {
-                    if (!create) return undefined;
-                    keyMetadata = new _Map();
-                    targetMetadata.set(targetKey, keyMetadata);
+                var metadataMap = targetMetadata.get(P);
+                if (IsUndefined(metadataMap)) {
+                    if (!Create) return undefined;
+                    metadataMap = new _Map();
+                    targetMetadata.set(P, metadataMap);
                 }
-                return keyMetadata;
+                return metadataMap;
             }
+            // Ordinary Object Internal Methods and Internal Slots
+            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinary-object-internal-methods-and-internal-slots
+            // OrdinaryHasMetadata(MetadataKey, O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryhasmetadata--metadatakey-o-p-
             function OrdinaryHasMetadata(MetadataKey, O, P) {
                 var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
                 if (hasOwn) return true;
-                var parent = GetPrototypeOf(O);
-                return parent !== null ? OrdinaryHasMetadata(MetadataKey, parent, P) : false;
+                var parent = OrdinaryGetPrototypeOf(O);
+                if (!IsNull(parent)) return OrdinaryHasMetadata(MetadataKey, parent, P);
+                return false;
             }
+            // OrdinaryHasOwnMetadata(MetadataKey, O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryhasownmetadata--metadatakey-o-p-
             function OrdinaryHasOwnMetadata(MetadataKey, O, P) {
                 var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
-                return metadataMap !== undefined && Boolean(metadataMap.has(MetadataKey));
+                if (IsUndefined(metadataMap)) return false;
+                return ToBoolean(metadataMap.has(MetadataKey));
             }
+            // OrdinaryGetMetadata(MetadataKey, O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarygetmetadata--metadatakey-o-p-
             function OrdinaryGetMetadata(MetadataKey, O, P) {
                 var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
                 if (hasOwn) return OrdinaryGetOwnMetadata(MetadataKey, O, P);
-                var parent = GetPrototypeOf(O);
-                return parent !== null ? OrdinaryGetMetadata(MetadataKey, parent, P) : undefined;
+                var parent = OrdinaryGetPrototypeOf(O);
+                if (!IsNull(parent)) return OrdinaryGetMetadata(MetadataKey, parent, P);
+                return undefined;
             }
+            // OrdinaryGetOwnMetadata(MetadataKey, O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarygetownmetadata--metadatakey-o-p-
             function OrdinaryGetOwnMetadata(MetadataKey, O, P) {
                 var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
-                return metadataMap === undefined ? undefined : metadataMap.get(MetadataKey);
+                if (IsUndefined(metadataMap)) return undefined;
+                return metadataMap.get(MetadataKey);
             }
+            // OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarydefineownmetadata--metadatakey-metadatavalue-o-p-
             function OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P) {
                 var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/true);
                 metadataMap.set(MetadataKey, MetadataValue);
             }
+            // OrdinaryMetadataKeys(O, P)
             // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarymetadatakeys--o-p-
             function OrdinaryMetadataKeys(O, P) {
                 var ownKeys = OrdinaryOwnMetadataKeys(O, P);
-                var parent = GetPrototypeOf(O);
+                var parent = OrdinaryGetPrototypeOf(O);
                 if (parent === null) return ownKeys;
                 var parentKeys = OrdinaryMetadataKeys(parent, P);
                 if (parentKeys.length <= 0) return ownKeys;
                 if (ownKeys.length <= 0) return parentKeys;
-                var keys = new _Set();
-                for (var _i = 0; _i < ownKeys.length; _i++) {
-                    var key = ownKeys[_i];
-                    keys.add(key);
-                }
-                for (var _a = 0; _a < parentKeys.length; _a++) {
-                    var key = parentKeys[_a];
-                    keys.add(key);
-                }
-                return getKeys(keys);
-            }
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryownmetadatakeys--o-p-
-            function OrdinaryOwnMetadataKeys(target, targetKey) {
-                var metadataMap = GetOrCreateMetadataMap(target, targetKey, /*create*/false);
+                var set = new _Set();
                 var keys = [];
-                if (metadataMap) forEach(metadataMap, function (_, key) {
-                    return keys.push(key);
-                });
+                for (var _i = 0, ownKeys_1 = ownKeys; _i < ownKeys_1.length; _i++) {
+                    var key = ownKeys_1[_i];
+                    var hasKey = set.has(key);
+                    if (!hasKey) {
+                        set.add(key);
+                        keys.push(key);
+                    }
+                }
+                for (var _a = 0, parentKeys_1 = parentKeys; _a < parentKeys_1.length; _a++) {
+                    var key = parentKeys_1[_a];
+                    var hasKey = set.has(key);
+                    if (!hasKey) {
+                        set.add(key);
+                        keys.push(key);
+                    }
+                }
                 return keys;
             }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-language-types-undefined-type
+            // OrdinaryOwnMetadataKeys(O, P)
+            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryownmetadatakeys--o-p-
+            function OrdinaryOwnMetadataKeys(O, P) {
+                var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
+                var keys = [];
+                if (IsUndefined(metadataMap)) return keys;
+                var keysObj = metadataMap.keys();
+                var iterator = GetIterator(keysObj);
+                while (true) {
+                    var next = IteratorStep(iterator);
+                    try {
+                        if (!next) return keys;
+                        var nextValue = IteratorValue(next);
+                        keys.push(nextValue);
+                    } catch (e) {
+                        try {
+                            if (next) {
+                                next = false;
+                                IteratorClose(iterator);
+                            }
+                        } finally {
+                            throw e;
+                        }
+                    } finally {
+                        if (next) IteratorClose(iterator);
+                    }
+                }
+            }
+            // ECMAScript Specification
+            // https://tc39.github.io/ecma262/
+            // 6 ECMAScript Data Typ0es and Values
+            // https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values
+            function Type(x) {
+                if (x === null) return 1 /* Null */;
+                switch (typeof x) {
+                    case "undefined":
+                        return 0 /* Undefined */;
+                    case "boolean":
+                        return 2 /* Boolean */;
+                    case "string":
+                        return 3 /* String */;
+                    case "symbol":
+                        return 4 /* Symbol */;
+                    case "number":
+                        return 5 /* Number */;
+                    case "object":
+                        return x === null ? 1 /* Null */ : 6 /* Object */;
+                    default:
+                        return 6 /* Object */;
+                }
+            }
+            // 6.1.1 The Undefined Type
+            // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-undefined-type
             function IsUndefined(x) {
                 return x === undefined;
             }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isarray
-            function IsArray(x) {
-                return Array.isArray ? Array.isArray(x) : x instanceof Array || Object.prototype.toString.call(x) === "[object Array]";
+            // 6.1.2 The Null Type
+            // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-null-type
+            function IsNull(x) {
+                return x === null;
             }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object-type
-            function IsObject(x) {
-                return typeof x === "object" ? x !== null : typeof x === "function";
-            }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isconstructor
-            function IsConstructor(x) {
-                return typeof x === "function";
-            }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-language-types-symbol-type
+            // 6.1.5 The Symbol Type
+            // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-symbol-type
             function IsSymbol(x) {
                 return typeof x === "symbol";
             }
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-topropertykey
-            function ToPropertyKey(value) {
-                return IsSymbol(value) ? value : String(value);
+            // 6.1.7 The Object Type
+            // https://tc39.github.io/ecma262/#sec-object-type
+            function IsObject(x) {
+                return typeof x === "object" ? x !== null : typeof x === "function";
             }
-            function GetPrototypeOf(O) {
+            // 7.1 Type Conversion
+            // https://tc39.github.io/ecma262/#sec-type-conversion
+            // 7.1.1 ToPrimitive(input [, PreferredType])
+            // https://tc39.github.io/ecma262/#sec-toprimitive
+            function ToPrimitive(input, PreferredType) {
+                switch (Type(input)) {
+                    case 0 /* Undefined */:
+                        return input;
+                    case 1 /* Null */:
+                        return input;
+                    case 2 /* Boolean */:
+                        return input;
+                    case 3 /* String */:
+                        return input;
+                    case 4 /* Symbol */:
+                        return input;
+                    case 5 /* Number */:
+                        return input;
+                }
+                var hint = PreferredType === 3 /* String */ ? "string" : PreferredType === 5 /* Number */ ? "number" : "default";
+                var exoticToPrim = GetMethod(input, toPrimitiveSymbol);
+                if (exoticToPrim !== undefined) {
+                    var result = exoticToPrim.call(input, hint);
+                    if (IsObject(result)) throw new TypeError();
+                    return result;
+                }
+                return OrdinaryToPrimitive(input, hint === "default" ? "number" : hint);
+            }
+            // 7.1.1.1 OrdinaryToPrimitive(O, hint)
+            // https://tc39.github.io/ecma262/#sec-ordinarytoprimitive
+            function OrdinaryToPrimitive(O, hint) {
+                if (hint === "string") {
+                    var toString_1 = O.toString;
+                    if (IsCallable(toString_1)) {
+                        var result = toString_1.call(O);
+                        if (!IsObject(result)) return result;
+                    }
+                    var valueOf = O.valueOf;
+                    if (IsCallable(valueOf)) {
+                        var result = valueOf.call(O);
+                        if (!IsObject(result)) return result;
+                    }
+                } else {
+                    var valueOf = O.valueOf;
+                    if (IsCallable(valueOf)) {
+                        var result = valueOf.call(O);
+                        if (!IsObject(result)) return result;
+                    }
+                    var toString_2 = O.toString;
+                    if (IsCallable(toString_2)) {
+                        var result = toString_2.call(O);
+                        if (!IsObject(result)) return result;
+                    }
+                }
+                throw new TypeError();
+            }
+            // 7.1.2 ToBoolean(argument)
+            // https://tc39.github.io/ecma262/2016/#sec-toboolean
+            function ToBoolean(argument) {
+                return !!argument;
+            }
+            // 7.1.12 ToString(argument)
+            // https://tc39.github.io/ecma262/#sec-tostring
+            function ToString(argument) {
+                return "" + argument;
+            }
+            // 7.1.14 ToPropertyKey(argument)
+            // https://tc39.github.io/ecma262/#sec-topropertykey
+            function ToPropertyKey(argument) {
+                var key = ToPrimitive(argument, 3 /* String */);
+                if (IsSymbol(key)) return key;
+                return ToString(key);
+            }
+            // 7.2 Testing and Comparison Operations
+            // https://tc39.github.io/ecma262/#sec-testing-and-comparison-operations
+            // 7.2.2 IsArray(argument)
+            // https://tc39.github.io/ecma262/#sec-isarray
+            function IsArray(argument) {
+                return Array.isArray ? Array.isArray(argument) : argument instanceof Object ? argument instanceof Array : Object.prototype.toString.call(argument) === "[object Array]";
+            }
+            // 7.2.3 IsCallable(argument)
+            // https://tc39.github.io/ecma262/#sec-iscallable
+            function IsCallable(argument) {
+                // NOTE: This is an approximation as we cannot check for [[Call]] internal method.
+                return typeof argument === "function";
+            }
+            // 7.2.4 IsConstructor(argument)
+            // https://tc39.github.io/ecma262/#sec-isconstructor
+            function IsConstructor(argument) {
+                // NOTE: This is an approximation as we cannot check for [[Construct]] internal method.
+                return typeof argument === "function";
+            }
+            // 7.3 Operations on Objects
+            // https://tc39.github.io/ecma262/#sec-operations-on-objects
+            // 7.3.9 GetMethod(V, P)
+            // https://tc39.github.io/ecma262/#sec-getmethod
+            function GetMethod(V, P) {
+                var func = V[P];
+                if (func === undefined || func === null) return undefined;
+                if (!IsCallable(func)) throw new TypeError();
+                return func;
+            }
+            // 7.4 Operations on Iterator Objects
+            // https://tc39.github.io/ecma262/#sec-operations-on-iterator-objects
+            function GetIterator(obj) {
+                var method = GetMethod(obj, iteratorSymbol);
+                if (!IsCallable(method)) throw new TypeError(); // from Call
+                var iterator = method.call(obj);
+                if (!IsObject(iterator)) throw new TypeError();
+                return iterator;
+            }
+            // 7.4.4 IteratorValue(iterResult)
+            // https://tc39.github.io/ecma262/2016/#sec-iteratorvalue
+            function IteratorValue(iterResult) {
+                return iterResult.value;
+            }
+            // 7.4.5 IteratorStep(iterator)
+            // https://tc39.github.io/ecma262/#sec-iteratorstep
+            function IteratorStep(iterator) {
+                var result = iterator.next();
+                return result.done ? false : result;
+            }
+            // 7.4.6 IteratorClose(iterator, completion)
+            // https://tc39.github.io/ecma262/#sec-iteratorclose
+            function IteratorClose(iterator) {
+                var f = iterator["return"];
+                if (f) f.call(iterator);
+            }
+            // 9.1 Ordinary Object Internal Methods and Internal Slots
+            // https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots
+            // 9.1.1.1 OrdinaryGetPrototypeOf(O)
+            // https://tc39.github.io/ecma262/#sec-ordinarygetprototypeof
+            function OrdinaryGetPrototypeOf(O) {
                 var proto = Object.getPrototypeOf(O);
                 if (typeof O !== "function" || O === functionPrototype) return proto;
                 // TypeScript doesn't set __proto__ in ES5, as it's non-standard.
-                // Try to determine the superclass Exampleonstructor. Compatible implementations
-                // must either set __proto__ on a subclass Exampleonstructor to the superclass Exampleonstructor,
+                // Try to determine the superclass constructor. Compatible implementations
+                // must either set __proto__ on a subclass constructor to the superclass constructor,
                 // or ensure each class has a valid `constructor` property on its prototype that
                 // points back to the constructor.
                 // If this is not the same as Function.[[Prototype]], then this is definately inherited.
@@ -5235,82 +5452,56 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 // we have a pretty good guess at the heritage.
                 return constructor;
             }
-            function IteratorStep(iterator) {
-                var result = iterator.next();
-                return result.done ? undefined : result;
-            }
-            function IteratorClose(iterator) {
-                var f = iterator["return"];
-                if (f) f.call(iterator);
-            }
-            function forEach(source, callback, thisArg) {
-                var entries = source.entries;
-                if (typeof entries === "function") {
-                    var iterator = entries.call(source);
-                    var result;
-                    try {
-                        while (result = IteratorStep(iterator)) {
-                            var _a = result.value,
-                                key = _a[0],
-                                value = _a[1];
-                            callback.call(thisArg, value, key, source);
-                        }
-                    } finally {
-                        if (result) IteratorClose(iterator);
-                    }
-                } else {
-                    var forEach_1 = source.forEach;
-                    if (typeof forEach_1 === "function") {
-                        forEach_1.call(source, callback, thisArg);
-                    }
-                }
-            }
-            function getKeys(source) {
-                var keys = [];
-                forEach(source, function (_, key) {
-                    keys.push(key);
-                });
-                return keys;
-            }
-            // naive MapIterator shim
-            function CreateMapIterator(keys, values, kind) {
-                var index = 0;
-                return {
-                    next: function () {
-                        if ((keys || values) && index < (keys || values).length) {
-                            var current = index++;
-                            switch (kind) {
-                                case "key":
-                                    return { value: keys[current], done: false };
-                                case "value":
-                                    return { value: values[current], done: false };
-                                case "key+value":
-                                    return { value: [keys[current], values[current]], done: false };
-                            }
-                        }
-                        keys = undefined;
-                        values = undefined;
-                        return { value: undefined, done: true };
-                    },
-                    "throw": function (error) {
-                        if (keys || values) {
-                            keys = undefined;
-                            values = undefined;
-                        }
-                        throw error;
-                    },
-                    "return": function (value) {
-                        if (keys || values) {
-                            keys = undefined;
-                            values = undefined;
-                        }
-                        return { value: value, done: true };
-                    }
-                };
-            }
             // naive Map shim
             function CreateMapPolyfill() {
                 var cacheSentinel = {};
+                var arraySentinel = [];
+                var MapIterator = function () {
+                    function MapIterator(keys, values, selector) {
+                        this._index = 0;
+                        this._keys = keys;
+                        this._values = values;
+                        this._selector = selector;
+                    }
+                    MapIterator.prototype["@@iterator"] = function () {
+                        return this;
+                    };
+                    MapIterator.prototype[iteratorSymbol] = function () {
+                        return this;
+                    };
+                    MapIterator.prototype.next = function () {
+                        var index = this._index;
+                        if (index >= 0 && index < this._keys.length) {
+                            var result = this._selector(this._keys[index], this._values[index]);
+                            if (index + 1 >= this._keys.length) {
+                                this._index = -1;
+                                this._keys = arraySentinel;
+                                this._values = arraySentinel;
+                            } else {
+                                this._index++;
+                            }
+                            return { value: result, done: false };
+                        }
+                        return { value: undefined, done: true };
+                    };
+                    MapIterator.prototype.throw = function (error) {
+                        if (this._index >= 0) {
+                            this._index = -1;
+                            this._keys = arraySentinel;
+                            this._values = arraySentinel;
+                        }
+                        throw error;
+                    };
+                    MapIterator.prototype.return = function (value) {
+                        if (this._index >= 0) {
+                            this._index = -1;
+                            this._keys = arraySentinel;
+                            this._values = arraySentinel;
+                        }
+                        return { value: value, done: true };
+                    };
+                    return MapIterator;
+                }();
                 return function () {
                     function Map() {
                         this._keys = [];
@@ -5347,8 +5538,10 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                             }
                             this._keys.length--;
                             this._values.length--;
-                            this._cacheKey = cacheSentinel;
-                            this._cacheIndex = -2;
+                            if (key === this._cacheKey) {
+                                this._cacheKey = cacheSentinel;
+                                this._cacheIndex = -2;
+                            }
                             return true;
                         }
                         return false;
@@ -5360,13 +5553,19 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                         this._cacheIndex = -2;
                     };
                     Map.prototype.keys = function () {
-                        return CreateMapIterator(this._keys, /*values*/undefined, "key");
+                        return new MapIterator(this._keys, this._values, getKey);
                     };
                     Map.prototype.values = function () {
-                        return CreateMapIterator( /*keys*/undefined, this._values, "value");
+                        return new MapIterator(this._keys, this._values, getValue);
                     };
                     Map.prototype.entries = function () {
-                        return CreateMapIterator(this._keys, this._values, "key+value");
+                        return new MapIterator(this._keys, this._values, getEntry);
+                    };
+                    Map.prototype["@@iterator"] = function () {
+                        return this.entries();
+                    };
+                    Map.prototype[iteratorSymbol] = function () {
+                        return this.entries();
                     };
                     Map.prototype._find = function (key, insert) {
                         if (this._cacheKey === key) return this._cacheIndex;
@@ -5380,6 +5579,15 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                     };
                     return Map;
                 }();
+                function getKey(key, _) {
+                    return key;
+                }
+                function getValue(_, value) {
+                    return value;
+                }
+                function getEntry(key, value) {
+                    return [key, value];
+                }
             }
             // naive Set shim
             function CreateSetPolyfill() {
@@ -5414,6 +5622,12 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                     };
                     Set.prototype.entries = function () {
                         return this._map.entries();
+                    };
+                    Set.prototype["@@iterator"] = function () {
+                        return this.keys();
+                    };
+                    Set.prototype[iteratorSymbol] = function () {
+                        return this.keys();
                     };
                     return Set;
                 }();
@@ -5450,6 +5664,19 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                     };
                     return WeakMap;
                 }();
+                function CreateUniqueKey() {
+                    var key;
+                    do key = "@@WeakMap@@" + CreateUUID(); while (HashMap.has(keys, key));
+                    keys[key] = true;
+                    return key;
+                }
+                function GetOrCreateWeakMapTable(target, create) {
+                    if (!hasOwn.call(target, rootKey)) {
+                        if (!create) return undefined;
+                        Object.defineProperty(target, rootKey, { value: createDictionary() });
+                    }
+                    return target[rootKey];
+                }
                 function FillRandomBytes(buffer, size) {
                     for (var i = 0; i < size; ++i) buffer[i] = Math.random() * 0xff | 0;
                     return buffer;
@@ -5476,24 +5703,11 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                     }
                     return result;
                 }
-                function CreateUniqueKey() {
-                    var key;
-                    do key = "@@WeakMap@@" + CreateUUID(); while (HashMap.has(keys, key));
-                    keys[key] = true;
-                    return key;
-                }
-                function GetOrCreateWeakMapTable(target, create) {
-                    if (!hasOwn.call(target, rootKey)) {
-                        if (!create) return undefined;
-                        Object.defineProperty(target, rootKey, { value: createDictionary() });
-                    }
-                    return target[rootKey];
-                }
             }
             // uses a heuristic used by v8 and chakra to force an object into dictionary mode.
             function MakeDictionary(obj) {
-                obj.__DICTIONARY_MODE__ = 1;
-                delete obj.____DICTIONARY_MODE__;
+                obj.__ = undefined;
+                delete obj.__;
                 return obj;
             }
             // patch global Reflect
@@ -5509,7 +5723,7 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 } else {
                     __global.Reflect = Reflect;
                 }
-            })(typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" ? self : typeof global !== "undefined" ? global : Function("return this;")());
+            })(typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : Function("return this;")());
         })(Reflect || (Reflect = {}));
         
 
@@ -5518,7 +5732,7 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
 
     return _retrieveGlobal();
 });
-$__System.register('1', ['2', '3', '4'], function (exports_1, context_1) {
+$__System.register("1", ["2", "3", "4"], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;

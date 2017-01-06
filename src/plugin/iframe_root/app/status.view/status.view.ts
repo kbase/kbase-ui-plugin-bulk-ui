@@ -223,7 +223,6 @@ export class StatusView {
         //console.log('ids', jobIds)
         this.ftpService.deleteImport(meta[0])
             .subscribe(res => {
-                console.log('res', res)
                 this.reload();
             })
     }
