@@ -46,7 +46,8 @@ export class JobService {
 
     runReadsImport(f: File,  workspace: string) {
         let params = {
-            method: "genome_transform.reads_to_assembly",
+            method: 'genome_transform.' +
+                (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_assembly'),
             service_ver: 'dev',
             params: [{
                 workspace : workspace,              //'janakakbase:1464032798535',
@@ -54,8 +55,7 @@ export class JobService {
                 reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
                 file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory()+f.path],   //["/kb/module/data/frag_1.fastq","/kb/module/data/frag_2.fastq"],
                 insert_size: f.meta['insert_size'],
-                std_dev: f.meta['std_dev'],
-                sra: f.meta['sra'] ? "1" : "0"  // expects strings instead of booleans
+                std_dev: f.meta['std_dev']
             }]
         }
 
