@@ -44,10 +44,9 @@ export class JobService {
         return Observable.forkJoin(reqs)
     }
 
-    runReadsImport(f: File,  workspace: string) {
+    runSRAImport(f: File,  workspace: string) {
         let params = {
-            method: 'genome_transform.' +
-                (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_assembly'),
+            method: 'genome_transform.sra_reads_to_assembly',
             service_ver: 'dev',
             params: [{
                 workspace : workspace,              //'janakakbase:1464032798535',
@@ -64,9 +63,40 @@ export class JobService {
     }
 
 
-    runReadsImports(files: File[], workspace: string) {
+    runSRAImports(files: File[], workspace: string) {
         var reqs = [];
-        files.forEach(file => reqs.push( this.runReadsImport(file, workspace) ) );
+        files.forEach(file => reqs.push( this.runSRAImport(file, workspace) ) );
+        return Observable.forkJoin(reqs)
+    }
+
+    runLibraryImport(f: File,  workspace: string) {
+        let params = {
+            method: 'genome_transform.reads_to_library',
+            service_ver: 'dev',
+            params: [{
+                wsname: workspace,              //'janakakbase:1464032798535',
+                name:  f.meta.importName,       //'TestFrag',
+                int:  0,       //'0',
+		reads_orientation_outward: 0, 	//'0',
+		single_genome: 0, 	//'0',
+		sequencing_tech: f.meta['sequencing_tech'],
+		strain: f.meta['strain'],
+		source: f.meta['source'],
+                reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
+                file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory()+f.path],   //["/kb/module/data/frag_1.fastq","/kb/module/data/frag_2.fastq"],
+                insert_size_mean: f.meta['insert_size'],
+                insert_size_std_dev: f.meta['std_dev']
+            }]
+        }
+
+
+        return this.rpc.call('njs', 'run_job', params);
+    }
+
+
+    runLibraryImports(files: File[], workspace: string) {
+        var reqs = [];
+        files.forEach(file => reqs.push( this.runLibraryImport(file, workspace) ) );
         return Observable.forkJoin(reqs)
     }
 

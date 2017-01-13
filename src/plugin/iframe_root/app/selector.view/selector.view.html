@@ -30,6 +30,10 @@
         Next, select Interleaved Paired-end reads from below to import.
     </div>
 
+    <div class="help-text" *ngIf="selectedType.name == 'SRA Format Reads'" >
+        Next, select SRA reads from below to import.
+    </div>
+
 
     <select (change)="onSelectType($event.target.value)" class="type-selector">
         <option selected disabled>Choose import type...</option>

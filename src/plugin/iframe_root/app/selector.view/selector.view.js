@@ -1,9 +1,30 @@
-import { Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-
-import { FtpService } from '../services/ftp.service';
-
-const htmlTemplate = `
+System.register(["@angular/core", "@angular/router", "../services/ftp.service"], function (exports_1, context_1) {
+    "use strict";
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var __moduleName = context_1 && context_1.id;
+    var core_1, router_1, ftp_service_1, htmlTemplate, cssTemplate, SelectorView;
+    return {
+        setters: [
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (ftp_service_1_1) {
+                ftp_service_1 = ftp_service_1_1;
+            }
+        ],
+        execute: function () {
+            htmlTemplate = `
 <div>
     <a md-raised-button
         href="https://www.globus.org/app/transfer?destination_id=3aca022a-5e5b-11e6-8309-22000b97daec&destination_path=%2F"
@@ -79,9 +100,8 @@ const htmlTemplate = `
         </file-tree>
     </card>
 -->
-`
-
-const cssTemplate = `
+`;
+            cssTemplate = `
 .side-nav {
     float: left;
 }
@@ -119,69 +139,54 @@ file-tree {
 }
 .add-set-btn {
     margin-right: 10px;
-}`
-
-@Component({
-  selector: 'selector',
-    template: htmlTemplate,
-    styles: [cssTemplate],
-  providers: [
-  ]
-})
-
-export class SelectorView implements OnInit {
-    folders;
-
-    selectedFolder;
-    selectedPath: string;
-    selectedType = {};
-
-    selectedFiles;      // for selecting individual files
-    selectedSets;       // for selecting sets of files
-
-    selectedCount;      // for selecting individual files
-    selectedSetCount;   // for selecting individual files
-
-    activeImports: number = 0;
-    completedImports: number = 0;
-
-    types = [{name: 'Genomes',  allowedType: 'file'},
-        {name: 'Single-end Reads', allowedType: 'file'},
-        {name: 'Paired-end Reads', allowedType: 'file', setsAllowed: true},
-        {name: 'Interleaved Paired-end Reads', allowedType: 'file'}
-    ]
-
-    constructor(
-        private router: Router,
-        private ftp: FtpService) {
-
-        this.ftp.selectedPath$.subscribe(path => this.selectedPath = path)
-        this.ftp.selectedFileCount$.subscribe(count => this.selectedCount = count)
-        this.ftp.selectedSetCount$.subscribe(count => {
-            this.selectedSetCount = count;
-        })
-    }
-
-    ngOnInit() {
-        this.selectedCount = this.ftp.selectedFiles.length;
-    }
-
-    clearSelected() {
-        this.selectedFiles = [];
-        this.ftp.clearSelected();
-    }
-
-    onFolderSelect(folder) {
-    }
-
-    onSelectType(index) {
-        this.selectedType = this.types[index];
-        this.ftp.selectType(this.selectedType);
-    }
-
-    addSet() {
-        this.ftp.addSet();
-    }
-
-
-}
+}`;
+            SelectorView = class SelectorView {
+                constructor(router, ftp) {
+                    this.router = router;
+                    this.ftp = ftp;
+                    this.selectedType = {};
+                    this.activeImports = 0;
+                    this.completedImports = 0;
+                    this.types = [{ name: 'Genomes', allowedType: 'file' },
+                        { name: 'Single-end Reads', allowedType: 'file' },
+                        { name: 'Paired-end Reads', allowedType: 'file', setsAllowed: true },
+                        { name: 'Interleaved Paired-end Reads', allowedType: 'file' }
+                    ];
+                    this.ftp.selectedPath$.subscribe(path => this.selectedPath = path);
+                    this.ftp.selectedFileCount$.subscribe(count => this.selectedCount = count);
+                    this.ftp.selectedSetCount$.subscribe(count => {
+                        this.selectedSetCount = count;
+                    });
+                }
+                ngOnInit() {
+                    this.selectedCount = this.ftp.selectedFiles.length;
+                }
+                clearSelected() {
+                    this.selectedFiles = [];
+                    this.ftp.clearSelected();
+                }
+                onFolderSelect(folder) {
+                }
+                onSelectType(index) {
+                    this.selectedType = this.types[index];
+                    this.ftp.selectType(this.selectedType);
+                }
+                addSet() {
+                    this.ftp.addSet();
+                }
+            };
+            SelectorView = __decorate([
+                core_1.Component({
+                    selector: 'selector',
+                    template: htmlTemplate,
+                    styles: [cssTemplate],
+                    providers: []
+                }),
+                __metadata("design:paramtypes", [router_1.Router,
+                    ftp_service_1.FtpService])
+            ], SelectorView);
+            exports_1("SelectorView", SelectorView);
+        }
+    };
+});
+//# sourceMappingURL=selector.view.js.map
