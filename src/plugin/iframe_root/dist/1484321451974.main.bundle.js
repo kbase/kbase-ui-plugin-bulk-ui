@@ -161,7 +161,7 @@ var define = $__System.amdDefine;
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core')) : typeof define === 'function' && define.amd ? define("9", ["exports", "a"], factory) : (factory((global.ng = global.ng || {}, global.ng.compiler = global.ng.compiler || {}), global.ng.core));
 }(this, function(exports, _angular_core) {
   'use strict';
-  var VERSION = new _angular_core.Version('2.4.1');
+  var VERSION = new _angular_core.Version('2.4.3');
   var TextAst = (function() {
     function TextAst(value, ngContentIndex, sourceSpan) {
       this.value = value;
@@ -1015,7 +1015,7 @@ var define = $__System.amdDefine;
   function getHtmlTagDefinition(tagName) {
     return TAG_DEFINITIONS[tagName.toLowerCase()] || _DEFAULT_TAG_DEFINITION;
   }
-  var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' + '([-\\w]+)|' + '(?:\\.([-\\w]+))|' + '(?:\\[([-\\w*]+)(?:=([^\\]]*))?\\])|' + '(\\))|' + '(\\s*,\\s*)', 'g');
+  var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' + '([-\\w]+)|' + '(?:\\.([-\\w]+))|' + '(?:\\[([.-\\w*]+)(?:=([^\\]]*))?\\])|' + '(\\))|' + '(\\s*,\\s*)', 'g');
   var CssSelector = (function() {
     function CssSelector() {
       this.element = null;
@@ -2783,7 +2783,7 @@ var define = $__System.amdDefine;
         this.advance();
         str += two;
       }
-      if (isPresent(threeCode) && this.peek == threeCode) {
+      if (threeCode != null && this.peek == threeCode) {
         this.advance();
         str += three;
       }
@@ -4700,7 +4700,7 @@ var define = $__System.amdDefine;
       var _a = this._getParentElementSkippingContainers(),
           parent = _a.parent,
           container = _a.container;
-      if (isPresent(parent) && tagDef.requireExtraParent(parent.name)) {
+      if (parent && tagDef.requireExtraParent(parent.name)) {
         var newParent = new Element(tagDef.parentToAdd, [], [], el.sourceSpan, el.startSourceSpan, el.endSourceSpan);
         this._insertBeforeContainer(parent, container, newParent);
       }
@@ -5207,41 +5207,28 @@ var define = $__System.amdDefine;
       this._depth++;
       var wasInI18nNode = this._inI18nNode;
       var wasInImplicitNode = this._inImplicitNode;
-      var childNodes;
+      var childNodes = [];
+      var translatedChildNodes;
       var i18nAttr = _getI18nAttr(el);
+      var i18nMeta = i18nAttr ? i18nAttr.value : '';
       var isImplicit = this._implicitTags.some(function(tag) {
         return el.name === tag;
       }) && !this._inIcu && !this._isInTranslatableSection;
       var isTopLevelImplicit = !wasInImplicitNode && isImplicit;
-      this._inImplicitNode = this._inImplicitNode || isImplicit;
+      this._inImplicitNode = wasInImplicitNode || isImplicit;
       if (!this._isInTranslatableSection && !this._inIcu) {
-        if (i18nAttr) {
+        if (i18nAttr || isTopLevelImplicit) {
           this._inI18nNode = true;
-          var message = this._addMessage(el.children, i18nAttr.value);
-          childNodes = this._translateMessage(el, message);
-        } else if (isTopLevelImplicit) {
-          this._inI18nNode = true;
-          var message = this._addMessage(el.children);
-          childNodes = this._translateMessage(el, message);
+          var message = this._addMessage(el.children, i18nMeta);
+          translatedChildNodes = this._translateMessage(el, message);
         }
         if (this._mode == _VisitorMode.Extract) {
           var isTranslatable = i18nAttr || isTopLevelImplicit;
-          if (isTranslatable) {
+          if (isTranslatable)
             this._openTranslatableSection(el);
-          }
           visitAll(this, el.children);
-          if (isTranslatable) {
+          if (isTranslatable)
             this._closeTranslatableSection(el, el.children);
-          }
-        }
-        if (this._mode === _VisitorMode.Merge && !i18nAttr && !isTopLevelImplicit) {
-          childNodes = [];
-          el.children.forEach(function(child) {
-            var visited = child.visit(_this, context);
-            if (visited && !_this._isInTranslatableSection) {
-              childNodes = childNodes.concat(visited);
-            }
-          });
         }
       } else {
         if (i18nAttr || isTopLevelImplicit) {
@@ -5250,15 +5237,15 @@ var define = $__System.amdDefine;
         if (this._mode == _VisitorMode.Extract) {
           visitAll(this, el.children);
         }
-        if (this._mode == _VisitorMode.Merge) {
-          childNodes = [];
-          el.children.forEach(function(child) {
-            var visited = child.visit(_this, context);
-            if (visited && !_this._isInTranslatableSection) {
-              childNodes = childNodes.concat(visited);
-            }
-          });
-        }
+      }
+      if (this._mode === _VisitorMode.Merge) {
+        var visitNodes = translatedChildNodes || el.children;
+        visitNodes.forEach(function(child) {
+          var visited = child.visit(_this, context);
+          if (visited && !_this._isInTranslatableSection) {
+            childNodes = childNodes.concat(visited);
+          }
+        });
       }
       this._visitAttributesOf(el);
       this._depth--;
@@ -7186,7 +7173,7 @@ var define = $__System.amdDefine;
       var queries;
       while (currentEl !== null) {
         queries = currentEl._contentQueries.get(tokenReference(token));
-        if (isPresent(queries)) {
+        if (queries) {
           result.push.apply(result, queries.filter(function(query) {
             return query.descendants || distance <= 1;
           }));
@@ -7197,7 +7184,7 @@ var define = $__System.amdDefine;
         currentEl = currentEl._parent;
       }
       queries = this.viewContext.viewQueries.get(tokenReference(token));
-      if (isPresent(queries)) {
+      if (queries) {
         result.push.apply(result, queries);
       }
       return result;
@@ -7209,7 +7196,7 @@ var define = $__System.amdDefine;
         return null;
       }
       var transformedProviderAst = this._transformedProviders.get(tokenReference(token));
-      if (isPresent(transformedProviderAst)) {
+      if (transformedProviderAst) {
         return transformedProviderAst;
       }
       if (isPresent(this._seenProviders.get(tokenReference(token)))) {
@@ -7229,12 +7216,12 @@ var define = $__System.amdDefine;
             transformedUseExisting = null;
             transformedUseValue = existingDiDep.value;
           }
-        } else if (isPresent(provider.useFactory)) {
+        } else if (provider.useFactory) {
           var deps = provider.deps || provider.useFactory.diDeps;
           transformedDeps = deps.map(function(dep) {
             return _this._getDependency(resolvedProvider.providerType, dep, eager);
           });
-        } else if (isPresent(provider.useClass)) {
+        } else if (provider.useClass) {
           var deps = provider.deps || provider.useClass.diDeps;
           transformedDeps = deps.map(function(dep) {
             return _this._getDependency(resolvedProvider.providerType, dep, eager);
@@ -7300,7 +7287,7 @@ var define = $__System.amdDefine;
           };
         }
       } else {
-        while (!result && isPresent(currElement._parent)) {
+        while (!result && currElement._parent) {
           var prevElement = currElement;
           currElement = currElement._parent;
           if (prevElement._isViewRoot) {
@@ -7362,7 +7349,7 @@ var define = $__System.amdDefine;
         return null;
       }
       var transformedProviderAst = this._transformedProviders.get(tokenReference(token));
-      if (isPresent(transformedProviderAst)) {
+      if (transformedProviderAst) {
         return transformedProviderAst;
       }
       if (isPresent(this._seenProviders.get(tokenReference(token)))) {
@@ -7382,12 +7369,12 @@ var define = $__System.amdDefine;
             transformedUseExisting = null;
             transformedUseValue = existingDiDep.value;
           }
-        } else if (isPresent(provider.useFactory)) {
+        } else if (provider.useFactory) {
           var deps = provider.deps || provider.useFactory.diDeps;
           transformedDeps = deps.map(function(dep) {
             return _this._getDependency(dep, eager, resolvedProvider.sourceSpan);
           });
-        } else if (isPresent(provider.useClass)) {
+        } else if (provider.useClass) {
           var deps = provider.deps || provider.useClass.diDeps;
           transformedDeps = deps.map(function(dep) {
             return _this._getDependency(dep, eager, resolvedProvider.sourceSpan);
@@ -7492,7 +7479,7 @@ var define = $__System.amdDefine;
   }
   function _getViewQueries(component) {
     var viewQueries = new Map();
-    if (isPresent(component.viewQueries)) {
+    if (component.viewQueries) {
       component.viewQueries.forEach(function(query) {
         return _addQueryToTokenMap(viewQueries, query);
       });
@@ -7502,7 +7489,7 @@ var define = $__System.amdDefine;
   function _getContentQueries(directives) {
     var contentQueries = new Map();
     directives.forEach(function(directive) {
-      if (isPresent(directive.queries)) {
+      if (directive.queries) {
         directive.queries.forEach(function(query) {
           return _addQueryToTokenMap(contentQueries, query);
         });
@@ -7667,13 +7654,13 @@ var define = $__System.amdDefine;
         return this._exprParser.wrapLiteralPrimitive('ERROR', sourceInfo);
       }
     };
-    BindingParser.prototype.parseInlineTemplateBinding = function(name, prefixToken, value, sourceSpan, targetMatchableAttrs, targetProps, targetVars) {
+    BindingParser.prototype.parseInlineTemplateBinding = function(prefixToken, value, sourceSpan, targetMatchableAttrs, targetProps, targetVars) {
       var bindings = this._parseTemplateBindings(prefixToken, value, sourceSpan);
       for (var i = 0; i < bindings.length; i++) {
         var binding = bindings[i];
         if (binding.keyIsVar) {
           targetVars.push(new VariableAst(binding.key, binding.name, sourceSpan));
-        } else if (isPresent(binding.expression)) {
+        } else if (binding.expression) {
           this._parsePropertyAst(binding.key, binding.expression, sourceSpan, targetMatchableAttrs, targetProps);
         } else {
           targetMatchableAttrs.push([binding.key, '']);
@@ -7688,7 +7675,7 @@ var define = $__System.amdDefine;
         var bindingsResult = this._exprParser.parseTemplateBindings(prefixToken, value, sourceInfo);
         this._reportExpressionParserErrors(bindingsResult.errors, sourceSpan);
         bindingsResult.templateBindings.forEach(function(binding) {
-          if (isPresent(binding.expression)) {
+          if (binding.expression) {
             _this._checkPipes(binding.expression, sourceSpan);
           }
         });
@@ -7729,7 +7716,7 @@ var define = $__System.amdDefine;
     };
     BindingParser.prototype.parsePropertyInterpolation = function(name, value, sourceSpan, targetMatchableAttrs, targetProps) {
       var expr = this.parseInterpolation(value, sourceSpan);
-      if (isPresent(expr)) {
+      if (expr) {
         this._parsePropertyAst(name, expr, sourceSpan, targetMatchableAttrs, targetProps);
         return true;
       }
@@ -7865,7 +7852,7 @@ var define = $__System.amdDefine;
     };
     BindingParser.prototype._checkPipes = function(ast, sourceSpan) {
       var _this = this;
-      if (isPresent(ast)) {
+      if (ast) {
         var collector = new PipeCollector();
         ast.visit(collector);
         collector.pipes.forEach(function(ast, pipeName) {
@@ -8100,7 +8087,7 @@ var define = $__System.amdDefine;
       if (errors.length > 0) {
         return new TemplateParseResult(result, errors);
       }
-      if (isPresent(this.transforms)) {
+      if (this.transforms) {
         this.transforms.forEach(function(transform) {
           result = templateVisitAll(transform, result);
         });
@@ -8178,7 +8165,7 @@ var define = $__System.amdDefine;
     TemplateParseVisitor.prototype.visitText = function(text, parent) {
       var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
       var expr = this._bindingParser.parseInterpolation(text.value, text.sourceSpan);
-      if (isPresent(expr)) {
+      if (expr) {
         return new BoundTextAst(expr, ngContentIndex, text.sourceSpan);
       } else {
         return new TextAst(text.value, ngContentIndex, text.sourceSpan);
@@ -8214,13 +8201,14 @@ var define = $__System.amdDefine;
       var isTemplateElement = lcElName == TEMPLATE_ELEMENT;
       element.attrs.forEach(function(attr) {
         var hasBinding = _this._parseAttr(isTemplateElement, attr, matchableAttrs, elementOrDirectiveProps, events, elementOrDirectiveRefs, elementVars);
-        var templateBindingsSource = undefined;
-        var prefixToken = undefined;
-        if (_this._normalizeAttributeName(attr.name) == TEMPLATE_ATTR) {
+        var templateBindingsSource;
+        var prefixToken;
+        var normalizedName = _this._normalizeAttributeName(attr.name);
+        if (normalizedName == TEMPLATE_ATTR) {
           templateBindingsSource = attr.value;
-        } else if (attr.name.startsWith(TEMPLATE_ATTR_PREFIX)) {
+        } else if (normalizedName.startsWith(TEMPLATE_ATTR_PREFIX)) {
           templateBindingsSource = attr.value;
-          prefixToken = attr.name.substring(TEMPLATE_ATTR_PREFIX.length);
+          prefixToken = normalizedName.substring(TEMPLATE_ATTR_PREFIX.length) + ':';
         }
         var hasTemplateBinding = isPresent(templateBindingsSource);
         if (hasTemplateBinding) {
@@ -8228,7 +8216,7 @@ var define = $__System.amdDefine;
             _this._reportError("Can't have multiple template bindings on one element. Use only one attribute named 'template' or prefixed with *", attr.sourceSpan);
           }
           hasInlineTemplates = true;
-          _this._bindingParser.parseInlineTemplateBinding(attr.name, prefixToken, templateBindingsSource, attr.sourceSpan, templateMatchableAttrs, templateElementOrDirectiveProps, templateElementVars);
+          _this._bindingParser.parseInlineTemplateBinding(prefixToken, templateBindingsSource, attr.sourceSpan, templateMatchableAttrs, templateElementOrDirectiveProps, templateElementVars);
         }
         if (!hasBinding && !hasTemplateBinding) {
           attrs.push(_this.visitAttribute(attr, null));
@@ -8530,8 +8518,8 @@ var define = $__System.amdDefine;
       if (preparsedElement.type === PreparsedElementType.SCRIPT || preparsedElement.type === PreparsedElementType.STYLE || preparsedElement.type === PreparsedElementType.STYLESHEET) {
         return null;
       }
-      var attrNameAndValues = ast.attrs.map(function(attrAst) {
-        return [attrAst.name, attrAst.value];
+      var attrNameAndValues = ast.attrs.map(function(attr) {
+        return [attr.name, attr.value];
       });
       var selector = createElementCssSelector(ast.name, attrNameAndValues);
       var ngContentIndex = parent.findNgContentIndex(selector);
@@ -8606,14 +8594,14 @@ var define = $__System.amdDefine;
     };
     return ElementContext;
   }());
-  function createElementCssSelector(elementName, matchableAttrs) {
+  function createElementCssSelector(elementName, attributes) {
     var cssSelector = new CssSelector();
     var elNameNoNs = splitNsName(elementName)[1];
     cssSelector.setElement(elNameNoNs);
-    for (var i = 0; i < matchableAttrs.length; i++) {
-      var attrName = matchableAttrs[i][0];
+    for (var i = 0; i < attributes.length; i++) {
+      var attrName = attributes[i][0];
       var attrNameNoNs = splitNsName(attrName)[1];
-      var attrValue = matchableAttrs[i][1];
+      var attrValue = attributes[i][1];
       cssSelector.addAttribute(attrNameNoNs, attrValue);
       if (attrName.toLowerCase() == CLASS_ATTR) {
         var classes = splitClasses(attrValue);
@@ -11431,7 +11419,7 @@ var define = $__System.amdDefine;
         var receiver = this.visit(ast.receiver, _Mode.Expression);
         if (receiver === this._implicitReceiver) {
           var varExpr = this._getLocal(ast.name);
-          if (isPresent(varExpr)) {
+          if (varExpr) {
             result = varExpr.callFn(args);
           }
         }
@@ -11464,7 +11452,7 @@ var define = $__System.amdDefine;
       var receiver = this.visit(ast.receiver, _Mode.Expression);
       if (receiver === this._implicitReceiver) {
         var varExpr = this._getLocal(ast.name);
-        if (isPresent(varExpr)) {
+        if (varExpr) {
           throw new Error('Cannot assign to a reference or variable!');
         }
       }
@@ -12184,7 +12172,7 @@ var define = $__System.amdDefine;
         throwIfNotFound = true;
       }
       var ngModuleMeta = ListWrapper.findLast(this._reflector.annotations(type), _isNgModuleMetadata);
-      if (isPresent(ngModuleMeta)) {
+      if (ngModuleMeta) {
         return ngModuleMeta;
       } else {
         if (throwIfNotFound) {
@@ -12231,9 +12219,9 @@ var define = $__System.amdDefine;
         throwIfNotFound = true;
       }
       var metas = this._reflector.annotations(_angular_core.resolveForwardRef(type));
-      if (isPresent(metas)) {
+      if (metas) {
         var annotation = ListWrapper.findLast(metas, _isPipeMetadata);
-        if (isPresent(annotation)) {
+        if (annotation) {
           return annotation;
         }
       }
@@ -14805,7 +14793,7 @@ var define = $__System.amdDefine;
     CompileMethod.prototype._updateDebugContextIfNeeded = function() {
       if (this._newState.nodeIndex !== this._currState.nodeIndex || this._newState.sourceAst !== this._currState.sourceAst) {
         var expr = this._updateDebugContext(this._newState);
-        if (isPresent(expr)) {
+        if (expr) {
           this._bodyStatements.push(expr.toStmt());
         }
       }
@@ -14813,8 +14801,8 @@ var define = $__System.amdDefine;
     CompileMethod.prototype._updateDebugContext = function(newState) {
       this._currState = this._newState = newState;
       if (this._debugEnabled) {
-        var sourceLocation = isPresent(newState.sourceAst) ? newState.sourceAst.sourceSpan.start : null;
-        return THIS_EXPR.callMethod('debug', [literal(newState.nodeIndex), isPresent(sourceLocation) ? literal(sourceLocation.line) : NULL_EXPR, isPresent(sourceLocation) ? literal(sourceLocation.col) : NULL_EXPR]);
+        var sourceLocation = newState.sourceAst ? newState.sourceAst.sourceSpan.start : null;
+        return THIS_EXPR.callMethod('debug', [literal(newState.nodeIndex), sourceLocation ? literal(sourceLocation.line) : NULL_EXPR, sourceLocation ? literal(sourceLocation.col) : NULL_EXPR]);
       } else {
         return null;
       }
@@ -14865,7 +14853,7 @@ var define = $__System.amdDefine;
     } else {
       var viewProp = THIS_EXPR;
       var currView = callingView;
-      while (currView !== definedView && isPresent(currView.declarationElement.view)) {
+      while (currView !== definedView && currView.declarationElement.view) {
         currView = currView.declarationElement.view;
         viewProp = viewProp.prop('parentView');
       }
@@ -14939,7 +14927,7 @@ var define = $__System.amdDefine;
     CompileQuery.prototype.addValue = function(value, view) {
       var currentView = view;
       var elPath = [];
-      while (isPresent(currentView) && currentView !== this.view) {
+      while (currentView && currentView !== this.view) {
         var parentEl = currentView.declarationElement;
         elPath.unshift(parentEl);
         currentView = parentEl.view;
@@ -14966,10 +14954,10 @@ var define = $__System.amdDefine;
         return value instanceof ViewQueryValues;
       });
     };
-    CompileQuery.prototype.afterChildren = function(targetStaticMethod, targetDynamicMethod) {
+    CompileQuery.prototype.generateStatements = function(targetStaticMethod, targetDynamicMethod) {
       var values = createQueryValues(this._values);
       var updateStmts = [this.queryList.callMethod('reset', [literalArr(values)]).toStmt()];
-      if (isPresent(this.ownerDirectiveExpression)) {
+      if (this.ownerDirectiveExpression) {
         var valueExpr = this.meta.first ? this.queryList.prop('first') : this.queryList;
         updateStmts.push(this.ownerDirectiveExpression.prop(this.meta.propertyName).set(valueExpr).toStmt());
       }
@@ -14999,7 +14987,7 @@ var define = $__System.amdDefine;
     });
     return viewContainer.callMethod('mapNestedViews', [variable(view.className), fn([new FnParam('nestedView', view.classType)], [new ReturnStatement(literalArr(adjustedExpressions))], DYNAMIC_TYPE)]);
   }
-  function createQueryList(query, directiveInstance, propertyName, compileView) {
+  function createQueryList(propertyName, compileView) {
     compileView.fields.push(new ClassField(propertyName, importType(createIdentifier(Identifiers.QueryList), [DYNAMIC_TYPE])));
     var expr = THIS_EXPR.prop(propertyName);
     compileView.createMethod.addStmt(THIS_EXPR.prop(propertyName).set(importExpr(createIdentifier(Identifiers.QueryList), [DYNAMIC_TYPE]).instantiate([])).toStmt());
@@ -15230,7 +15218,7 @@ var define = $__System.amdDefine;
           }
         });
         var propName = "_" + tokenName(resolvedProvider.token) + "_" + _this.nodeIndex + "_" + _this.instances.size;
-        var instance = createProviderProperty(propName, resolvedProvider, providerValueExpressions, resolvedProvider.multiProvider, resolvedProvider.eager, _this);
+        var instance = createProviderProperty(propName, providerValueExpressions, resolvedProvider.multiProvider, resolvedProvider.eager, _this);
         if (isDirectiveWrapper) {
           _this.directiveWrapperInstance.set(tokenReference(resolvedProvider.token), instance);
           _this.instances.set(tokenReference(resolvedProvider.token), DirectiveWrapperExpressions.context(instance));
@@ -15249,13 +15237,6 @@ var define = $__System.amdDefine;
       for (var i = 0; i < this._directives.length; i++) {
         _loop_1(i);
       }
-      var queriesWithReads = [];
-      Array.from(this._resolvedProviders.values()).forEach(function(resolvedProvider) {
-        var queriesForProvider = _this._getQueriesFor(resolvedProvider.token);
-        queriesWithReads.push.apply(queriesWithReads, queriesForProvider.map(function(query) {
-          return new _QueryWithRead(query, resolvedProvider.token);
-        }));
-      });
       Object.keys(this.referenceTokens).forEach(function(varName) {
         var token = _this.referenceTokens[varName];
         var varValue;
@@ -15265,26 +15246,6 @@ var define = $__System.amdDefine;
           varValue = _this.renderNode;
         }
         _this.view.locals.set(varName, varValue);
-        var varToken = {value: varName};
-        queriesWithReads.push.apply(queriesWithReads, _this._getQueriesFor(varToken).map(function(query) {
-          return new _QueryWithRead(query, varToken);
-        }));
-      });
-      queriesWithReads.forEach(function(queryWithRead) {
-        var value;
-        if (isPresent(queryWithRead.read.identifier)) {
-          value = _this.instances.get(tokenReference(queryWithRead.read));
-        } else {
-          var token = _this.referenceTokens[queryWithRead.read.value];
-          if (isPresent(token)) {
-            value = _this.instances.get(tokenReference(token));
-          } else {
-            value = _this.elementRef;
-          }
-        }
-        if (isPresent(value)) {
-          queryWithRead.query.addValue(value, _this.view);
-        }
       });
     };
     CompileElement.prototype.afterChildren = function(childNodeCount) {
@@ -15294,9 +15255,12 @@ var define = $__System.amdDefine;
         var providerChildNodeCount = resolvedProvider.providerType === ProviderAstType.PrivateService ? 0 : childNodeCount;
         _this.view.injectorGetMethod.addStmt(createInjectInternalCondition(_this.nodeIndex, providerChildNodeCount, resolvedProvider, providerExpr));
       });
+    };
+    CompileElement.prototype.finish = function() {
+      var _this = this;
       Array.from(this._queries.values()).forEach(function(queries) {
         return queries.forEach(function(q) {
-          return q.afterChildren(_this.view.createMethod, _this.view.updateContentQueriesMethod);
+          return q.generateStatements(_this.view.createMethod, _this.view.updateContentQueriesMethod);
         });
       });
     };
@@ -15307,11 +15271,11 @@ var define = $__System.amdDefine;
       return isPresent(this.component) ? this.instances.get(tokenReference(identifierToken(this.component.type))) : null;
     };
     CompileElement.prototype.getProviderTokens = function() {
-      return Array.from(this._resolvedProviders.values()).map(function(resolvedProvider) {
-        return createDiTokenExpression(resolvedProvider.token);
+      return Array.from(this._resolvedProviders.values()).map(function(provider) {
+        return provider.token;
       });
     };
-    CompileElement.prototype._getQueriesFor = function(token) {
+    CompileElement.prototype.getQueriesFor = function(token) {
       var result = [];
       var currentEl = this;
       var distance = 0;
@@ -15336,7 +15300,7 @@ var define = $__System.amdDefine;
     };
     CompileElement.prototype._addQuery = function(queryMeta, directiveInstance) {
       var propName = "_query_" + tokenName(queryMeta.selectors[0]) + "_" + this.nodeIndex + "_" + this._queryCount++;
-      var queryList = createQueryList(queryMeta, directiveInstance, propName, this.view);
+      var queryList = createQueryList(propName, this.view);
       var query = new CompileQuery(queryMeta, queryList, directiveInstance, this.view);
       addQueryToTokenMap(this._queries, query);
       return query;
@@ -15395,7 +15359,7 @@ var define = $__System.amdDefine;
     }
     return new IfStmt(InjectMethodVars$1.token.identical(createDiTokenExpression(provider.token)).and(indexCondition), [new ReturnStatement(providerExpr)]);
   }
-  function createProviderProperty(propName, provider, providerValueExpressions, isMulti, isEager, compileElement) {
+  function createProviderProperty(propName, providerValueExpressions, isMulti, isEager, compileElement) {
     var view = compileElement.view;
     var resolvedProviderValueExpr;
     var type;
@@ -15423,13 +15387,6 @@ var define = $__System.amdDefine;
     }
     return THIS_EXPR.prop(propName);
   }
-  var _QueryWithRead = (function() {
-    function _QueryWithRead(query, match) {
-      this.query = query;
-      this.read = query.meta.read || match;
-    }
-    return _QueryWithRead;
-  }());
   var CompilePipe = (function() {
     function CompilePipe(view, meta) {
       var _this = this;
@@ -15570,7 +15527,7 @@ var define = $__System.amdDefine;
         var directiveInstance_1 = THIS_EXPR.prop('context');
         this.component.viewQueries.forEach(function(queryMeta, queryIndex) {
           var propName = "_viewQuery_" + tokenName(queryMeta.selectors[0]) + "_" + queryIndex;
-          var queryList = createQueryList(queryMeta, directiveInstance_1, propName, _this);
+          var queryList = createQueryList(propName, _this);
           var query = new CompileQuery(queryMeta, queryList, directiveInstance_1, _this);
           addQueryToTokenMap(viewQueries, query);
         });
@@ -15602,11 +15559,11 @@ var define = $__System.amdDefine;
         return null;
       }
     };
-    CompileView.prototype.afterNodes = function() {
+    CompileView.prototype.finish = function() {
       var _this = this;
       Array.from(this.viewQueries.values()).forEach(function(queries) {
         return queries.forEach(function(q) {
-          return q.afterChildren(_this.createMethod, _this.updateViewQueriesMethod);
+          return q.generateStatements(_this.createMethod, _this.updateViewQueriesMethod);
         });
       });
     };
@@ -15820,6 +15777,44 @@ var define = $__System.amdDefine;
     var directiveDetectChangesStmt = isOnPushComp ? new IfStmt(directiveDetectChangesExpr, [compileElement.compViewExpr.callMethod('markAsCheckOnce', []).toStmt()]) : directiveDetectChangesExpr.toStmt();
     detectChangesInInputsMethod.addStmt(directiveDetectChangesStmt);
   }
+  function bindQueryValues(ce) {
+    var queriesWithReads = [];
+    ce.getProviderTokens().forEach(function(token) {
+      var queriesForProvider = ce.getQueriesFor(token);
+      queriesWithReads.push.apply(queriesWithReads, queriesForProvider.map(function(query) {
+        return new _QueryWithRead(query, token);
+      }));
+    });
+    Object.keys(ce.referenceTokens).forEach(function(varName) {
+      var varToken = {value: varName};
+      queriesWithReads.push.apply(queriesWithReads, ce.getQueriesFor(varToken).map(function(query) {
+        return new _QueryWithRead(query, varToken);
+      }));
+    });
+    queriesWithReads.forEach(function(queryWithRead) {
+      var value;
+      if (queryWithRead.read.identifier) {
+        value = ce.instances.get(tokenReference(queryWithRead.read));
+      } else {
+        var token = ce.referenceTokens[queryWithRead.read.value];
+        if (token) {
+          value = ce.instances.get(tokenReference(token));
+        } else {
+          value = ce.elementRef;
+        }
+      }
+      if (value) {
+        queryWithRead.query.addValue(value, ce.view);
+      }
+    });
+  }
+  var _QueryWithRead = (function() {
+    function _QueryWithRead(query, match) {
+      this.query = query;
+      this.read = query.meta.read || match;
+    }
+    return _QueryWithRead;
+  }());
   function bindView(view, parsedTemplate, schemaRegistry) {
     var visitor = new ViewBinderVisitor(view, schemaRegistry);
     templateVisitAll(visitor, parsedTemplate);
@@ -15848,6 +15843,7 @@ var define = $__System.amdDefine;
     ViewBinderVisitor.prototype.visitElement = function(ast, parent) {
       var _this = this;
       var compileElement = (this.view.nodes[this._nodeIndex++]);
+      bindQueryValues(compileElement);
       var hasEvents = bindOutputs(ast.outputs, ast.directives, compileElement, true);
       bindRenderInputs(ast.inputs, ast.outputs, hasEvents, compileElement);
       ast.directives.forEach(function(directiveAst, dirIndex) {
@@ -15871,6 +15867,7 @@ var define = $__System.amdDefine;
     };
     ViewBinderVisitor.prototype.visitEmbeddedTemplate = function(ast, parent) {
       var compileElement = (this.view.nodes[this._nodeIndex++]);
+      bindQueryValues(compileElement);
       bindOutputs(ast.outputs, ast.directives, compileElement, false);
       ast.directives.forEach(function(directiveAst, dirIndex) {
         var directiveInstance = compileElement.instances.get(directiveAst.directive.type.reference);
@@ -15926,13 +15923,16 @@ var define = $__System.amdDefine;
     return builderVisitor.nestedViewCount;
   }
   function finishView(view, targetStatements) {
-    view.afterNodes();
-    createViewTopLevelStmts(view, targetStatements);
     view.nodes.forEach(function(node) {
-      if (node instanceof CompileElement && node.hasEmbeddedView) {
-        finishView(node.embeddedView, targetStatements);
+      if (node instanceof CompileElement) {
+        node.finish();
+        if (node.hasEmbeddedView) {
+          finishView(node.embeddedView, targetStatements);
+        }
       }
     });
+    view.finish();
+    createViewTopLevelStmts(view, targetStatements);
   }
   var ViewBuilderVisitor = (function() {
     function ViewBuilderVisitor(view, targetDependencies) {
@@ -16180,7 +16180,9 @@ var define = $__System.amdDefine;
     var componentToken = NULL_EXPR;
     var varTokenEntries = [];
     if (isPresent(compileElement)) {
-      providerTokens = compileElement.getProviderTokens();
+      providerTokens = compileElement.getProviderTokens().map(function(token) {
+        return createDiTokenExpression(token);
+      });
       if (isPresent(compileElement.component)) {
         componentToken = createDiTokenExpression(identifierToken(compileElement.component.type));
       }
@@ -16344,7 +16346,6 @@ var define = $__System.amdDefine;
     view.nodes.forEach(function(node) {
       if (node instanceof CompileElement) {
         if (node.embeddedView) {
-          var parentNodeIndex = node.isRootElement() ? null : node.parent.nodeIndex;
           stmts.push(new IfStmt(nodeIndexVar.equals(literal(node.nodeIndex)), [new ReturnStatement(node.embeddedView.classExpr.instantiate([ViewProperties.viewUtils, THIS_EXPR, literal(node.nodeIndex), node.renderNode, node.viewContainer]))]));
         }
       }
@@ -17442,6 +17443,9 @@ var define = $__System.amdDefine;
               if (value_1 && (depth != 0 || value_1.__symbolic != 'error')) {
                 var parameters = targetFunction['parameters'];
                 var defaults = targetFunction.defaults;
+                args = args.map(function(arg) {
+                  return simplifyInContext(context, arg, depth + 1);
+                });
                 if (defaults && defaults.length > args.length) {
                   args.push.apply(args, defaults.slice(args.length).map(function(value) {
                     return simplify(value);
@@ -17629,15 +17633,15 @@ var define = $__System.amdDefine;
                       return context;
                     }
                     var argExpressions = expression['arguments'] || [];
-                    var args = argExpressions.map(function(arg) {
-                      return simplifyInContext(context, arg, depth + 1);
-                    });
                     var converter = self.conversionMap.get(staticSymbol);
                     if (converter) {
+                      var args = argExpressions.map(function(arg) {
+                        return simplifyInContext(context, arg, depth + 1);
+                      });
                       return converter(context, args);
                     } else {
                       var targetFunction = resolveReferenceValue(staticSymbol);
-                      return simplifyCall(staticSymbol, targetFunction, args);
+                      return simplifyCall(staticSymbol, targetFunction, argExpressions);
                     }
                   }
                   break;
@@ -19478,7 +19482,7 @@ var define = $__System.amdDefine;
     INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS: INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
     ResourceLoaderImpl: ResourceLoaderImpl
   };
-  var VERSION = new _angular_core.Version('2.4.1');
+  var VERSION = new _angular_core.Version('2.4.3');
   var RESOURCE_CACHE_PROVIDER = [{
     provide: _angular_compiler.ResourceLoader,
     useClass: CachedResourceLoader
@@ -22487,7 +22491,7 @@ var define = $__System.amdDefine;
   }());
   var isPromise = _angular_core.__core_private__.isPromise;
   function isEmptyInputValue(value) {
-    return value == null || typeof value === 'string' && value.length === 0;
+    return value == null || value.length === 0;
   }
   var NG_VALIDATORS = new _angular_core.OpaqueToken('NgValidators');
   var NG_ASYNC_VALIDATORS = new _angular_core.OpaqueToken('NgAsyncValidators');
@@ -25811,7 +25815,7 @@ var define = $__System.amdDefine;
     };
     return FormBuilder;
   }());
-  var VERSION = new _angular_core.Version('2.4.1');
+  var VERSION = new _angular_core.Version('2.4.3');
   var SHARED_FORM_DIRECTIVES = [NgSelectOption, NgSelectMultipleOption, DefaultValueAccessor, NumberValueAccessor, RangeValueAccessor, CheckboxControlValueAccessor, SelectControlValueAccessor, SelectMultipleControlValueAccessor, RadioControlValueAccessor, NgControlStatus, NgControlStatusGroup, RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator, CheckboxRequiredValidator];
   var TEMPLATE_DRIVEN_DIRECTIVES = [NgModel, NgModelGroup, NgForm];
   var REACTIVE_DRIVEN_DIRECTIVES = [FormControlDirective, FormGroupDirective, FormControlName, FormGroupName, FormArrayName];
@@ -26978,9 +26982,6 @@ $__System.register("28", ["a", "10"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
     var __moduleName = context_1 && context_1.id;
     var core_1, Subject_1, DataTableService;
     return {
@@ -27006,7 +27007,7 @@ $__System.register("28", ["a", "10"], function (exports_1, context_1) {
                     //this._updateEvent.next(data, sortBy, sortOrder);
                 }
             };
-            DataTableService = __decorate([core_1.Injectable(), __metadata("design:paramtypes", [])], DataTableService);
+            DataTableService = __decorate([core_1.Injectable()], DataTableService);
             exports_1("DataTableService", DataTableService);
         }
     };
@@ -27076,9 +27077,6 @@ $__System.register("2a", ["a"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
     var __moduleName = context_1 && context_1.id;
     var core_1, CardDirective;
     return {
@@ -27089,7 +27087,7 @@ $__System.register("2a", ["a"], function (exports_1, context_1) {
             CardDirective = class CardDirective {};
             CardDirective = __decorate([core_1.Directive({
                 selector: 'card'
-            }), __metadata("design:paramtypes", [])], CardDirective);
+            })], CardDirective);
             exports_1("CardDirective", CardDirective);
         }
     };
@@ -27565,9 +27563,6 @@ $__System.register("1e", ["a"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
     var __moduleName = context_1 && context_1.id;
     var core_1, htmlTemplate, AboutView;
     return {
@@ -27585,7 +27580,7 @@ $__System.register("1e", ["a"], function (exports_1, context_1) {
             AboutView = class AboutView {};
             AboutView = __decorate([core_1.Component({
                 template: htmlTemplate
-            }), __metadata("design:paramtypes", [])], AboutView);
+            })], AboutView);
             exports_1("AboutView", AboutView);
         }
     };
@@ -28436,7 +28431,7 @@ $__System.registerDynamic('3a', ['3b', '3c', '3d', '3e'], true, function ($__req
      * source Observable. More than one input Observables may be given as argument.
      * @param {function} [project] An optional function to project the values from
      * the combined latest values into a new value on the output Observable.
-     * @param {Scheduler} [scheduler=null] The Scheduler to use for subscribing to
+     * @param {Scheduler} [scheduler=null] The IScheduler to use for subscribing to
      * each input Observable.
      * @return {Observable} An Observable of projected values from the most recent
      * values from each input Observable, or an array of the most recent values from
@@ -29462,7 +29457,7 @@ $__System.registerDynamic('5e', ['5f', '15', '60'], true, function ($__require, 
         }
         /**
          * Creates an Observable that emits sequential numbers every specified
-         * interval of time, on a specified Scheduler.
+         * interval of time, on a specified IScheduler.
          *
          * <span class="informal">Emits incremental numbers periodically in time.
          * </span>
@@ -29473,8 +29468,8 @@ $__System.registerDynamic('5e', ['5f', '15', '60'], true, function ($__require, 
          * ascending integers, with a constant interval of time of your choosing
          * between those emissions. The first emission is not sent immediately, but
          * only after the first period has passed. By default, this operator uses the
-         * `async` Scheduler to provide a notion of time, but you may pass any
-         * Scheduler to it.
+         * `async` IScheduler to provide a notion of time, but you may pass any
+         * IScheduler to it.
          *
          * @example <caption>Emits ascending numbers, one every second (1000ms)</caption>
          * var numbers = Rx.Observable.interval(1000);
@@ -29485,7 +29480,7 @@ $__System.registerDynamic('5e', ['5f', '15', '60'], true, function ($__require, 
          *
          * @param {number} [period=0] The interval size in milliseconds (by default)
          * or the time unit determined by the scheduler's clock.
-         * @param {Scheduler} [scheduler=async] The Scheduler to use for scheduling
+         * @param {Scheduler} [scheduler=async] The IScheduler to use for scheduling
          * the emission of values, and providing a notion of "time".
          * @return {Observable} An Observable that emits a sequential number each time
          * interval.
@@ -29755,7 +29750,7 @@ $__System.registerDynamic("70", ["15"], true, function ($__require, exports, mod
         }
         /**
          * Convert an object into an observable sequence of [key, value] pairs
-         * using an optional Scheduler to enumerate the object.
+         * using an optional IScheduler to enumerate the object.
          *
          * @example <caption>Converts a javascript object to an Observable</caption>
          * var obj = {
@@ -29779,7 +29774,7 @@ $__System.registerDynamic("70", ["15"], true, function ($__require, exports, mod
          *
          * @param {Object} obj The object to inspect and turn into an
          * Observable sequence.
-         * @param {Scheduler} [scheduler] An optional Scheduler to run the
+         * @param {Scheduler} [scheduler] An optional IScheduler to run the
          * enumeration of the input sequence on.
          * @returns {(Observable<Array<string | T>>)} An observable sequence of
          * [key, value] pairs from the object.
@@ -29873,8 +29868,8 @@ $__System.registerDynamic("73", ["15"], true, function ($__require, exports, mod
          *
          * `range` operator emits a range of sequential integers, in order, where you
          * select the `start` of the range and its `length`. By default, uses no
-         * Scheduler and just delivers the notifications synchronously, but may use
-         * an optional Scheduler to regulate those deliveries.
+         * IScheduler and just delivers the notifications synchronously, but may use
+         * an optional IScheduler to regulate those deliveries.
          *
          * @example <caption>Emits the numbers 1 to 10</caption>
          * var numbers = Rx.Observable.range(1, 10);
@@ -29885,7 +29880,7 @@ $__System.registerDynamic("73", ["15"], true, function ($__require, exports, mod
          *
          * @param {number} [start=0] The value of the first integer in the sequence.
          * @param {number} [count=0] The number of sequential integers to generate.
-         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
          * the emissions of the notifications.
          * @return {Observable} An Observable of numbers that emits a finite range of
          * sequential integers.
@@ -30127,7 +30122,7 @@ $__System.registerDynamic("79", ["15"], true, function ($__require, exports, mod
          * @see {@link of}
          *
          * @param {any} error The particular Error to pass to the error notification.
-         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
          * the emission of the error notification.
          * @return {Observable} An error Observable: emits only the error notification
          * using the given error argument.
@@ -30242,8 +30237,8 @@ $__System.registerDynamic('7c', ['5f', '15', '60', '3b', '7d'], true, function (
          * integers, with a constant interval of time, `period` of your choosing
          * between those emissions. The first emission happens after the specified
          * `initialDelay`. The initial delay may be a {@link Date}. By default, this
-         * operator uses the `async` Scheduler to provide a notion of time, but you
-         * may pass any Scheduler to it. If `period` is not specified, the output
+         * operator uses the `async` IScheduler to provide a notion of time, but you
+         * may pass any IScheduler to it. If `period` is not specified, the output
          * Observable emits only one value, `0`. Otherwise, it emits an infinite
          * sequence.
          *
@@ -30262,7 +30257,7 @@ $__System.registerDynamic('7c', ['5f', '15', '60', '3b', '7d'], true, function (
          * emitting the first value of `0`.
          * @param {number} [period] The period of time between emissions of the
          * subsequent numbers.
-         * @param {Scheduler} [scheduler=async] The Scheduler to use for scheduling
+         * @param {Scheduler} [scheduler=async] The IScheduler to use for scheduling
          * the emission of values, and providing a notion of "time".
          * @return {Observable} An Observable that emits a `0` after the
          * `initialDelay` and ever increasing numbers after each `period` of time
@@ -32218,7 +32213,7 @@ $__System.registerDynamic('a8', ['89', '60'], true, function ($__require, export
      * This is a rate-limiting operator, because it is impossible for more than one
      * value to be emitted in any time window of duration `dueTime`, but it is also
      * a delay-like operator since output emissions do not occur at the same time as
-     * they did on the source Observable. Optionally takes a {@link Scheduler} for
+     * they did on the source Observable. Optionally takes a {@link IScheduler} for
      * managing timers.
      *
      * @example <caption>Emit the most recent click after a burst of clicks</caption>
@@ -32236,7 +32231,7 @@ $__System.registerDynamic('a8', ['89', '60'], true, function ($__require, export
      * unit determined internally by the optional `scheduler`) for the window of
      * time required to wait for emission silence before emitting the most recent
      * source value.
-     * @param {Scheduler} [scheduler=async] The {@link Scheduler} to use for
+     * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
      * managing the timers that handle the timeout for each value.
      * @return {Observable} An Observable that delays the emissions of the source
      * Observable by the specified `dueTime`, and may drop some values if they occur
@@ -32475,7 +32470,7 @@ $__System.registerDynamic('ac', ['60', '7d', '89', 'ad'], true, function ($__req
      *
      * @param {number|Date} delay The delay duration in milliseconds (a `number`) or
      * a `Date` until which the emission of the source items is delayed.
-     * @param {Scheduler} [scheduler=async] The Scheduler to use for
+     * @param {Scheduler} [scheduler=async] The IScheduler to use for
      * managing the timers that handle the time-shift for each item.
      * @return {Observable} An Observable that delays the emissions of the source
      * Observable by the specified timeout or Date.
@@ -32855,14 +32850,43 @@ $__System.registerDynamic('b2', ['45', '44', 'b1'], true, function ($__require, 
     var Set_1 = $__require('b1');
     /**
      * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from previous items.
+     *
      * If a keySelector function is provided, then it will project each value from the source observable into a new value that it will
      * check for equality with previously projected values. If a keySelector function is not provided, it will use each value from the
      * source observable directly with an equality check against previous values.
+     *
      * In JavaScript runtimes that support `Set`, this operator will use a `Set` to improve performance of the distinct value checking.
+     *
      * In other runtimes, this operator will use a minimal implementation of `Set` that relies on an `Array` and `indexOf` under the
      * hood, so performance will degrade as more values are checked for distinction. Even in newer browsers, a long-running `distinct`
      * use might result in memory leaks. To help alleviate this in some scenarios, an optional `flushes` parameter is also provided so
      * that the internal `Set` can be "flushed", basically clearing it of values.
+     *
+     * @example <caption>A simple example with numbers</caption>
+     * Observable.of(1, 1, 2, 2, 2, 1, 2, 3, 4, 3, 2, 1)
+     *   .distinct()
+     *   .subscribe(x => console.log(x)); // 1, 2, 3, 4
+     *
+     * @example <caption>An example using a keySelector function</caption>
+     * interface Person {
+     *    age: number,
+     *    name: string
+     * }
+     *
+     * Observable.of<Person>(
+     *     { age: 4, name: 'Foo'},
+     *     { age: 7, name: 'Bar'},
+     *     { age: 5, name: 'Foo'})
+     *     .distinct((p: Person) => p.name)
+     *     .subscribe(x => console.log(x));
+     *
+     * // displays:
+     * // { age: 4, name: 'Foo' }
+     * // { age: 7, name: 'Bar' }
+     *
+     * @see {@link distinctUntilChanged}
+     * @see {@link distinctUntilKeyChanged}
+     *
      * @param {function} [keySelector] optional function to select which value you want to check as distinct.
      * @param {Observable} [flushes] optional Observable for flushing the internal HashSet of the operator.
      * @return {Observable} an Observable that emits items from the source Observable with distinct values.
@@ -32981,8 +33005,38 @@ $__System.registerDynamic('b5', ['89', '32', '33'], true, function ($__require, 
     /* tslint:disable:max-line-length */
     /**
      * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
+     *
      * If a comparator function is provided, then it will be called for each item to test for whether or not that value should be emitted.
+     *
      * If a comparator function is not provided, an equality check is used by default.
+     *
+     * @example <caption>A simple example with numbers</caption>
+     * Observable.of(1, 1, 2, 2, 2, 1, 1, 2, 3, 3, 4)
+     *   .distinctUntilChanged()
+     *   .subscribe(x => console.log(x)); // 1, 2, 1, 2, 3, 4
+     *
+     * @example <caption>An example using a compare function</caption>
+     * interface Person {
+     *    age: number,
+     *    name: string
+     * }
+     *
+     * Observable.of<Person>(
+     *     { age: 4, name: 'Foo'},
+     *     { age: 7, name: 'Bar'},
+     *     { age: 5, name: 'Foo'})
+     *     { age: 6, name: 'Foo'})
+     *     .distinctUntilChanged((p: Person, q: Person) => p.name === q.name)
+     *     .subscribe(x => console.log(x));
+     *
+     * // displays:
+     * // { age: 4, name: 'Foo' }
+     * // { age: 7, name: 'Bar' }
+     * // { age: 5, name: 'Foo' }
+     *
+     * @see {@link distinct}
+     * @see {@link distinctUntilKeyChanged}
+     *
      * @param {function} [compare] optional comparison function called to test if an item is distinct from the previous item in the source.
      * @return {Observable} an Observable that emits items from the source Observable with distinct values.
      * @method distinctUntilChanged
@@ -33060,8 +33114,54 @@ $__System.registerDynamic("b6", ["b5"], true, function ($__require, exports, mod
     /**
      * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item,
      * using a property accessed by using the key provided to check if the two items are distinct.
+     *
      * If a comparator function is provided, then it will be called for each item to test for whether or not that value should be emitted.
+     *
      * If a comparator function is not provided, an equality check is used by default.
+     *
+     * @example <caption>An example comparing the name of persons</caption>
+     *
+     *  interface Person {
+     *     age: number,
+     *     name: string
+     *  }
+     *
+     * Observable.of<Person>(
+     *     { age: 4, name: 'Foo'},
+     *     { age: 7, name: 'Bar'},
+     *     { age: 5, name: 'Foo'},
+     *     { age: 6, name: 'Foo'})
+     *     .distinctUntilKeyChanged('name')
+     *     .subscribe(x => console.log(x));
+     *
+     * // displays:
+     * // { age: 4, name: 'Foo' }
+     * // { age: 7, name: 'Bar' }
+     * // { age: 5, name: 'Foo' }
+     *
+     * @example <caption>An example comparing the first letters of the name</caption>
+     *
+     * interface Person {
+     *     age: number,
+     *     name: string
+     *  }
+     *
+     * Observable.of<Person>(
+     *     { age: 4, name: 'Foo1'},
+     *     { age: 7, name: 'Bar'},
+     *     { age: 5, name: 'Foo2'},
+     *     { age: 6, name: 'Foo3'})
+     *     .distinctUntilKeyChanged('name', (x: string, y: string) => x.substring(0, 3) === y.substring(0, 3))
+     *     .subscribe(x => console.log(x));
+     *
+     * // displays:
+     * // { age: 4, name: 'Foo1' }
+     * // { age: 7, name: 'Bar' }
+     * // { age: 5, name: 'Foo2' }
+     *
+     * @see {@link distinct}
+     * @see {@link distinctUntilChanged}
+     *
      * @param {string} key string key for object property lookup on each item.
      * @param {function} [compare] optional comparison function called to test if an item is distinct from the previous item in the source.
      * @return {Observable} an Observable that emits items from the source Observable with distinct values based on the key specified.
@@ -33422,7 +33522,7 @@ $__System.registerDynamic('bc', ['32', '33', '45', '44'], true, function ($__req
      * returns an Observable.
      * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
      * Observables being subscribed to concurrently.
-     * @param {Scheduler} [scheduler=null] The Scheduler to use for subscribing to
+     * @param {Scheduler} [scheduler=null] The IScheduler to use for subscribing to
      * each projected inner Observable.
      * @return {Observable} An Observable that emits the source values and also
      * result of applying the projection function to each value emitted on the
@@ -34637,7 +34737,7 @@ $__System.registerDynamic('d6', ['60', '89'], true, function ($__require, export
      * the time unit determined internally by the optional `scheduler`) has passed,
      * the timer is disabled, then the most recent source value is emitted on the
      * output Observable, and this process repeats for the next source value.
-     * Optionally takes a {@link Scheduler} for managing timers.
+     * Optionally takes a {@link IScheduler} for managing timers.
      *
      * @example <caption>Emit clicks at a rate of at most one click per second</caption>
      * var clicks = Rx.Observable.fromEvent(document, 'click');
@@ -34653,7 +34753,7 @@ $__System.registerDynamic('d6', ['60', '89'], true, function ($__require, export
      * @param {number} duration Time to wait before emitting the most recent source
      * value, measured in milliseconds or the time unit determined internally
      * by the optional `scheduler`.
-     * @param {Scheduler} [scheduler=async] The {@link Scheduler} to use for
+     * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
      * managing the timers that handle the rate-limiting behavior.
      * @return {Observable<T>} An Observable that performs rate-limiting of
      * emissions from the source Observable.
@@ -35001,14 +35101,33 @@ $__System.registerDynamic('e2', ['e3'], true, function ($__require, exports, mod
         GLOBAL = global;
     var reduce_1 = $__require('e3');
     /**
-     * The Max operator operates on an Observable that emits numbers (or items that can be evaluated as numbers),
-     * and when source Observable completes it emits a single item: the item with the largest number.
+     * The Max operator operates on an Observable that emits numbers (or items that can be compared with a provided function),
+     * and when source Observable completes it emits a single item: the item with the largest value.
      *
      * <img src="./img/max.png" width="100%">
      *
+     * @example <caption>Get the maximal value of a series of numbers</caption>
+     * Rx.Observable.of(5, 4, 7, 2, 8)
+     *   .max()
+     *   .subscribe(x => console.log(x)); // -> 8
+     *
+     * @example <caption>Use a comparer function to get the maximal item</caption>
+     * interface Person {
+     *   age: number,
+     *   name: string
+     * }
+     * Observable.of<Person>({age: 7, name: 'Foo'},
+     *                       {age: 5, name: 'Bar'},
+     *                       {age: 9, name: 'Beer'})
+     *           .max<Person>((a: Person, b: Person) => a.age < b.age ? -1 : 1)
+     *           .subscribe((x: Person) => console.log(x.name)); // -> 'Beer'
+     * }
+     *
+     * @see {@link min}
+     *
      * @param {Function} optional comparer function that it will use instead of its default to compare the value of two
      * items.
-     * @return {Observable} an Observable that emits item with the largest number.
+     * @return {Observable} an Observable that emits item with the largest value.
      * @method max
      * @owner Observable
      */
@@ -35087,7 +35206,7 @@ $__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, 
      * Observable. More than one input Observables may be given as argument.
      * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
      * Observables being subscribed to concurrently.
-     * @param {Scheduler} [scheduler=null] The Scheduler to use for managing
+     * @param {Scheduler} [scheduler=null] The IScheduler to use for managing
      * concurrency of input Observables.
      * @return {Observable} an Observable that emits items that are the result of
      * every input Observable.
@@ -35155,7 +35274,7 @@ $__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, 
      * @param {...Observable} observables Input Observables to merge together.
      * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
      * Observables being subscribed to concurrently.
-     * @param {Scheduler} [scheduler=null] The Scheduler to use for managing
+     * @param {Scheduler} [scheduler=null] The IScheduler to use for managing
      * concurrency of input Observables.
      * @return {Observable} an Observable that emits items that are the result of
      * every input Observable.
@@ -35550,13 +35669,32 @@ $__System.registerDynamic('ed', ['e3'], true, function ($__require, exports, mod
         GLOBAL = global;
     var reduce_1 = $__require('e3');
     /**
-     * The Min operator operates on an Observable that emits numbers (or items that can be evaluated as numbers),
-     * and when source Observable completes it emits a single item: the item with the smallest number.
+     * The Min operator operates on an Observable that emits numbers (or items that can be compared with a provided function),
+     * and when source Observable completes it emits a single item: the item with the smallest value.
      *
      * <img src="./img/min.png" width="100%">
      *
+     * @example <caption>Get the minimal value of a series of numbers</caption>
+     * Rx.Observable.of(5, 4, 7, 2, 8)
+     *   .min()
+     *   .subscribe(x => console.log(x)); // -> 2
+     *
+     * @example <caption>Use a comparer function to get the minimal item</caption>
+     * interface Person {
+     *   age: number,
+     *   name: string
+     * }
+     * Observable.of<Person>({age: 7, name: 'Foo'},
+     *                       {age: 5, name: 'Bar'},
+     *                       {age: 9, name: 'Beer'})
+     *           .min<Person>( (a: Person, b: Person) => a.age < b.age ? -1 : 1)
+     *           .subscribe((x: Person) => console.log(x.name)); // -> 'Bar'
+     * }
+     *
+     * @see {@link max}
+     *
      * @param {Function} optional comparer function that it will use instead of its default to compare the value of two items.
-     * @return {Observable<R>} an Observable that emits item with the smallest number.
+     * @return {Observable<R>} an Observable that emits item with the smallest value.
      * @method min
      * @owner Observable
      */
@@ -36293,11 +36431,11 @@ $__System.registerDynamic('108', ['89', '49'], true, function ($__require, expor
     var EmptyObservable_1 = $__require('49');
     /**
      * Returns an Observable that repeats the stream of items emitted by the source Observable at most count times,
-     * on a particular Scheduler.
+     * on a particular IScheduler.
      *
      * <img src="./img/repeat.png" width="100%">
      *
-     * @param {Scheduler} [scheduler] the Scheduler to emit the items on.
+     * @param {Scheduler} [scheduler] the IScheduler to emit the items on.
      * @param {number} [count] the number of times the source Observable items are repeated, a count of 0 will yield
      * an empty Observable.
      * @return {Observable} an Observable that repeats the stream of items emitted by the source Observable at most
@@ -36398,13 +36536,13 @@ $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function 
      * A `complete` will cause the emission of the Throwable that cause the complete to the Observable returned from
      * notificationHandler. If that Observable calls onComplete or `complete` then retry will call `complete` or `error`
      * on the child subscription. Otherwise, this Observable will resubscribe to the source observable, on a particular
-     * Scheduler.
+     * IScheduler.
      *
      * <img src="./img/repeatWhen.png" width="100%">
      *
      * @param {notificationHandler} receives an Observable of notifications with which a user can `complete` or `error`,
      * aborting the retry.
-     * @param {scheduler} the Scheduler on which to subscribe to the source Observable.
+     * @param {scheduler} the IScheduler on which to subscribe to the source Observable.
      * @return {Observable} the source Observable modified with retry logic.
      * @method repeatWhen
      * @owner Observable
@@ -36626,13 +36764,13 @@ $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function 
      * An `error` will cause the emission of the Throwable that cause the error to the Observable returned from
      * notificationHandler. If that Observable calls onComplete or `error` then retry will call `complete` or `error`
      * on the child subscription. Otherwise, this Observable will resubscribe to the source observable, on a particular
-     * Scheduler.
+     * IScheduler.
      *
      * <img src="./img/retryWhen.png" width="100%">
      *
      * @param {notificationHandler} receives an Observable of notifications with which a user can `complete` or `error`,
      * aborting the retry.
-     * @param {scheduler} the Scheduler on which to subscribe to the source Observable.
+     * @param {scheduler} the IScheduler on which to subscribe to the source Observable.
      * @return {Observable} the source Observable modified with retry logic.
      * @method retryWhen
      * @owner Observable
@@ -36891,7 +37029,7 @@ $__System.registerDynamic('112', ['89', '60'], true, function ($__require, expor
      *
      * @param {number} period The sampling period expressed in milliseconds or the
      * time unit determined internally by the optional `scheduler`.
-     * @param {Scheduler} [scheduler=async] The {@link Scheduler} to use for
+     * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
      * managing the timers that handle the sampling.
      * @return {Observable<T>} An Observable that emits the results of sampling the
      * values emitted by the source Observable at the specified time interval.
@@ -37822,7 +37960,7 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
      *
      * @param {Observable} other An input Observable to concatenate after the source
      * Observable. More than one input Observables may be given as argument.
-     * @param {Scheduler} [scheduler=null] An optional Scheduler to schedule each
+     * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
      * Observable subscription on.
      * @return {Observable} All values of each passed Observable merged into a
      * single Observable, in order, in serial fashion.
@@ -37880,7 +38018,7 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
      * @param {Observable} input1 An input Observable to concatenate with others.
      * @param {Observable} input2 An input Observable to concatenate with others.
      * More than one input Observables may be given as argument.
-     * @param {Scheduler} [scheduler=null] An optional Scheduler to schedule each
+     * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
      * Observable subscription on.
      * @return {Observable} All values of each passed Observable merged into a
      * single Observable, in order, in serial fashion.
@@ -38068,12 +38206,12 @@ $__System.registerDynamic("129", ["127"], true, function ($__require, exports, m
         GLOBAL = global;
     var SubscribeOnObservable_1 = $__require("127");
     /**
-     * Asynchronously subscribes Observers to this Observable on the specified Scheduler.
+     * Asynchronously subscribes Observers to this Observable on the specified IScheduler.
      *
      * <img src="./img/subscribeOn.png" width="100%">
      *
-     * @param {Scheduler} the Scheduler to perform subscription actions on.
-     * @return {Observable<T>} the source Observable modified so that its subscriptions happen on the specified Scheduler
+     * @param {Scheduler} the IScheduler to perform subscription actions on.
+     * @return {Observable<T>} the source Observable modified so that its subscriptions happen on the specified IScheduler
      .
      * @method subscribeOn
      * @owner Observable
@@ -39166,7 +39304,7 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
      * is enabled. After `duration` milliseconds (or the time unit determined
      * internally by the optional `scheduler`) has passed, the timer is disabled,
      * and this process repeats for the next source value. Optionally takes a
-     * {@link Scheduler} for managing timers.
+     * {@link IScheduler} for managing timers.
      *
      * @example <caption>Emit clicks at a rate of at most one click per second</caption>
      * var clicks = Rx.Observable.fromEvent(document, 'click');
@@ -39182,7 +39320,7 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
      * @param {number} duration Time to wait before emitting another value after
      * emitting the last value, measured in milliseconds or the time unit determined
      * internally by the optional `scheduler`.
-     * @param {Scheduler} [scheduler=async] The {@link Scheduler} to use for
+     * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
      * managing the timers that handle the sampling.
      * @return {Observable<T>} An Observable that performs the throttle operation to
      * limit the rate of emissions from the source.
@@ -40722,6 +40860,30 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
     exports.zipProto = zipProto;
     /* tslint:enable:max-line-length */
     /**
+     * Combines multiple Observables to create an Observable whose values are calculated from the values, in order, of each
+     * of its input Observables.
+     *
+     * If the latest parameter is a function, this function is used to compute the created value from the input values.
+     * Otherwise, an array of the input values is returned.
+     *
+     * @example <caption>Combine age and name from different sources</caption>
+     *
+     * let age$ = Observable.of<number>(27, 25, 29);
+     * let name$ = Observable.of<string>('Foo', 'Bar', 'Beer');
+     * let isDev$ = Observable.of<boolean>(true, true, false);
+     *
+     * Observable
+     *     .zip(age$,
+     *          name$,
+     *          isDev$,
+     *          (age: number, name: string, isDev: boolean) => ({ age, name, isDev }))
+     *     .subscribe(x => console.log(x));
+     *
+     * // outputs
+     * // { age: 7, name: 'Foo', isDev: true }
+     * // { age: 5, name: 'Bar', isDev: true }
+     * // { age: 9, name: 'Beer', isDev: false }
+     *
      * @param observables
      * @return {Observable<R>}
      * @static true
@@ -42021,7 +42183,16 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
             if (delay === void 0) {
                 delay = 0;
             }
-            return !this.id ? _super.prototype.schedule.call(this, state, delay) : this.add(new VirtualAction(this.scheduler, this.work)).schedule(state, delay);
+            if (!this.id) {
+                return _super.prototype.schedule.call(this, state, delay);
+            }
+            // If an action is rescheduled, we save allocations by mutating its state,
+            // pushing it to the end of the scheduler queue, and recycling the action.
+            // But since the VirtualTimeScheduler is used for testing, VirtualActions
+            // must be immutable so they can be inspected later.
+            var action = new VirtualAction(this.scheduler, this.work);
+            this.add(action);
+            return action.schedule(state, delay);
         };
         VirtualAction.prototype.requestAsyncId = function (scheduler, id, delay) {
             if (delay === void 0) {
@@ -43742,7 +43913,7 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                 }
                 runReadsImport(f, workspace) {
                     let params = {
-                        method: "genome_transform.reads_to_assembly",
+                        method: 'genome_transform.' + (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_assembly'),
                         service_ver: 'dev',
                         params: [{
                             workspace: workspace,
@@ -43750,8 +43921,7 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                             reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
                             file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory() + f.path],
                             insert_size: f.meta['insert_size'],
-                            std_dev: f.meta['std_dev'],
-                            sra: f.meta['sra'] ? "1" : "0" // expects strings instead of booleans
+                            std_dev: f.meta['std_dev']
                         }]
                     };
                     return this.rpc.call('njs', 'run_job', params);
@@ -43932,9 +44102,6 @@ $__System.register("30", ["a"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
     var __moduleName = context_1 && context_1.id;
     var core_1, msecPerMinute, msecPerHour, msecPerDay, dayOfWeek, months, sizes, Encode, ElapsedTime, ReadableSize;
     return {
@@ -43953,7 +44120,7 @@ $__System.register("30", ["a"], function (exports_1, context_1) {
                     return encodeURIComponent(value);
                 }
             };
-            Encode = __decorate([core_1.Pipe({ name: 'encode' }), __metadata("design:paramtypes", [])], Encode);
+            Encode = __decorate([core_1.Pipe({ name: 'encode' })], Encode);
             exports_1("Encode", Encode);
             ElapsedTime = class ElapsedTime {
                 transform(value, args) {
@@ -43989,7 +44156,7 @@ $__System.register("30", ["a"], function (exports_1, context_1) {
                     }
                 }
             };
-            ElapsedTime = __decorate([core_1.Pipe({ name: 'elapsedTime' }), __metadata("design:paramtypes", [])], ElapsedTime);
+            ElapsedTime = __decorate([core_1.Pipe({ name: 'elapsedTime' })], ElapsedTime);
             exports_1("ElapsedTime", ElapsedTime);
             ReadableSize = class ReadableSize {
                 // interesting solution based on http://stackoverflow.com/questions
@@ -44003,7 +44170,7 @@ $__System.register("30", ["a"], function (exports_1, context_1) {
                     return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
                 }
             };
-            ReadableSize = __decorate([core_1.Pipe({ name: 'readableSize' }), __metadata("design:paramtypes", [])], ReadableSize);
+            ReadableSize = __decorate([core_1.Pipe({ name: 'readableSize' })], ReadableSize);
             exports_1("ReadableSize", ReadableSize);
         }
     };
@@ -45457,7 +45624,7 @@ var define = $__System.amdDefine;
     };
     return JsonpModule;
   }());
-  var VERSION = new _angular_core.Version('2.4.1');
+  var VERSION = new _angular_core.Version('2.4.3');
   exports.BrowserXhr = BrowserXhr;
   exports.JSONPBackend = JSONPBackend;
   exports.JSONPConnection = JSONPConnection;
@@ -46191,11 +46358,16 @@ $__System.registerDynamic('f2', ['89', 'ad'], true, function ($__require, export
         }
         ObserveOnSubscriber.dispatch = function (arg) {
             var notification = arg.notification,
-                destination = arg.destination;
+                destination = arg.destination,
+                subscription = arg.subscription;
             notification.observe(destination);
+            if (subscription) {
+                subscription.unsubscribe();
+            }
         };
         ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
-            this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
+            var message = new ObserveOnMessage(notification, this.destination);
+            message.subscription = this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, message));
         };
         ObserveOnSubscriber.prototype._next = function (value) {
             this.scheduleMessage(Notification_1.Notification.createNext(value));
@@ -46491,7 +46663,7 @@ $__System.registerDynamic("49", ["15"], true, function ($__require, exports, mod
          * @see {@link of}
          * @see {@link throw}
          *
-         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
          * the emission of the complete notification.
          * @return {Observable} An "empty" Observable: emits only the complete
          * notification.
@@ -46583,8 +46755,8 @@ $__System.registerDynamic('3d', ['15', '125', '49', '3b'], true, function ($__re
          * This static operator is useful for creating a simple Observable that only
          * emits the arguments given, and the complete notification thereafter. It can
          * be used for composing with other Observables, such as with {@link concat}.
-         * By default, it uses a `null` Scheduler, which means the `next`
-         * notifications are sent synchronously, although with a different Scheduler
+         * By default, it uses a `null` IScheduler, which means the `next`
+         * notifications are sent synchronously, although with a different IScheduler
          * it is possible to determine when those notifications will be delivered.
          *
          * @example <caption>Emit 10, 20, 30, then 'a', 'b', 'c', then start ticking every second.</caption>
@@ -46600,7 +46772,7 @@ $__System.registerDynamic('3d', ['15', '125', '49', '3b'], true, function ($__re
          * @see {@link throw}
          *
          * @param {...T} values Arguments that represent `next` values to be emitted.
-         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
          * the emissions of the `next` notifications.
          * @return {Observable<T>} An Observable that emits each given input value.
          * @static true
@@ -46772,6 +46944,12 @@ $__System.registerDynamic("dd", ["89"], true, function ($__require, exports, mod
     var Subscriber_1 = $__require("89");
     /**
      * Returns an Observable that emits whether or not every item of the source satisfies the condition specified.
+     *
+     * @example <caption>A simple example emitting true if all elements are less than 5, false otherwise</caption>
+     *  Observable.of(1, 2, 3, 4, 5, 6)
+     *     .every(x => x < 5)
+     *     .subscribe(x => console.log(x)); // -> false
+     *
      * @param {function} predicate a function for determining if an item meets a specified condition.
      * @param {any} [thisArg] optional object to use for `this` in the callback
      * @return {Observable} an Observable of booleans that determines if all items of the source Observable meet the condition specified.
@@ -47587,7 +47765,7 @@ $__System.registerDynamic('17d', ['87', '15'], true, function ($__require, expor
          * @see {@link from}
          *
          * @param {Promise<T>} promise The promise to be converted.
-         * @param {Scheduler} [scheduler] An optional Scheduler to use for scheduling
+         * @param {Scheduler} [scheduler] An optional IScheduler to use for scheduling
          * the delivery of the resolved value (or the rejection).
          * @return {Observable<T>} An Observable which wraps the Promise.
          * @static true
@@ -49114,7 +49292,7 @@ var define = $__System.amdDefine;
           });
         } else {
           Object.keys(rawClassVal).forEach(function(klass) {
-            if (isPresent(rawClassVal[klass]))
+            if (rawClassVal[klass] != null)
               _this._toggleClass(klass, !isCleanup);
           });
         }
@@ -49194,8 +49372,10 @@ var define = $__System.amdDefine;
         return this._trackByFn;
       },
       set: function(fn) {
-        if (typeof fn !== 'function') {
-          throw new Error("trackBy must be a function, but received " + JSON.stringify(fn));
+        if (_angular_core.isDevMode() && fn != null && typeof fn !== 'function') {
+          if ((console) && (console.warn)) {
+            console.warn(("trackBy must be a function, but received " + JSON.stringify(fn) + ". ") + "See https://angular.io/docs/ts/latest/api/common/index/NgFor-directive.html#!#change-propagation for more information.");
+          }
         }
         this._trackByFn = fn;
       },
@@ -50019,7 +50199,7 @@ var define = $__System.amdDefine;
       this._localization = _localization;
     }
     I18nPluralPipe.prototype.transform = function(value, pluralMap) {
-      if (isBlank(value))
+      if (value == null)
         return '';
       if (typeof pluralMap !== 'object' || pluralMap === null) {
         throw new InvalidPipeArgumentError(I18nPluralPipe, pluralMap);
@@ -50111,7 +50291,7 @@ var define = $__System.amdDefine;
     if (currencyAsSymbol === void 0) {
       currencyAsSymbol = false;
     }
-    if (isBlank(value))
+    if (value == null)
       return null;
     value = typeof value === 'string' && NumberWrapper.isNumeric(value) ? +value : value;
     if (typeof value !== 'number') {
@@ -50130,13 +50310,13 @@ var define = $__System.amdDefine;
       if (parts === null) {
         throw new Error(digits + " is not a valid digit info for number pipes");
       }
-      if (isPresent(parts[1])) {
+      if (parts[1] != null) {
         minInt = NumberWrapper.parseIntAutoRadix(parts[1]);
       }
-      if (isPresent(parts[3])) {
+      if (parts[3] != null) {
         minFraction = NumberWrapper.parseIntAutoRadix(parts[3]);
       }
-      if (isPresent(parts[5])) {
+      if (parts[5] != null) {
         maxFraction = NumberWrapper.parseIntAutoRadix(parts[5]);
       }
     }
@@ -50232,7 +50412,7 @@ var define = $__System.amdDefine;
   var SlicePipe = (function() {
     function SlicePipe() {}
     SlicePipe.prototype.transform = function(value, start, end) {
-      if (isBlank(value))
+      if (value == null)
         return value;
       if (!this.supports(value)) {
         throw new InvalidPipeArgumentError(SlicePipe, value);
@@ -50292,7 +50472,7 @@ var define = $__System.amdDefine;
     };
     return CommonModule;
   }());
-  var VERSION = new _angular_core.Version('2.4.1');
+  var VERSION = new _angular_core.Version('2.4.3');
   exports.NgLocalization = NgLocalization;
   exports.CommonModule = CommonModule;
   exports.NgClass = NgClass;
@@ -50599,12 +50779,25 @@ var define = $__System.amdDefine;
       });
       var previousStyleProps = Object.keys(this.previousStyles);
       if (previousStyleProps.length) {
-        var startingKeyframe_1 = findStartingKeyframe(keyframes);
+        var startingKeyframe_1 = keyframes[0];
+        var missingStyleProps_1 = [];
         previousStyleProps.forEach(function(prop) {
-          if (isPresent(startingKeyframe_1[prop])) {
-            startingKeyframe_1[prop] = _this.previousStyles[prop];
+          if (!isPresent(startingKeyframe_1[prop])) {
+            missingStyleProps_1.push(prop);
           }
+          startingKeyframe_1[prop] = _this.previousStyles[prop];
         });
+        if (missingStyleProps_1.length) {
+          var _loop_1 = function(i) {
+            var kf = keyframes[i];
+            missingStyleProps_1.forEach(function(prop) {
+              kf[prop] = _computeStyle(_this.element, prop);
+            });
+          };
+          for (var i = 1; i < keyframes.length; i++) {
+            _loop_1(i);
+          }
+        }
       }
       this._player = this._triggerWebAnimation(this.element, keyframes, this.options);
       this._finalKeyframe = _copyKeyframeStyles(keyframes[keyframes.length - 1]);
@@ -50713,17 +50906,6 @@ var define = $__System.amdDefine;
     });
     return newStyles;
   }
-  function findStartingKeyframe(keyframes) {
-    var startingKeyframe = keyframes[0];
-    for (var i = 1; i < keyframes.length; i++) {
-      var kf = keyframes[i];
-      var offset = kf['offset'];
-      if (offset !== 0)
-        break;
-      startingKeyframe = kf;
-    }
-    return startingKeyframe;
-  }
   var WebAnimationsDriver = (function() {
     function WebAnimationsDriver() {}
     WebAnimationsDriver.prototype.animate = function(element, startingStyles, keyframes, duration, delay, easing, previousPlayers) {
@@ -50732,20 +50914,21 @@ var define = $__System.amdDefine;
       }
       var formattedSteps = [];
       var startingStyleLookup = {};
-      if (isPresent(startingStyles) && startingStyles.styles.length > 0) {
+      if (isPresent(startingStyles)) {
         startingStyleLookup = _populateStyles(startingStyles, {});
-        startingStyleLookup['offset'] = 0;
-        formattedSteps.push(startingStyleLookup);
       }
       keyframes.forEach(function(keyframe) {
         var data = _populateStyles(keyframe.styles, startingStyleLookup);
         data['offset'] = Math.max(0, Math.min(1, keyframe.offset));
         formattedSteps.push(data);
       });
-      if (formattedSteps.length == 1) {
-        var start = formattedSteps[0];
-        start['offset'] = null;
-        formattedSteps = [start, start];
+      if (formattedSteps.length == 0) {
+        formattedSteps = [startingStyleLookup, startingStyleLookup];
+      } else if (formattedSteps.length == 1) {
+        var start = startingStyleLookup;
+        var end = formattedSteps[0];
+        end['offset'] = null;
+        formattedSteps = [start, end];
       }
       var playerOptions = {
         'duration': duration,
@@ -51948,11 +52131,10 @@ var define = $__System.amdDefine;
       if (previousPlayers === void 0) {
         previousPlayers = [];
       }
-      try {
+      if (this._rootRenderer.document.body.contains(element)) {
         return this._animationDriver.animate(element, startingStyles, keyframes, duration, delay, easing, previousPlayers);
-      } catch (e) {
-        return new NoOpAnimationPlayer();
       }
+      return new NoOpAnimationPlayer();
     };
     return DomRenderer;
   }());
@@ -52859,7 +53041,7 @@ var define = $__System.amdDefine;
     BROWSER_SANITIZATION_PROVIDERS: BROWSER_SANITIZATION_PROVIDERS,
     WebAnimationsDriver: WebAnimationsDriver
   };
-  var VERSION = new core.Version('2.4.1');
+  var VERSION = new core.Version('2.4.3');
   exports.BrowserModule = BrowserModule;
   exports.platformBrowser = platformBrowser;
   exports.Title = Title;
@@ -53201,7 +53383,7 @@ var define = $__System.amdDefine;
     return true;
   }
   function containsQueryParams(container, containee) {
-    return Object.keys(containee) <= Object.keys(container) && Object.keys(containee).every(function(key) {
+    return Object.keys(containee).length <= Object.keys(container).length && Object.keys(containee).every(function(key) {
       return containee[key] === container[key];
     });
   }
@@ -53774,7 +53956,7 @@ var define = $__System.amdDefine;
         if (route.loadChildren) {
           return rxjs_operator_map.map.call(this.configLoader.load(injector, route.loadChildren), function(r) {
             ((route))._loadedConfig = r;
-            return rxjs_observable_of.of(new UrlSegmentGroup(segments, {}));
+            return new UrlSegmentGroup(segments, {});
           });
         } else {
           return rxjs_observable_of.of(new UrlSegmentGroup(segments, {}));
@@ -54384,22 +54566,23 @@ var define = $__System.amdDefine;
   }
   function advanceActivatedRoute(route) {
     if (route.snapshot) {
-      if (!shallowEqual(route.snapshot.queryParams, route._futureSnapshot.queryParams)) {
+      var currentSnapshot = route.snapshot;
+      route.snapshot = route._futureSnapshot;
+      if (!shallowEqual(currentSnapshot.queryParams, route._futureSnapshot.queryParams)) {
         ((route.queryParams)).next(route._futureSnapshot.queryParams);
       }
-      if (route.snapshot.fragment !== route._futureSnapshot.fragment) {
+      if (currentSnapshot.fragment !== route._futureSnapshot.fragment) {
         ((route.fragment)).next(route._futureSnapshot.fragment);
       }
-      if (!shallowEqual(route.snapshot.params, route._futureSnapshot.params)) {
+      if (!shallowEqual(currentSnapshot.params, route._futureSnapshot.params)) {
         ((route.params)).next(route._futureSnapshot.params);
       }
-      if (!shallowEqualArrays(route.snapshot.url, route._futureSnapshot.url)) {
+      if (!shallowEqualArrays(currentSnapshot.url, route._futureSnapshot.url)) {
         ((route.url)).next(route._futureSnapshot.url);
       }
-      if (!equalParamsAndUrlSegments(route.snapshot, route._futureSnapshot)) {
+      if (!equalParamsAndUrlSegments(currentSnapshot, route._futureSnapshot)) {
         ((route.data)).next(route._futureSnapshot.data);
       }
-      route.snapshot = route._futureSnapshot;
     } else {
       route.snapshot = route._futureSnapshot;
       ((route.data)).next(route._futureSnapshot.data);
@@ -54470,7 +54653,7 @@ var define = $__System.amdDefine;
     return tree(startingPosition.segmentGroup, segmentGroup, urlTree, queryParams, fragment);
   }
   function isMatrixParams(command) {
-    return typeof command === 'object' && !command.outlets && !command.segmentPath;
+    return typeof command === 'object' && command != null && !command.outlets && !command.segmentPath;
   }
   function tree(oldSegmentGroup, newSegmentGroup, urlTree, queryParams, fragment) {
     if (urlTree.root === oldSegmentGroup) {
@@ -54498,7 +54681,7 @@ var define = $__System.amdDefine;
         throw new Error('Root segment cannot have matrix parameters');
       }
       var cmdWithOutlet = commands.find(function(c) {
-        return typeof c === 'object' && c.outlets;
+        return typeof c === 'object' && c != null && c.outlets;
       });
       if (cmdWithOutlet && cmdWithOutlet !== last(commands)) {
         throw new Error('{outlets:{}} has to be the last command');
@@ -54516,7 +54699,7 @@ var define = $__System.amdDefine;
     var numberOfDoubleDots = 0;
     var isAbsolute = false;
     var res = commands.reduce(function(res, cmd, cmdIdx) {
-      if (typeof cmd === 'object') {
+      if (typeof cmd === 'object' && cmd != null) {
         if (cmd.outlets) {
           var outlets_1 = {};
           forEach(cmd.outlets, function(commands, name) {
@@ -54581,8 +54764,9 @@ var define = $__System.amdDefine;
     return new Position(g, false, ci - dd);
   }
   function getPath(command) {
-    if (typeof command === 'object' && command.outlets)
+    if (typeof command === 'object' && command != null && command.outlets) {
       return command.outlets[PRIMARY_OUTLET];
+    }
     return "" + command;
   }
   function getOutlets(commands) {
@@ -55189,6 +55373,7 @@ var define = $__System.amdDefine;
       if (extras === void 0) {
         extras = {skipLocationChange: false};
       }
+      validateCommands(commands);
       if (typeof extras.queryParams === 'object' && extras.queryParams !== null) {
         extras.queryParams = this.removeEmptyProps(extras.queryParams);
       }
@@ -55823,6 +56008,14 @@ var define = $__System.amdDefine;
     }
     return outlet;
   }
+  function validateCommands(commands) {
+    for (var i = 0; i < commands.length; i++) {
+      var cmd = commands[i];
+      if (cmd == null) {
+        throw new Error("The requested path contains " + cmd + " segment at index " + i);
+      }
+    }
+  }
   var RouterLink = (function() {
     function RouterLink(router, route) {
       this.router = router;
@@ -55830,11 +56023,11 @@ var define = $__System.amdDefine;
       this.commands = [];
     }
     Object.defineProperty(RouterLink.prototype, "routerLink", {
-      set: function(data) {
-        if (Array.isArray(data)) {
-          this.commands = data;
+      set: function(commands) {
+        if (commands != null) {
+          this.commands = Array.isArray(commands) ? commands : [commands];
         } else {
-          this.commands = [data];
+          this.commands = [];
         }
       },
       enumerable: true,
@@ -55878,7 +56071,7 @@ var define = $__System.amdDefine;
       'routerLink': [{type: _angular_core.Input}],
       'onClick': [{
         type: _angular_core.HostListener,
-        args: ['click', []]
+        args: ['click']
       }]
     };
     return RouterLink;
@@ -55897,11 +56090,11 @@ var define = $__System.amdDefine;
       });
     }
     Object.defineProperty(RouterLinkWithHref.prototype, "routerLink", {
-      set: function(data) {
-        if (Array.isArray(data)) {
-          this.commands = data;
+      set: function(commands) {
+        if (commands != null) {
+          this.commands = Array.isArray(commands) ? commands : [commands];
         } else {
-          this.commands = [data];
+          this.commands = [];
         }
       },
       enumerable: true,
@@ -55951,7 +56144,10 @@ var define = $__System.amdDefine;
       return [{type: Router}, {type: ActivatedRoute}, {type: _angular_common.LocationStrategy}];
     };
     RouterLinkWithHref.propDecorators = {
-      'target': [{type: _angular_core.Input}],
+      'target': [{
+        type: _angular_core.HostBinding,
+        args: ['attr.target']
+      }, {type: _angular_core.Input}],
       'queryParams': [{type: _angular_core.Input}],
       'fragment': [{type: _angular_core.Input}],
       'preserveQueryParams': [{type: _angular_core.Input}],
@@ -56414,7 +56610,7 @@ var define = $__System.amdDefine;
       useExisting: ROUTER_INITIALIZER
     }];
   }
-  var VERSION = new _angular_core.Version('3.4.1');
+  var VERSION = new _angular_core.Version('3.4.3');
   var __router_private__ = {
     ROUTER_PROVIDERS: ROUTER_PROVIDERS,
     ROUTES: ROUTES,
@@ -56563,9 +56759,6 @@ $__System.register("181", ["a", "c", "13", "25", "179", "d", "11", "12", "17", "
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = this && this.__metadata || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
     var __moduleName = context_1 && context_1.id;
     var core_1, platform_browser_1, forms_1, router_1, http_1, button_1, sidenav_1, progress_circle_1, checkbox_1, progress_bar_1, app_comptest_1, app_routes_1, toolbar_1, file_table_1, file_tree_1, dataTable_1, card_1, selector_view_1, edit_meta_view_1, about_view_1, status_view_1, import_details_view_1, job_log_view_1, home_view_1, pipes_1, ftp_service_1, kbase_rpc_service_1, kbase_auth_service_1, kbase_integration_service_1, kbase_config_service_1, AppModule;
     return {
@@ -56637,7 +56830,7 @@ $__System.register("181", ["a", "c", "13", "25", "179", "d", "11", "12", "17", "
                 declarations: [app_comptest_1.AppComponent, toolbar_1.ToolbarComponent, file_table_1.FileTableComponent, file_tree_1.FileTreeComponent, card_1.CardDirective, selector_view_1.SelectorView, edit_meta_view_1.EditMetaView, about_view_1.AboutView, status_view_1.StatusView, import_details_view_1.ImportDetailsView, job_log_view_1.JobLogView, home_view_1.HomeView, pipes_1.Encode, pipes_1.ElapsedTime, pipes_1.ReadableSize, dataTable_1.DataTable],
                 providers: [ftp_service_1.FtpService, kbase_rpc_service_1.KBaseRpc, kbase_auth_service_1.KBaseAuth, kbase_integration_service_1.KBaseIntegration, kbase_config_service_1.KBaseConfig],
                 bootstrap: [app_comptest_1.AppComponent]
-            }), __metadata("design:paramtypes", [])], AppModule);
+            })], AppModule);
             exports_1("AppModule", AppModule);
         }
     };
@@ -57017,6 +57210,13 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
     var define,
         global = this || self,
         GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
     var isArray_1 = $__require('3c');
     var isObject_1 = $__require('17f');
     var isFunction_1 = $__require('51');
@@ -57071,7 +57271,7 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
                 var trial = tryCatch_1.tryCatch(_unsubscribe).call(this);
                 if (trial === errorObject_1.errorObject) {
                     hasErrors = true;
-                    (errors = errors || []).push(errorObject_1.errorObject.e);
+                    errors = errors || (errorObject_1.errorObject.e instanceof UnsubscriptionError_1.UnsubscriptionError ? flattenUnsubscriptionErrors(errorObject_1.errorObject.e.errors) : [errorObject_1.errorObject.e]);
                 }
             }
             if (isArray_1.isArray(_subscriptions)) {
@@ -57086,7 +57286,7 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
                             errors = errors || [];
                             var err = errorObject_1.errorObject.e;
                             if (err instanceof UnsubscriptionError_1.UnsubscriptionError) {
-                                errors = errors.concat(err.errors);
+                                errors = errors.concat(flattenUnsubscriptionErrors(err.errors));
                             } else {
                                 errors.push(err);
                             }
@@ -57129,17 +57329,19 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
                     sub = new Subscription(teardown);
                 case 'object':
                     if (sub.closed || typeof sub.unsubscribe !== 'function') {
-                        break;
+                        return sub;
                     } else if (this.closed) {
                         sub.unsubscribe();
-                    } else {
-                        (this._subscriptions || (this._subscriptions = [])).push(sub);
+                        return sub;
                     }
                     break;
                 default:
                     throw new Error('unrecognized teardown ' + teardown + ' added to Subscription.');
             }
-            return sub;
+            var childSub = new ChildSubscription(sub, this);
+            this._subscriptions = this._subscriptions || [];
+            this._subscriptions.push(childSub);
+            return childSub;
         };
         /**
          * Removes a Subscription from the internal list of subscriptions that will
@@ -57167,6 +57369,28 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
         return Subscription;
     }();
     exports.Subscription = Subscription;
+    var ChildSubscription = function (_super) {
+        __extends(ChildSubscription, _super);
+        function ChildSubscription(_innerSub, _parent) {
+            _super.call(this);
+            this._innerSub = _innerSub;
+            this._parent = _parent;
+        }
+        ChildSubscription.prototype._unsubscribe = function () {
+            var _a = this,
+                _innerSub = _a._innerSub,
+                _parent = _a._parent;
+            _parent.remove(this);
+            _innerSub.unsubscribe();
+        };
+        return ChildSubscription;
+    }(Subscription);
+    exports.ChildSubscription = ChildSubscription;
+    function flattenUnsubscriptionErrors(errors) {
+        return errors.reduce(function (errs, err) {
+            return errs.concat(err instanceof UnsubscriptionError_1.UnsubscriptionError ? err.errors : err);
+        }, []);
+    }
     
 
     return module.exports;
@@ -58161,7 +58385,7 @@ var define = $__System.amdDefine;
     });
     return Version;
   }());
-  var VERSION = new Version('2.4.1');
+  var VERSION = new Version('2.4.3');
   function forwardRef(forwardRefFn) {
     ((forwardRefFn)).__forward_ref__ = forwardRef;
     ((forwardRefFn)).toString = function() {
@@ -58452,6 +58676,9 @@ var define = $__System.amdDefine;
   }());
   var _globalKeyRegistry = new KeyRegistry();
   var Type = Function;
+  function isType(v) {
+    return typeof v === 'function';
+  }
   var DELEGATE_CTOR = /^function\s+\S+\(\)\s*{\s*("use strict";)?\s*(return\s+)?\S+\.apply\(this,\s*arguments\)/;
   var ReflectionCapabilities = (function() {
     function ReflectionCapabilities(reflect) {
@@ -58518,7 +58745,10 @@ var define = $__System.amdDefine;
       return new Array(((type.length))).fill(undefined);
     };
     ReflectionCapabilities.prototype.parameters = function(type) {
-      var parentCtor = Object.getPrototypeOf(type.prototype).constructor;
+      if (!isType(type)) {
+        return [];
+      }
+      var parentCtor = getParentCtor(type);
       var parameters = this._ownParameters(type, parentCtor);
       if (!parameters && parentCtor !== Object) {
         parameters = this.parameters(parentCtor);
@@ -58541,7 +58771,10 @@ var define = $__System.amdDefine;
       }
     };
     ReflectionCapabilities.prototype.annotations = function(typeOrFunc) {
-      var parentCtor = Object.getPrototypeOf(typeOrFunc.prototype).constructor;
+      if (!isType(typeOrFunc)) {
+        return [];
+      }
+      var parentCtor = getParentCtor(typeOrFunc);
       var ownAnnotations = this._ownAnnotations(typeOrFunc, parentCtor) || [];
       var parentAnnotations = parentCtor !== Object ? this.annotations(parentCtor) : [];
       return parentAnnotations.concat(ownAnnotations);
@@ -58567,7 +58800,10 @@ var define = $__System.amdDefine;
       }
     };
     ReflectionCapabilities.prototype.propMetadata = function(typeOrFunc) {
-      var parentCtor = Object.getPrototypeOf(typeOrFunc.prototype).constructor;
+      if (!isType(typeOrFunc)) {
+        return {};
+      }
+      var parentCtor = getParentCtor(typeOrFunc);
       var propMetadata = {};
       if (parentCtor !== Object) {
         var parentPropMetadata_1 = this.propMetadata(parentCtor);
@@ -58625,6 +58861,11 @@ var define = $__System.amdDefine;
       var annotationArgs = decoratorInvocation.args ? decoratorInvocation.args : [];
       return new (annotationCls.bind.apply(annotationCls, [void 0].concat(annotationArgs)))();
     });
+  }
+  function getParentCtor(ctor) {
+    var parentProto = Object.getPrototypeOf(ctor.prototype);
+    var parentCtor = parentProto ? parentProto.constructor : null;
+    return parentCtor || Object;
   }
   var ReflectorReader = (function() {
     function ReflectorReader() {}
@@ -61112,7 +61353,6 @@ var define = $__System.amdDefine;
     function ViewUtils(_renderer, sanitizer, animationQueue) {
       this._renderer = _renderer;
       this.animationQueue = animationQueue;
-      this._nextCompTypeId = 0;
       this.sanitizer = sanitizer;
     }
     ViewUtils.prototype.renderComponent = function(renderComponentType) {
@@ -62462,7 +62702,7 @@ var define = $__System.amdDefine;
       }
       this._loadComponent(compRef);
       if (isDevMode()) {
-        this._console.log("Angular 2 is running in the development mode. Call enableProdMode() to enable the production mode.");
+        this._console.log("Angular is running in the development mode. Call enableProdMode() to enable the production mode.");
       }
       return compRef;
     };
@@ -63331,6 +63571,9 @@ var define = $__System.amdDefine;
   function _keyValueDiffersFactory() {
     return defaultKeyValueDiffers;
   }
+  function _localeFactory(locale) {
+    return locale || 'en-US';
+  }
   var ApplicationModule = (function() {
     function ApplicationModule() {}
     ApplicationModule.decorators = [{
@@ -63346,7 +63589,8 @@ var define = $__System.amdDefine;
           useFactory: _keyValueDiffersFactory
         }, {
           provide: LOCALE_ID,
-          useValue: 'en-US'
+          useFactory: _localeFactory,
+          deps: [[new Inject(LOCALE_ID), new Optional(), new SkipSelf()]]
         }]}]
     }];
     ApplicationModule.ctorParameters = function() {
@@ -64383,7 +64627,7 @@ var define = $__System.amdDefine;
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var _scope_check = wtfCreateScope("AppView#check(ascii id)");
-  var EMPTY_CONTEXT$1 = new Object();
+  var EMPTY_CONTEXT = new Object();
   var UNDEFINED$1 = new Object();
   var AppView = (function() {
     function AppView(clazz, componentType, type, viewUtils, parentView, parentIndex, parentElement, cdMode, declaredViewContainer) {
@@ -64430,7 +64674,7 @@ var define = $__System.amdDefine;
       return this.createInternal(null);
     };
     AppView.prototype.createHostView = function(rootSelectorOrNode, hostInjector, projectableNodes) {
-      this.context = (EMPTY_CONTEXT$1);
+      this.context = (EMPTY_CONTEXT);
       this._hasExternalHostElement = isPresent(rootSelectorOrNode);
       this._hostInjector = hostInjector;
       this._hostProjectableNodes = projectableNodes;
