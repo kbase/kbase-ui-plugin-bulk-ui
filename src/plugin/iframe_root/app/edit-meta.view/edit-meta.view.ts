@@ -145,8 +145,8 @@ export class EditMetaView implements OnInit {
         required: 'true',
         type: 'wsObject'
     }, {
-        name: 'SRA?',
-        prop: "sra",
+        name: 'Reads Orientation Outward',
+        prop: "read_orientation_outward",
         type: 'checkbox'
     }, {
         name: 'Mean Insert Size',
@@ -154,6 +154,25 @@ export class EditMetaView implements OnInit {
     }, {
         name: 'Stdev of Insert Size',
         prop: "std_dev"
+    }, {
+        name: 'Sequencing Technology',
+        prop: "sequencing_tech",
+        required: 'true',
+        type: 'string'
+    }, {
+        name: 'Is Metagenome',
+        prop: "single_genome",
+        type: 'checkbox'
+   }, {
+        name: 'Strain',
+        prop: "strain",
+        required: 'false',
+        type: 'string'
+   }, {
+        name: 'Source',
+        prop: "source",
+        required: 'false',
+        type: 'string'
     }]
 
     // use same spec file for paired-end for now.
@@ -191,6 +210,8 @@ export class EditMetaView implements OnInit {
             this.importSpec = this.pairedReadsSpec;
         else if (this.selectedType == 'Interleaved Paired-end Reads')
 	    this.importSpec = this.singleReadsSpec;
+        else if (this.selectedType == 'SRA Format Reads')
+            this.importSpec = this.singleReadsSpec;
 
 
         this.preprocessData(this.selectedType);
@@ -221,17 +242,22 @@ export class EditMetaView implements OnInit {
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Single-end Reads") {
-            this.jobService.runReadsImports(this.files, wsName)
+            this.jobService.runLibrarysImports(this.files, wsName)
                 .subscribe(ids => {
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Interleaved Paired-end Reads") {
-            this.jobService.runReadsImports(this.files, wsName)
+            this.jobService.runLibrarysImports(this.files, wsName)
+                .subscribe(ids => {
+                    this.createBulkJob(ids, wsId, narId)
+                })
+        } else if (type === "SRA Format Reads") {
+            this.jobService.runSRAImports(this.files, wsName)
                 .subscribe(ids => {
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Paired-end Reads") {
-            this.jobService.runReadsImports(this.files, wsName)
+            this.jobService.runLibrarysImports(this.files, wsName)
                 .subscribe(ids => {
                     this.createBulkJob(ids, wsId, narId)
                 })
@@ -258,6 +284,8 @@ export class EditMetaView implements OnInit {
         else if (type == "Single-end Reads")
             this.preprocessSingleReads();
         else if (type == "Interleaved Paired-end Reads")
+            this.preprocessSingleReads();
+        else if (type == "SRA Format Reads")
             this.preprocessSingleReads();
     }
 
@@ -288,9 +316,10 @@ export class EditMetaView implements OnInit {
 
             file['meta'] = {
                 importName: objName,
-                sra: false,
+                read_orientation_outward: false,
                 insert_size: 0,
-                std_dev: 0
+                std_dev: 0,
+		sequencing_tech: "Illumina"
             }
         }
 
