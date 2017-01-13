@@ -234,7 +234,7 @@ table.edit-sheet input {
                         });
                     }
                     else if (type === "SRA Format Reads") {
-                        this.jobService.runReadsImports(this.files, wsName)
+                        this.jobService.runSRAImports(this.files, wsName)
                             .subscribe(ids => {
                             this.createBulkJob(ids, wsId, narId);
                         });

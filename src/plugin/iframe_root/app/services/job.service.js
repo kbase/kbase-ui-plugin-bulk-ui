@@ -54,10 +54,9 @@ System.register(["@angular/core", "rxjs/Rx", "./kbase-rpc.service", "./kbase-aut
                     files.forEach(file => reqs.push(this.runGenomeTransform(file, workspace)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
-                runReadsImport(f, workspace) {
+                runSRAImport(f, workspace) {
                     let params = {
-                        method: 'genome_transform.' +
-                            (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_assembly'),
+                        method: 'genome_transform.sra_reads_to_assembly',
                         service_ver: 'dev',
                         params: [{
                                 workspace: workspace,
@@ -70,15 +69,14 @@ System.register(["@angular/core", "rxjs/Rx", "./kbase-rpc.service", "./kbase-aut
                     };
                     return this.rpc.call('njs', 'run_job', params);
                 }
-                runReadsImports(files, workspace) {
+                runSRAImports(files, workspace) {
                     var reqs = [];
-                    files.forEach(file => reqs.push(this.runReadsImport(file, workspace)));
+                    files.forEach(file => reqs.push(this.runSRAImport(file, workspace)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
                 runLibraryImport(f, workspace) {
                     let params = {
-                        method: 'genome_transform.' +
-                            (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_library'),
+                        method: 'genome_transform.reads_to_library',
                         service_ver: 'dev',
                         params: [{
                                 wsname: workspace,
