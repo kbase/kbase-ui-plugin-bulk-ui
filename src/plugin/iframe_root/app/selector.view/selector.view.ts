@@ -28,6 +28,9 @@ const htmlTemplate = `
     <div class="help-text" *ngIf="selectedType.name == 'Interleaved Paired-end Reads'" >
         Next, select Interleaved Paired-end reads from below to import.
     </div>
+    <div class="help-text" *ngIf="selectedType.name == 'SRA Format Reads'" >
+        Next, select SRA Format reads from below to import.
+    </div>
     <select (change)="onSelectType($event.target.value)" class="md-select type-selector">
         <option selected disabled class="md-option">Choose import type...</option>
         <option [value]="i" *ngFor="let t of types; let i=index" class="md-option">{{t.name}}</option>

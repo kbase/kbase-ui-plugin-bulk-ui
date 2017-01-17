@@ -27142,6 +27142,9 @@ $__System.register("1c", ["a", "25", "19"], function (exports_1, context_1) {
     <div class="help-text" *ngIf="selectedType.name == 'Interleaved Paired-end Reads'" >
         Next, select Interleaved Paired-end reads from below to import.
     </div>
+    <div class="help-text" *ngIf="selectedType.name == 'SRA Format Reads'" >
+        Next, select SRA Format reads from below to import.
+    </div>
     <select (change)="onSelectType($event.target.value)" class="md-select type-selector">
         <option selected disabled class="md-option">Choose import type...</option>
         <option [value]="i" *ngFor="let t of types; let i=index" class="md-option">{{t.name}}</option>
@@ -27420,8 +27423,8 @@ table.edit-sheet input {
                         required: 'true',
                         type: 'wsObject'
                     }, {
-                        name: 'SRA?',
-                        prop: "sra",
+                        name: 'Reads Orientation Outward',
+                        prop: "read_orientation_outward",
                         type: 'checkbox'
                     }, {
                         name: 'Mean Insert Size',
@@ -27429,6 +27432,25 @@ table.edit-sheet input {
                     }, {
                         name: 'Stdev of Insert Size',
                         prop: "std_dev"
+                    }, {
+                        name: 'Sequencing Technology',
+                        prop: "sequencing_tech",
+                        required: 'true',
+                        type: 'string'
+                    }, {
+                        name: 'Is Metagenome',
+                        prop: "single_genome",
+                        type: 'checkbox'
+                    }, {
+                        name: 'Strain',
+                        prop: "strain",
+                        required: 'false',
+                        type: 'string'
+                    }, {
+                        name: 'Source',
+                        prop: "source",
+                        required: 'false',
+                        type: 'string'
                     }];
                     // use same spec file for paired-end for now.
                     this.pairedReadsSpec = this.singleReadsSpec;
@@ -27440,7 +27462,7 @@ table.edit-sheet input {
                 ngOnInit() {
                     // get type selected on browser
                     this.selectedType = this.ftp.selectedType.getValue()['name'];
-                    if (this.selectedType == 'Genomes') this.importSpec = this.genomeSpec;else if (this.selectedType == 'Single-end Reads') this.importSpec = this.singleReadsSpec;else if (this.selectedType == 'Paired-end Reads') this.importSpec = this.pairedReadsSpec;else if (this.selectedType == 'Interleaved Paired-end Reads') this.importSpec = this.singleReadsSpec;
+                    if (this.selectedType == 'Genomes') this.importSpec = this.genomeSpec;else if (this.selectedType == 'Single-end Reads') this.importSpec = this.singleReadsSpec;else if (this.selectedType == 'Paired-end Reads') this.importSpec = this.pairedReadsSpec;else if (this.selectedType == 'Interleaved Paired-end Reads') this.importSpec = this.singleReadsSpec;else if (this.selectedType == 'SRA Format Reads') this.importSpec = this.singleReadsSpec;
                     this.preprocessData(this.selectedType);
                     this.selectedCount = this.ftp.selectedFiles.length;
                     this.selectedSetCount = this.ftp.selectedSets.length;
@@ -27463,15 +27485,19 @@ table.edit-sheet input {
                             this.createBulkJob(ids, wsId, narId);
                         });
                     } else if (type === "Single-end Reads") {
-                        this.jobService.runReadsImports(this.files, wsName).subscribe(ids => {
+                        this.jobService.runLibraryImports(this.files, wsName).subscribe(ids => {
                             this.createBulkJob(ids, wsId, narId);
                         });
                     } else if (type === "Interleaved Paired-end Reads") {
-                        this.jobService.runReadsImports(this.files, wsName).subscribe(ids => {
+                        this.jobService.runLibraryImports(this.files, wsName).subscribe(ids => {
+                            this.createBulkJob(ids, wsId, narId);
+                        });
+                    } else if (type === "SRA Format Reads") {
+                        this.jobService.runSRAImports(this.files, wsName).subscribe(ids => {
                             this.createBulkJob(ids, wsId, narId);
                         });
                     } else if (type === "Paired-end Reads") {
-                        this.jobService.runReadsImports(this.files, wsName).subscribe(ids => {
+                        this.jobService.runLibraryImports(this.files, wsName).subscribe(ids => {
                             this.createBulkJob(ids, wsId, narId);
                         });
                     }
@@ -27486,7 +27512,7 @@ table.edit-sheet input {
                 // method to copy selected file data
                 // and add any defaults to edit meta table data
                 preprocessData(type) {
-                    if (type == "Genomes") this.preprocessGenomes();else if (type == "Paired-end Reads") this.preprocessPairedReads();else if (type == "Single-end Reads") this.preprocessSingleReads();else if (type == "Interleaved Paired-end Reads") this.preprocessSingleReads();
+                    if (type == "Genomes") this.preprocessGenomes();else if (type == "Paired-end Reads") this.preprocessPairedReads();else if (type == "Single-end Reads") this.preprocessSingleReads();else if (type == "Interleaved Paired-end Reads") this.preprocessSingleReads();else if (type == "SRA Format Reads") this.preprocessSingleReads();
                 }
                 preprocessGenomes() {
                     let files = Object.assign([], this.ftp.selectedFiles);
@@ -27509,9 +27535,10 @@ table.edit-sheet input {
                             ext = objName.slice(objName.lastIndexOf('.'), objName.length);
                         file['meta'] = {
                             importName: objName,
-                            sra: false,
+                            read_orientation_outward: false,
                             insert_size: 0,
-                            std_dev: 0
+                            std_dev: 0,
+                            sequencing_tech: "Illumina"
                         };
                     }
                     this.files = files;
@@ -43911,9 +43938,9 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                     files.forEach(file => reqs.push(this.runGenomeTransform(file, workspace)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
-                runReadsImport(f, workspace) {
+                runSRAImport(f, workspace) {
                     let params = {
-                        method: 'genome_transform.' + (f.meta['sra'] ? 'sra_reads_to_assembly' : 'reads_to_assembly'),
+                        method: 'genome_transform.sra_reads_to_assembly',
                         service_ver: 'dev',
                         params: [{
                             workspace: workspace,
@@ -43926,9 +43953,35 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                     };
                     return this.rpc.call('njs', 'run_job', params);
                 }
-                runReadsImports(files, workspace) {
+                runSRAImports(files, workspace) {
                     var reqs = [];
-                    files.forEach(file => reqs.push(this.runReadsImport(file, workspace)));
+                    files.forEach(file => reqs.push(this.runSRAImport(file, workspace)));
+                    return Rx_1.Observable.forkJoin(reqs);
+                }
+                runLibraryImport(f, workspace) {
+                    let params = {
+                        method: 'genome_transform.reads_to_library',
+                        service_ver: 'dev',
+                        params: [{
+                            wsname: workspace,
+                            name: f.meta.importName,
+                            int: 0,
+                            reads_orientation_outward: 0,
+                            single_genome: 0,
+                            sequencing_tech: f.meta['sequencing_tech'],
+                            strain: f.meta['strain'],
+                            source: f.meta['source'],
+                            reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
+                            file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory() + f.path],
+                            insert_size_mean: f.meta['insert_size'],
+                            insert_size_std_dev: f.meta['std_dev']
+                        }]
+                    };
+                    return this.rpc.call('njs', 'run_job', params);
+                }
+                runLibraryImports(files, workspace) {
+                    var reqs = [];
+                    files.forEach(file => reqs.push(this.runLibraryImport(file, workspace)));
                     return Rx_1.Observable.forkJoin(reqs);
                 }
                 checkJob(jobId) {
