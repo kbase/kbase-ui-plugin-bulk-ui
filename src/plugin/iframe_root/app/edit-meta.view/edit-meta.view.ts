@@ -60,6 +60,14 @@ const htmlTemplate = `
                     <md-checkbox *ngIf="col.type == 'checkbox'"
                                 [(ngModel)]="file.meta[col.prop]">
                     </md-checkbox>
+                    <select *ngIf="col.type == 'stdropdown'" [(ngModel)]="file.meta[col.prop]">
+		    	     <option value="Unknown">Unknown</option>
+                             <option value="Illumina">Illumina</option>
+                             <option value="PacBio CLR">PacBio CLR</option>
+                             <option value="PacBio CCS">PacBio CCS</option>
+                             <option value="IonTorrent">IonTorrent</option>
+                             <option value="NanoPore">NanoPore</option>
+                    </select>
                     <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
             </tr>
@@ -157,7 +165,7 @@ export class EditMetaView implements OnInit {
         name: 'Sequencing Technology',
         prop: "sequencing_tech",
         required: 'true',
-        type: 'string'
+        type: 'stdropdown'
     }, {
         name: 'Is Metagenome',
         prop: "single_genome",
@@ -318,8 +326,8 @@ export class EditMetaView implements OnInit {
                 read_orientation_outward: false,
                 insert_size: 0,
                 std_dev: 0,
-                single_genome: false,
-		sequencing_tech: "Illumina"
+                sequencing_tech: "Unknown",
+                single_genome: false
             }
         }
 
