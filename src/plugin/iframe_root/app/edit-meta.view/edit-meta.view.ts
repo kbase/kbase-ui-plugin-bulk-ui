@@ -58,7 +58,7 @@ const htmlTemplate = `
                     (mouseover)="cellSelection && mouseOver($event)"
                     [ngClass]="{'text-center': col.type == 'checkbox'}">
                     <md-checkbox *ngIf="col.type == 'checkbox'"
-                                [checked]="file.meta[col.prop]">
+                                [(ngModel)]="file.meta[col.prop]">
                     </md-checkbox>
                     <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
