@@ -58,8 +58,7 @@ const htmlTemplate = `
                     (mouseover)="cellSelection && mouseOver($event)"
                     [ngClass]="{'text-center': col.type == 'checkbox'}">
                     <md-checkbox *ngIf="col.type == 'checkbox'"
-                                [checked]="file.meta[col.prop]"
-                                (change)="file.meta[col.prop] = $event">
+                                [checked]="file.meta[col.prop]">
                     </md-checkbox>
                     <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
@@ -247,7 +246,7 @@ export class EditMetaView implements OnInit {
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Interleaved Paired-end Reads") {
-            this.jobService.runLibraryImports(this.files, wsName)
+            this.jobService.runInterleavedLibraryImports(this.files, wsName)
                 .subscribe(ids => {
                     this.createBulkJob(ids, wsId, narId)
                 })
@@ -319,6 +318,7 @@ export class EditMetaView implements OnInit {
                 read_orientation_outward: false,
                 insert_size: 0,
                 std_dev: 0,
+                single_genome: false,
 		sequencing_tech: "Illumina"
             }
         }
