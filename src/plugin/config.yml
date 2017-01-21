@@ -1,10 +1,10 @@
 ## Data API Demo Plugin
 ---
 package:
-    name: data-api-demo
-    description: Widgets for the Data API
-    author: Erik Pearson
-    date: January 12, 2016
+    name: bulk-ui
+    description: Bulk Import Interface
+    author: Erik Pearson and Dan Murphy-Olson
+    date: January 20, 2017
 source:
     modules: []
     styles: 
