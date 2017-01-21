@@ -61,7 +61,7 @@ const htmlTemplate = `
                                 [checked]="file.meta[col.prop]"
                                 (change)="file.meta[col.prop] = $event">
                     </md-checkbox>
-                    <input *ngIf="!col.type || col.type == 'wsObject'" [(ngModel)]="file.meta[col.prop]">
+                    <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
             </tr>
         </tbody>
