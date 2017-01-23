@@ -157,7 +157,6 @@ md-sidenav-layout {
     height: 100%;
 }
 
-.md-checkbox-background,
 .md-primary[md-raised-button] {
     background-color: #0088cc !important;
 }

@@ -58,10 +58,17 @@ const htmlTemplate = `
                     (mouseover)="cellSelection && mouseOver($event)"
                     [ngClass]="{'text-center': col.type == 'checkbox'}">
                     <md-checkbox *ngIf="col.type == 'checkbox'"
-                                [checked]="file.meta[col.prop]"
-                                (change)="file.meta[col.prop] = $event">
+                                [(ngModel)]="file.meta[col.prop]">
                     </md-checkbox>
-                    <input *ngIf="!col.type || col.type == 'wsObject'" [(ngModel)]="file.meta[col.prop]">
+                    <select *ngIf="col.type == 'stdropdown'" [(ngModel)]="file.meta[col.prop]">
+		    	     <option value="Unknown">Unknown</option>
+                             <option value="Illumina">Illumina</option>
+                             <option value="PacBio CLR">PacBio CLR</option>
+                             <option value="PacBio CCS">PacBio CCS</option>
+                             <option value="IonTorrent">IonTorrent</option>
+                             <option value="NanoPore">NanoPore</option>
+                    </select>
+                    <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
             </tr>
         </tbody>
@@ -158,7 +165,7 @@ export class EditMetaView implements OnInit {
         name: 'Sequencing Technology',
         prop: "sequencing_tech",
         required: 'true',
-        type: 'string'
+        type: 'stdropdown'
     }, {
         name: 'Is Metagenome',
         prop: "single_genome",
@@ -247,7 +254,7 @@ export class EditMetaView implements OnInit {
                     this.createBulkJob(ids, wsId, narId)
                 })
         } else if (type === "Interleaved Paired-end Reads") {
-            this.jobService.runLibraryImports(this.files, wsName)
+            this.jobService.runInterleavedLibraryImports(this.files, wsName)
                 .subscribe(ids => {
                     this.createBulkJob(ids, wsId, narId)
                 })
@@ -319,7 +326,8 @@ export class EditMetaView implements OnInit {
                 read_orientation_outward: false,
                 insert_size: 0,
                 std_dev: 0,
-		sequencing_tech: "Illumina"
+                sequencing_tech: "Unknown",
+                single_genome: false
             }
         }
 
