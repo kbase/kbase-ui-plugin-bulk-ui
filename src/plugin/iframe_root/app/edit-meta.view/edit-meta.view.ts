@@ -21,7 +21,7 @@ const htmlTemplate = `
     <div class="pull-left">
         Destination Narrative:
         <select (change)="selectNarrative($event.target.value)">
-            <option *ngFor="let narrative of narratives; let i = index" [value]="i">{{narrative.name}}</option>
+            <option *ngFor="let narrative of narratives; let i = index" [value]="i">{{narrative.name}} {{narrative.narrativeId}}</option>
         </select>
     </div>
     <div class="pull-right">
@@ -39,12 +39,35 @@ const htmlTemplate = `
     <br><br>
     <h4>Edit meta data</h4>
     <table class="edit-sheet">
-        <thead>
+        <thead style="border:3px solid green">
+<!--            <tr>
+                <th style="border:3px solid green">Select All</th>
+                 <th style="border:3px solid green" *ngFor="let col of importSpec">
+                    <md-checkbox *ngIf="col.type == 'checkbox'">
+                    </md-checkbox>
+                    <select *ngIf="col.type == 'stdropdown'" >
+                             <option value="Unknown">Unknown</option>
+                             <option value="Illumina">Illumina</option>
+                             <option value="PacBio CLR">PacBio CLR</option>
+                             <option value="PacBio CCS">PacBio CCS</option>
+                             <option value="IonTorrent">IonTorrent</option>
+                             <option value="NanoPore">NanoPore</option>
+                    </select>
+                    <select *ngIf="col.type == 'postdropdown'" >
+                             <option value=""></option>
+                             <option value="Assemble Contigs from Reads">Assemble Contigs from Reads</option>
+                             <option value="Assemble Reads with MEGAHIT">Assemble Reads with MEGAHIT</option>
+                             <option value="Align Reads using Bowtie2">Align Reads using Bowtie2</option>
+                             <option value="Align Reads using HISAT2">Align Reads using HISAT2</option>
+                             <option value="Reads Quality Control using FastQC">Reads Quality Control using FastQC</option>
+                    </select>
+                    <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" > 
+                </th> 
+            </tr> -->
             <tr>
                 <th>File Name</th>
-
-                <th *ngFor="let spec of importSpec">{{spec.name}}</th>
-            </tr>
+                <th style="border:3px solid green" *ngFor="let spec of importSpec">{{spec.name}}</th>
+	    </tr>
         </thead>
         <tbody>
             <tr *ngFor="let file of files">
@@ -56,7 +79,7 @@ const htmlTemplate = `
                     (mousedown)="selectCell($event)"
                     (mouseup)="mouseUp($event)"
                     (mouseover)="cellSelection && mouseOver($event)"
-                    [ngClass]="{'text-center': col.type == 'checkbox'}">
+                    [ngClass]="{'text-center': col.type == 'checkbox' || col.type == 'stdropdown'}">
                     <md-checkbox *ngIf="col.type == 'checkbox'"
                                 [(ngModel)]="file.meta[col.prop]">
                     </md-checkbox>
@@ -67,6 +90,14 @@ const htmlTemplate = `
                              <option value="PacBio CCS">PacBio CCS</option>
                              <option value="IonTorrent">IonTorrent</option>
                              <option value="NanoPore">NanoPore</option>
+                    </select>
+                    <select *ngIf="col.type == 'postdropdown'" [(ngModel)]="file.meta[col.prop]">
+                             <option value=""></option>
+                             <option value="Assemble Contigs from Reads">Assemble Contigs from Reads</option>
+                             <option value="Assemble Reads with MEGAHIT">Assemble Reads with MEGAHIT</option>
+                             <option value="Align Reads using Bowtie2">Align Reads using Bowtie2</option>
+                             <option value="Align Reads using HISAT2">Align Reads using HISAT2</option>
+                             <option value="Reads Quality Control using FastQC">Reads Quality Control using FastQC</option>
                     </select>
                     <input *ngIf="!col.type || col.type == 'wsObject' || col.type == 'string'" [(ngModel)]="file.meta[col.prop]">
                 </td>
@@ -89,9 +120,12 @@ table.edit-sheet > tbody > tr > td {
 }
 table.edit-sheet input {
     width: 100%;
-    -webkit-appearance:none;
+    -webkit-appearance:searchfield;
+    box-sizing: border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing: border-box;
     padding: 0;
-    border: none;
+/*    border: none;*/
     padding: .7em;
     font-size: .8em;
 }
@@ -170,7 +204,11 @@ export class EditMetaView implements OnInit {
         name: 'Is Metagenome',
         prop: "single_genome",
         type: 'checkbox'
-   }, {
+/*   }, {
+        name: 'Post-import Method',
+        prop: "poststep",
+        type: 'postdropdown'
+    }, {
         name: 'Strain',
         prop: "strain",
         required: 'false',
@@ -179,7 +217,7 @@ export class EditMetaView implements OnInit {
         name: 'Source',
         prop: "source",
         required: 'false',
-        type: 'string'
+        type: 'string'*/
     }]
 
     // use same spec file for paired-end for now.
@@ -324,8 +362,6 @@ export class EditMetaView implements OnInit {
             file['meta'] = {
                 importName: objName,
                 read_orientation_outward: false,
-                insert_size: 0,
-                std_dev: 0,
                 sequencing_tech: "Unknown",
                 single_genome: false
             }

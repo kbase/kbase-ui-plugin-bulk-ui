@@ -25,7 +25,7 @@ export class JobService {
 
     runGenomeTransform(f: File,  workspace: string) {
         let params = {
-            method: "genome_transform.genbank_to_genome",
+            method: "genome_transform.genbank_to_genome_GFU",
             service_ver: 'dev',
             params: [{
                 genbank_file_path: this.ftp.getRootDirectory()+f.path,
