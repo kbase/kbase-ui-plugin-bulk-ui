@@ -24,3 +24,10 @@ The configuration and modules are managed just like a normal kbase-ui plugin. Ju
 - compile the distribution with "gulp dist"
 - this places the runtime files into src/plugin/iframe_root/dist
 
+
+#### Which node?
+
+Requires node 6.
+
+On Mac, use nvm: https://github.com/creationix/nvm
+
