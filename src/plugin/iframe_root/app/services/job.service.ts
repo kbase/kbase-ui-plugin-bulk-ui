@@ -28,9 +28,9 @@ export class JobService {
             method: "genome_transform.genbank_to_genome_GFU",
             service_ver: 'dev',
             params: [{
-                genbank_file_path: this.ftp.getRootDirectory()+f.path,
+                file_path: f.path.split("/").slice(2).join("/"), //this.ftp.getRootDirectory()+f.path
                 workspace: workspace,
-                genome_id: f.meta.importName,
+                genome_name: f.meta.importName,
                 contigset_id: f.meta['contigsetName']
             }]
         }
@@ -52,15 +52,15 @@ export class JobService {
                 wsname: workspace,              //'janakakbase:1464032798535',
                 name:  f.meta.importName,       //'TestFrag',
                 interleaved:  0,       //'0',
-                read_orientation_outward: f.meta['read_orientation_outward'] ? '1' : '0',       //'0',
-                single_genome: f.meta['single_genome'] ? '1' : '0',     //'0',
+                read_orientation_outward: parseInt(f.meta['read_orientation_outward'] ? '1' : '0'),       //'0',
+                single_genome: parseInt(f.meta['single_genome'] ? '1' : '0'),     //'0',
                 sequencing_tech: f.meta['sequencing_tech'],
                 strain: f.meta['strain'],
                 source: f.meta['source'],
                 reads_type: 'PairedEndLibrary',
                 file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory()+f.path],   //["/kb/module/data/frag_1.fastq","/kb/module/data/frag_2.fastq"],
-                insert_size_mean: f.meta['insert_size'],
-                insert_size_std_dev: f.meta['std_dev']
+                insert_size_mean: parseFloat(f.meta['insert_size']),
+                insert_size_std_dev: parseFloat(f.meta['std_dev'])
             }]
         }
 
@@ -83,15 +83,15 @@ export class JobService {
                 wsname: workspace,              //'janakakbase:1464032798535',
                 name:  f.meta.importName,       //'TestFrag',
                 interleaved:  0,       //'0',
-		read_orientation_outward: f.meta['read_orientation_outward'] ? '1' : '0', 	//'0',
-		single_genome: f.meta['single_genome'] ? '1' : '0', 	//'0',
+		read_orientation_outward: parseInt(f.meta['read_orientation_outward'] ? '1' : '0'), 	//'0',
+		single_genome: parseInt(f.meta['single_genome'] ? '1' : '0'), 	//'0',
 		sequencing_tech: f.meta['sequencing_tech'],
 		strain: f.meta['strain'],
 		source: f.meta['source'],
                 reads_type: f['paths'] ? 'PairedEndLibrary' : 'SingleEndLibrary',
                 file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory()+f.path],   //["/kb/module/data/frag_1.fastq","/kb/module/data/frag_2.fastq"],
-                insert_size_mean: f.meta['insert_size'],
-                insert_size_std_dev: f.meta['std_dev']
+                insert_size_mean: parseFloat(f.meta['insert_size']),
+                insert_size_std_dev: parseFloat(f.meta['std_dev'])
             }]
         }
 
@@ -121,8 +121,8 @@ export class JobService {
                 source: f.meta['source'],
                 reads_type: 'PairedEndLibrary',
                 file_path_list: f['paths'] ? f['paths'] : [this.ftp.getRootDirectory()+f.path],   //["/kb/module/data/frag_1.fastq","/kb/module/data/frag_2.fastq"],
-                insert_size_mean: f.meta['insert_size'],
-                insert_size_std_dev: f.meta['std_dev']
+                insert_size_mean: parseFloat(f.meta['insert_size']),
+                insert_size_std_dev: parseFloat(f.meta['std_dev'])
             }]
         }
 
