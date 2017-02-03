@@ -26505,7 +26505,7 @@ $__System.register("24", ["a", "1a"], function (exports_1, context_1) {
         <i class="material-icons">access_time</i><br>
         View Status
     </button>
-    <a md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
+    <a style="color: #0088cc !important" md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
         <i class="material-icons">help_outline</i><br>
         Documentation
     </a>

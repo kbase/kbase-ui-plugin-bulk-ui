@@ -35,7 +35,7 @@ column {
     width: 100%;
 }
 
-a { color: #0088cc !important; text-decoration: none; }
+a { color: #0088cc; text-decoration: none; }
 a:hover { color: #2a6496; }
 a.no-link { color: #444; }
 
