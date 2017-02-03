@@ -16,7 +16,7 @@ const htmlTemplate = `
         <i class="material-icons">access_time</i><br>
         View Status
     </button>
-    <a style="color: #0088cc !important" md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
+    <a style="color: #0088cc !important; vertical-align: bottom" md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
         <i class="material-icons">help_outline</i><br>
         Documentation
     </a>
@@ -78,6 +78,7 @@ nav.right-side-nav > a > i.material-icons {
     position: relative;
     bottom: -10px;
 .nav-btns a {
+    vertical-align: bottom;
     margin-top: 0px;
     color: #0088cc !important;
 }
@@ -85,6 +86,7 @@ nav.right-side-nav > a > i.material-icons {
     font-size: 2.1em;
     position: relative;
     bottom: -10px;
+    vertical-align: bottom;
 }}
 `
 
