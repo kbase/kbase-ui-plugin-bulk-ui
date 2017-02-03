@@ -16,6 +16,10 @@ const htmlTemplate = `
         <i class="material-icons">access_time</i><br>
         View Status
     </button>
+    <a style="color: #0088cc !important" md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
+        <i class="material-icons">help_outline</i><br>
+        Documentation
+    </a>
 </span>
 </nav>
 `
@@ -73,7 +77,15 @@ nav.right-side-nav > a > i.material-icons {
     font-size: 2.1em;
     position: relative;
     bottom: -10px;
+.nav-btns a {
+    margin-top: 0px;
+    color: #0088cc !important;
 }
+.nav-btns a i {
+    font-size: 2.1em;
+    position: relative;
+    bottom: -10px;
+}}
 `
 
 @Component({

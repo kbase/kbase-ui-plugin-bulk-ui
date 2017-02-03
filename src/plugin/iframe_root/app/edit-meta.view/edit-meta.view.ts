@@ -380,7 +380,10 @@ export class EditMetaView implements OnInit {
                 name: set[0].name+', '+set[1].name,
                 paths: [ftpRoot+set[0].path, ftpRoot+set[1].path],
                 meta: {
-                    importName: set[0].name.replace(/[^\w\-\.\_]/g,'-')
+                    importName: set[0].name.replace(/[^\w\-\.\_]/g,'-'),
+		    sequencing_tech: "Unknown",
+		    read_orientation_outward: false,
+		    single_genome: false
                 }
             })
         })

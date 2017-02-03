@@ -26505,6 +26505,10 @@ $__System.register("24", ["a", "1a"], function (exports_1, context_1) {
         <i class="material-icons">access_time</i><br>
         View Status
     </button>
+    <a style="color: #0088cc !important" md-button href="http://kbase.us/bulk-upload-guide/" target="_blank" class="nav-btn">
+        <i class="material-icons">help_outline</i><br>
+        Documentation
+    </a>
 </span>
 </nav>
 `;
@@ -26561,7 +26565,15 @@ nav.right-side-nav > a > i.material-icons {
     font-size: 2.1em;
     position: relative;
     bottom: -10px;
+.nav-btns a {
+    margin-top: 0px;
+    color: #0088cc !important;
 }
+.nav-btns a i {
+    font-size: 2.1em;
+    position: relative;
+    bottom: -10px;
+}}
 `;
             ToolbarComponent = class ToolbarComponent {
                 constructor(auth) {
@@ -27582,7 +27594,10 @@ table.edit-sheet input {
                             name: set[0].name + ', ' + set[1].name,
                             paths: [ftpRoot + set[0].path, ftpRoot + set[1].path],
                             meta: {
-                                importName: set[0].name.replace(/[^\w\-\.\_]/g, '-')
+                                importName: set[0].name.replace(/[^\w\-\.\_]/g, '-'),
+                                sequencing_tech: "Unknown",
+                                read_orientation_outward: false,
+                                single_genome: false
                             }
                         });
                     });
@@ -43977,7 +43992,7 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                             name: f.meta.importName,
                             interleaved: 0,
                             read_orientation_outward: parseInt(f.meta['read_orientation_outward'] ? '1' : '0'),
-                            single_genome: parseInt(f.meta['single_genome'] ? '1' : '0'),
+                            single_genome: parseInt(f.meta['single_genome'] ? '0' : '1'),
                             sequencing_tech: f.meta['sequencing_tech'],
                             strain: f.meta['strain'],
                             source: f.meta['source'],
@@ -44003,7 +44018,7 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                             name: f.meta.importName,
                             interleaved: 0,
                             read_orientation_outward: parseInt(f.meta['read_orientation_outward'] ? '1' : '0'),
-                            single_genome: parseInt(f.meta['single_genome'] ? '1' : '0'),
+                            single_genome: parseInt(f.meta['single_genome'] ? '0' : '1'),
                             sequencing_tech: f.meta['sequencing_tech'],
                             strain: f.meta['strain'],
                             source: f.meta['source'],
@@ -44029,7 +44044,7 @@ $__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, co
                             name: f.meta.importName,
                             interleaved: 1,
                             read_orientation_outward: 0,
-                            single_genome: 0,
+                            single_genome: parseInt(f.meta['single_genome'] ? '0' : '1'),
                             sequencing_tech: f.meta['sequencing_tech'],
                             strain: f.meta['strain'],
                             source: f.meta['source'],
@@ -44190,8 +44205,8 @@ $__System.register("23", ["a"], function (exports_1, context_1) {
         To get started, you must <b>first upload your data via "Browse"</b>.
     </p>
     <p>
-        The Bulk Importer will support two ways to accomplish this: upload <b>via Globus Online</b> and
-        <b>upload via this interface</b>.  Currently, <b>upload is only supported via Globus Online</b>.
+        The Bulk Importer supports two ways to accomplish this: upload <b>via Globus Online</b> and
+        <b>upload via this interface</b>.  <b>Documentation</b> for this tool is available at <a href="http://kbase.us/bulk-upload-guide/">http://kbase.us/bulk-upload-guide/</a>.
     </p>
 </card>
 `;
