@@ -26568,6 +26568,7 @@ nav.right-side-nav > a > i.material-icons {
 .nav-btns a {
     margin-top: 0px;
     color: #0088cc !important;
+    vertical-align: bottom;
 }
 .nav-btns a i {
     font-size: 2.1em;
