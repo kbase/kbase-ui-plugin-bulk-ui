@@ -19,14 +19,12 @@
         "jquery": "^2.1.0",
         "bluebird": "^3.0.0",
         "bootstrap": "^3.3.0",
-        "numeral": "^1.5.0",
-        "kbase-common-js": "^1.0.0",
+        "numeral": "^2.0.0",
+        "kbase-common-js": "^2.5.0",
         "kbase-ui-widget": "^1.0.0",
-        "kbase-service-clients-js": "^1.0.0",
-        "kbase-data-api-client-js": "^1.0.0"
+        "kbase-service-clients-js": "^3.0.0"
     },
-    "devDependencies": {
-    },
+    "devDependencies": {},
     "ignore": [
         ".gitignore"
     ],
