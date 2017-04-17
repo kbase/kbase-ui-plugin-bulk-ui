@@ -1,22 +1,22 @@
-/*global define*/
-/*jslint white:true,browser:true */
-
 define([
     'bluebird',
-    'kb/common/html',
+    'kb_common/html',
     './host/iframeMessages',
     'bootstrap'
-], function (
+], function(
     Promise,
     html,
     IframeMessages
-    ) {
+) {
     'use strict';
 
     var t = html.tag,
         div = t('div'),
         iframe = t('iframe'),
-        table = t('table'), tr = t('tr'), th = t('th'), td = t('td');
+        table = t('table'),
+        tr = t('tr'),
+        th = t('th'),
+        td = t('td');
 
     function factory(config) {
         var container,
@@ -31,15 +31,15 @@ define([
 
         // VIEW
 
-//        function updateStats() {
-//            var stats = iframeMessages.stats(),
-//                content = table({class: 'table table-striped'}, [
-//                    Object.keys(stats).map(function (key) {
-//                        return tr([th(key), td(String(stats[key]))]);
-//                    })
-//                ]);
-//            container.querySelector('[data-element="stats"]').innerHTML = content;
-//        }
+        //        function updateStats() {
+        //            var stats = iframeMessages.stats(),
+        //                content = table({class: 'table table-striped'}, [
+        //                    Object.keys(stats).map(function (key) {
+        //                        return tr([th(key), td(String(stats[key]))]);
+        //                    })
+        //                ]);
+        //            container.querySelector('[data-element="stats"]').innerHTML = content;
+        //        }
 
         function getOrigin() {
             return document.location.origin;
@@ -50,9 +50,12 @@ define([
                 frameId = 'frame_' + frameNumber,
                 iframeIndex = '/modules/plugins/bulk-ui/iframe_root/dist/index.html',
                 iframeUrl = iframeOrigin + iframeIndex,
-                content = div({class: 'container-fluid', style: {
+                content = div({
+                    class: 'container-fluid',
+                    style: {
                         border: '0px blue dotted'
-                    }}, [
+                    }
+                }, [
                     // div({dataElement: 'stats'}),
                     iframe({
                         dataFrame: 'frame_' + frameNumber,
@@ -61,13 +64,13 @@ define([
                             frameId: 'frame_' + frameNumber
                         })),
                         style: {
-                            width: '100%', 
+                            width: '100%',
                             height: 'auto'
                         },
                         frameborder: 0,
                         scrolling: 'no',
                         src: iframeUrl
-                        // src: '/modules/plugins/bulk-ui/iframe_test/index.html'
+                            // src: '/modules/plugins/bulk-ui/iframe_test/index.html'
                     })
                 ]);
             return {
@@ -82,15 +85,15 @@ define([
         // API
 
         function attach(node) {
-            return Promise.try(function () {
+            return Promise.try(function() {
                 container = node;
             });
         }
 
         function start(params) {
-            return Promise.try(function () {
+            return Promise.try(function() {
                 var embeddedIframe = makeIframe();
-                
+
                 runtime.send('ui', 'setTitle', 'Bulk Import');
 
                 container.innerHTML = embeddedIframe.content;
@@ -99,7 +102,7 @@ define([
 
                 iframeMessages.listen({
                     name: 'ready',
-                    handler: function (message) {
+                    handler: function(message) {
                         if (message.frameId !== embeddedIframe.frameId) {
                             console.error('Unexpected "ready"', message, message.frameId, embeddedIframe.frameId);
                             return;
@@ -108,11 +111,11 @@ define([
                         iframeMessages.addPartner({
                             name: message.frameId,
                             host: embeddedIframe.host,
-                            window: container.querySelector('[data-frame="frame_'+ embeddedIframe.frameNumber+'"]').contentWindow
+                            window: container.querySelector('[data-frame="frame_' + embeddedIframe.frameNumber + '"]').contentWindow
                         });
-                        
+
                         // updateStats();
-                        
+
                         iframeMessages.send(message.from, {
                             name: 'start'
                         });
@@ -121,16 +124,16 @@ define([
 
                 iframeMessages.listen({
                     name: 'rendered',
-                    handler: function (message) {
+                    handler: function(message) {
                         var height = message.height,
-                            iframe = container.querySelector('[data-frame="frame_'+ embeddedIframe.frameNumber+'"]');
+                            iframe = container.querySelector('[data-frame="frame_' + embeddedIframe.frameNumber + '"]');
                         iframe.style.height = height + 'px';
                     }
                 });
-                
+
                 iframeMessages.listen({
                     name: 'authStatus',
-                    handler: function (message) {
+                    handler: function(message) {
                         iframeMessages.send(message.from, {
                             name: 'authInfo',
                             id: message.id,
@@ -139,10 +142,10 @@ define([
                         });
                     }
                 });
-                
+
                 iframeMessages.listen({
                     name: 'configProperty',
-                    handler: function (message) {
+                    handler: function(message) {
                         iframeMessages.send(message.from, {
                             name: 'config',
                             id: message.id,
@@ -153,7 +156,7 @@ define([
 
                 iframeMessages.listen({
                     name: 'config',
-                    handler: function (message) {
+                    handler: function(message) {
                         iframeMessages.send(message.from, {
                             name: 'config',
                             id: message.id,
@@ -167,7 +170,7 @@ define([
         }
 
         function stop() {
-            return Promise.try(function () {
+            return Promise.try(function() {
                 iframeMessages.stop();
                 container.innerHTML = '';
             });
@@ -181,7 +184,7 @@ define([
     }
 
     return {
-        make: function (config) {
+        make: function(config) {
             return factory(config);
         }
     };

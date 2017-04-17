@@ -1,14 +1,10 @@
-/*global define*/
-/*jslint white:true,browser:true*/
-define([
-], function () {
+define([], function() {
     'use strict';
 
-    
     function factoryHost(config) {
         var awaitingResponse = {},
             listeners = {},
-            lastId = 0,  
+            lastId = 0,
             sentCount = 0,
             receivedCount = 0,
             root = config.root,
@@ -18,8 +14,9 @@ define([
             lastId += 1;
             return 'msg_' + String(lastId);
         }
-        
+
         var partners = {};
+
         function addPartner(config) {
             partners[config.name] = config;
         }
@@ -35,7 +32,7 @@ define([
             var origin = event.origin || event.originalEvent.origin,
                 message = event.data,
                 listener, response;
-            
+
             if (message.id && awaitingResponse[message.id]) {
                 try {
                     response = awaitingResponse[message.id];
@@ -48,7 +45,7 @@ define([
             }
 
             if (listeners[message.name]) {
-                listeners[message.name].forEach(function (listener) {
+                listeners[message.name].forEach(function(listener) {
                     try {
                         listener.handler(message, event);
                         return;
@@ -59,13 +56,13 @@ define([
             }
 
         }
-        
+
         function getPartner(name) {
             var partner = partners[name];
             if (!partner) {
                 throw new Error('Partner ' + name + ' not registered');
             }
-            return partner;                
+            return partner;
         }
 
         function sendMessage(partnerName, message) {
@@ -83,22 +80,22 @@ define([
             };
             sendMessage(partnerName, message);
         }
-        
+
         function request(partnerName, message) {
-            return new Promise(function (resolve, reject) {
-                sendRequest(partnerName, message, function (response) {
+            return new Promise(function(resolve, reject) {
+                sendRequest(partnerName, message, function(response) {
                     resolve(response);
                 });
             });
         }
-        
+
         function setName(newName) {
             if (name !== undefined) {
                 throw new Error('Name is already set');
             }
             name = newName;
         }
-        
+
         function stats() {
             return {
                 sent: sentCount,
@@ -114,12 +111,12 @@ define([
         function stop() {
             root.removeEventListener('message', receiveMessage);
         }
-        
 
-        return {       
+
+        return {
             start: start,
             stop: stop,
-     
+
             addPartner: addPartner,
             request: request,
             send: sendMessage,
@@ -131,7 +128,7 @@ define([
     }
 
     return {
-        makeHost: function (config) {
+        makeHost: function(config) {
             return factoryHost(config);
         }
     };
