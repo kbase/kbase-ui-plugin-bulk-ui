@@ -1,4 +1,4 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==typeof c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
 
 (["1"], [], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
@@ -1258,13 +1258,13 @@ var define = $__System.amdDefine;
     isNaN: numberIsNaN
   });
   defineProperty(Number, 'parseInt', globals.parseInt, Number.parseInt !== globals.parseInt);
-  if (![, 1].find(function(item, idx) {
-    return idx === 0;
-  })) {
+  if ([, 1].find(function() {
+    return true;
+  }) === 1) {
     overrideNative(Array.prototype, 'find', ArrayPrototypeShims.find);
   }
-  if ([, 1].findIndex(function(item, idx) {
-    return idx === 0;
+  if ([, 1].findIndex(function() {
+    return true;
   }) !== 0) {
     overrideNative(Array.prototype, 'findIndex', ArrayPrototypeShims.findIndex);
   }
@@ -2681,7 +2681,8 @@ var define = $__System.amdDefine;
             }
             while ((i = i.next) !== head) {
               if (ES.SameValueZero(i.key, key)) {
-                i.key = i.value = empty;
+                i.key = empty;
+                i.value = empty;
                 i.prev.next = i.next;
                 i.next.prev = i.prev;
                 this._size -= 1;
@@ -2699,7 +2700,8 @@ var define = $__System.amdDefine;
             var i = head;
             var p = i.next;
             while ((i = p) !== head) {
-              i.key = i.value = empty;
+              i.key = empty;
+              i.value = empty;
               p = i.next;
               i.next = i.prev = head;
             }
@@ -2784,7 +2786,8 @@ var define = $__System.amdDefine;
         };
         var ensureMap = function ensureMap(set) {
           if (!set['[[SetData]]']) {
-            var m = set['[[SetData]]'] = new collectionShims.Map();
+            var m = new collectionShims.Map();
+            set['[[SetData]]'] = m;
             _forEach(keys(set._storage), function(key) {
               var k = decodeKey(key);
               m.set(k, k);
@@ -4643,25 +4646,23 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             "use strict";
 
             var hasOwn = Object.prototype.hasOwnProperty;
-            // feature test for Object.create support
-            var supportsCreate = typeof Object.create === "function";
-            // feature test for __proto__ support
-            var supportsProto = { __proto__: [] } instanceof Array;
             // feature test for Symbol support
             var supportsSymbol = typeof Symbol === "function";
             var toPrimitiveSymbol = supportsSymbol && typeof Symbol.toPrimitive !== "undefined" ? Symbol.toPrimitive : "@@toPrimitive";
             var iteratorSymbol = supportsSymbol && typeof Symbol.iterator !== "undefined" ? Symbol.iterator : "@@iterator";
-            // create an object in dictionary mode (a.k.a. "slow" mode in v8)
-            var createDictionary = supportsCreate ? function () {
-                return MakeDictionary(Object.create(null));
-            } : supportsProto ? function () {
-                return MakeDictionary({ __proto__: null });
-            } : function () {
-                return MakeDictionary({});
-            };
             var HashMap;
             (function (HashMap) {
+                var supportsCreate = typeof Object.create === "function"; // feature test for Object.create support
+                var supportsProto = { __proto__: [] } instanceof Array; // feature test for __proto__ support
                 var downLevel = !supportsCreate && !supportsProto;
+                // create an object in dictionary mode (a.k.a. "slow" mode in v8)
+                HashMap.create = supportsCreate ? function () {
+                    return MakeDictionary(Object.create(null));
+                } : supportsProto ? function () {
+                    return MakeDictionary({ __proto__: null });
+                } : function () {
+                    return MakeDictionary({});
+                };
                 HashMap.has = downLevel ? function (map, key) {
                     return hasOwn.call(map, key);
                 } : function (map, key) {
@@ -4675,17 +4676,19 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             })(HashMap || (HashMap = {}));
             // Load global or shim versions of Map, Set, and WeakMap
             var functionPrototype = Object.getPrototypeOf(Function);
-            var _Map = typeof Map === "function" && typeof Map.prototype.entries === "function" ? Map : CreateMapPolyfill();
-            var _Set = typeof Set === "function" && typeof Set.prototype.entries === "function" ? Set : CreateSetPolyfill();
-            var _WeakMap = typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
+            var usePolyfill = typeof process === "object" && process.env && process.env["REFLECT_METADATA_USE_MAP_POLYFILL"] === "true";
+            var _Map = !usePolyfill && typeof Map === "function" && typeof Map.prototype.entries === "function" ? Map : CreateMapPolyfill();
+            var _Set = !usePolyfill && typeof Set === "function" && typeof Set.prototype.entries === "function" ? Set : CreateSetPolyfill();
+            var _WeakMap = !usePolyfill && typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
             // [[Metadata]] internal slot
+            // https://rbuckton.github.io/reflect-metadata/#ordinary-object-internal-methods-and-internal-slots
             var Metadata = new _WeakMap();
             /**
               * Applies a set of decorators to a property of a target object.
               * @param decorators An array of decorators.
               * @param target The target object.
-              * @param targetKey (Optional) The property key to decorate.
-              * @param targetDescriptor (Optional) The property descriptor for the target key
+              * @param propertyKey (Optional) The property key to decorate.
+              * @param attributes (Optional) The property descriptor for the target key.
               * @remarks Decorators are applied in reverse order.
               * @example
               *
@@ -4719,14 +4722,14 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *             Object.getOwnPropertyDescriptor(Example.prototype, "method")));
               *
               */
-            function decorate(decorators, target, targetKey, targetDescriptor) {
-                if (!IsUndefined(targetKey)) {
+            function decorate(decorators, target, propertyKey, attributes) {
+                if (!IsUndefined(propertyKey)) {
                     if (!IsArray(decorators)) throw new TypeError();
                     if (!IsObject(target)) throw new TypeError();
-                    if (!IsObject(targetDescriptor) && !IsUndefined(targetDescriptor) && !IsNull(targetDescriptor)) throw new TypeError();
-                    if (IsNull(targetDescriptor)) targetDescriptor = undefined;
-                    targetKey = ToPropertyKey(targetKey);
-                    return DecorateProperty(decorators, target, targetKey, targetDescriptor);
+                    if (!IsObject(attributes) && !IsUndefined(attributes) && !IsNull(attributes)) throw new TypeError();
+                    if (IsNull(attributes)) attributes = undefined;
+                    propertyKey = ToPropertyKey(propertyKey);
+                    return DecorateProperty(decorators, target, propertyKey, attributes);
                 } else {
                     if (!IsArray(decorators)) throw new TypeError();
                     if (!IsConstructor(target)) throw new TypeError();
@@ -4734,6 +4737,8 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 }
             }
             Reflect.decorate = decorate;
+            // 4.1.2 Reflect.metadata(metadataKey, metadataValue)
+            // https://rbuckton.github.io/reflect-metadata/#reflect.metadata
             /**
               * A default metadata decorator factory that can be used on a class, class member, or parameter.
               * @param metadataKey The key for the metadata entry.
@@ -4775,15 +4780,10 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *
               */
             function metadata(metadataKey, metadataValue) {
-                function decorator(target, targetKey) {
-                    if (!IsUndefined(targetKey)) {
-                        if (!IsObject(target)) throw new TypeError();
-                        targetKey = ToPropertyKey(targetKey);
-                        OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
-                    } else {
-                        if (!IsConstructor(target)) throw new TypeError();
-                        OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, /*targetKey*/undefined);
-                    }
+                function decorator(target, propertyKey) {
+                    if (!IsObject(target)) throw new TypeError();
+                    if (!IsUndefined(propertyKey) && !IsPropertyKey(propertyKey)) throw new TypeError();
+                    OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, propertyKey);
                 }
                 return decorator;
             }
@@ -4793,7 +4793,7 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               * @param metadataKey A key used to store and retrieve metadata.
               * @param metadataValue A value that contains attached metadata.
               * @param target The target object on which to define metadata.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @example
               *
               *     class Example {
@@ -4827,17 +4827,17 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     }
               *
               */
-            function defineMetadata(metadataKey, metadataValue, target, targetKey) {
+            function defineMetadata(metadataKey, metadataValue, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, propertyKey);
             }
             Reflect.defineMetadata = defineMetadata;
             /**
               * Gets a value indicating whether the target object or its prototype chain has the provided metadata key defined.
               * @param metadataKey A key used to store and retrieve metadata.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns `true` if the metadata key was defined on the target object or its prototype chain; otherwise, `false`.
               * @example
               *
@@ -4867,17 +4867,17 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.hasMetadata("custom:annotation", Example.prototype, "method");
               *
               */
-            function hasMetadata(metadataKey, target, targetKey) {
+            function hasMetadata(metadataKey, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryHasMetadata(metadataKey, target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryHasMetadata(metadataKey, target, propertyKey);
             }
             Reflect.hasMetadata = hasMetadata;
             /**
               * Gets a value indicating whether the target object has the provided metadata key defined.
               * @param metadataKey A key used to store and retrieve metadata.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns `true` if the metadata key was defined on the target object; otherwise, `false`.
               * @example
               *
@@ -4907,17 +4907,17 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.hasOwnMetadata("custom:annotation", Example.prototype, "method");
               *
               */
-            function hasOwnMetadata(metadataKey, target, targetKey) {
+            function hasOwnMetadata(metadataKey, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryHasOwnMetadata(metadataKey, target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryHasOwnMetadata(metadataKey, target, propertyKey);
             }
             Reflect.hasOwnMetadata = hasOwnMetadata;
             /**
               * Gets the metadata value for the provided metadata key on the target object or its prototype chain.
               * @param metadataKey A key used to store and retrieve metadata.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns The metadata value for the metadata key if found; otherwise, `undefined`.
               * @example
               *
@@ -4947,17 +4947,17 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.getMetadata("custom:annotation", Example.prototype, "method");
               *
               */
-            function getMetadata(metadataKey, target, targetKey) {
+            function getMetadata(metadataKey, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryGetMetadata(metadataKey, target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryGetMetadata(metadataKey, target, propertyKey);
             }
             Reflect.getMetadata = getMetadata;
             /**
               * Gets the metadata value for the provided metadata key on the target object.
               * @param metadataKey A key used to store and retrieve metadata.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns The metadata value for the metadata key if found; otherwise, `undefined`.
               * @example
               *
@@ -4987,16 +4987,16 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.getOwnMetadata("custom:annotation", Example.prototype, "method");
               *
               */
-            function getOwnMetadata(metadataKey, target, targetKey) {
+            function getOwnMetadata(metadataKey, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryGetOwnMetadata(metadataKey, target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryGetOwnMetadata(metadataKey, target, propertyKey);
             }
             Reflect.getOwnMetadata = getOwnMetadata;
             /**
               * Gets the metadata keys defined on the target object or its prototype chain.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns An array of unique metadata keys.
               * @example
               *
@@ -5026,16 +5026,16 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.getMetadataKeys(Example.prototype, "method");
               *
               */
-            function getMetadataKeys(target, targetKey) {
+            function getMetadataKeys(target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryMetadataKeys(target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryMetadataKeys(target, propertyKey);
             }
             Reflect.getMetadataKeys = getMetadataKeys;
             /**
               * Gets the unique metadata keys defined on the target object.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns An array of unique metadata keys.
               * @example
               *
@@ -5065,17 +5065,17 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.getOwnMetadataKeys(Example.prototype, "method");
               *
               */
-            function getOwnMetadataKeys(target, targetKey) {
+            function getOwnMetadataKeys(target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                return OrdinaryOwnMetadataKeys(target, targetKey);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                return OrdinaryOwnMetadataKeys(target, propertyKey);
             }
             Reflect.getOwnMetadataKeys = getOwnMetadataKeys;
             /**
               * Deletes the metadata entry from the target object with the provided key.
               * @param metadataKey A key used to store and retrieve metadata.
               * @param target The target object on which the metadata is defined.
-              * @param targetKey (Optional) The property key for the target.
+              * @param propertyKey (Optional) The property key for the target.
               * @returns `true` if the metadata entry was found and deleted; otherwise, false.
               * @example
               *
@@ -5105,16 +5105,15 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
               *     result = Reflect.deleteMetadata("custom:annotation", Example.prototype, "method");
               *
               */
-            function deleteMetadata(metadataKey, target, targetKey) {
-                // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#deletemetadata-metadatakey-p-
+            function deleteMetadata(metadataKey, target, propertyKey) {
                 if (!IsObject(target)) throw new TypeError();
-                if (!IsUndefined(targetKey)) targetKey = ToPropertyKey(targetKey);
-                var metadataMap = GetOrCreateMetadataMap(target, targetKey, /*create*/false);
+                if (!IsUndefined(propertyKey)) propertyKey = ToPropertyKey(propertyKey);
+                var metadataMap = GetOrCreateMetadataMap(target, propertyKey, /*Create*/false);
                 if (IsUndefined(metadataMap)) return false;
                 if (!metadataMap.delete(metadataKey)) return false;
                 if (metadataMap.size > 0) return true;
                 var targetMetadata = Metadata.get(target);
-                targetMetadata.delete(targetKey);
+                targetMetadata.delete(propertyKey);
                 if (targetMetadata.size > 0) return true;
                 Metadata.delete(target);
                 return true;
@@ -5157,10 +5156,8 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 }
                 return metadataMap;
             }
-            // Ordinary Object Internal Methods and Internal Slots
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinary-object-internal-methods-and-internal-slots
-            // OrdinaryHasMetadata(MetadataKey, O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryhasmetadata--metadatakey-o-p-
+            // 3.1.1.1 OrdinaryHasMetadata(MetadataKey, O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinaryhasmetadata
             function OrdinaryHasMetadata(MetadataKey, O, P) {
                 var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
                 if (hasOwn) return true;
@@ -5168,15 +5165,15 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 if (!IsNull(parent)) return OrdinaryHasMetadata(MetadataKey, parent, P);
                 return false;
             }
-            // OrdinaryHasOwnMetadata(MetadataKey, O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryhasownmetadata--metadatakey-o-p-
+            // 3.1.2.1 OrdinaryHasOwnMetadata(MetadataKey, O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinaryhasownmetadata
             function OrdinaryHasOwnMetadata(MetadataKey, O, P) {
-                var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
+                var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/false);
                 if (IsUndefined(metadataMap)) return false;
                 return ToBoolean(metadataMap.has(MetadataKey));
             }
-            // OrdinaryGetMetadata(MetadataKey, O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarygetmetadata--metadatakey-o-p-
+            // 3.1.3.1 OrdinaryGetMetadata(MetadataKey, O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinarygetmetadata
             function OrdinaryGetMetadata(MetadataKey, O, P) {
                 var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
                 if (hasOwn) return OrdinaryGetOwnMetadata(MetadataKey, O, P);
@@ -5184,21 +5181,21 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 if (!IsNull(parent)) return OrdinaryGetMetadata(MetadataKey, parent, P);
                 return undefined;
             }
-            // OrdinaryGetOwnMetadata(MetadataKey, O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarygetownmetadata--metadatakey-o-p-
+            // 3.1.4.1 OrdinaryGetOwnMetadata(MetadataKey, O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinarygetownmetadata
             function OrdinaryGetOwnMetadata(MetadataKey, O, P) {
-                var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
+                var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/false);
                 if (IsUndefined(metadataMap)) return undefined;
                 return metadataMap.get(MetadataKey);
             }
-            // OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarydefineownmetadata--metadatakey-metadatavalue-o-p-
+            // 3.1.5.1 OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinarydefineownmetadata
             function OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P) {
-                var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/true);
+                var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/true);
                 metadataMap.set(MetadataKey, MetadataValue);
             }
-            // OrdinaryMetadataKeys(O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinarymetadatakeys--o-p-
+            // 3.1.6.1 OrdinaryMetadataKeys(O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinarymetadatakeys
             function OrdinaryMetadataKeys(O, P) {
                 var ownKeys = OrdinaryOwnMetadataKeys(O, P);
                 var parent = OrdinaryGetPrototypeOf(O);
@@ -5226,36 +5223,34 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 }
                 return keys;
             }
-            // OrdinaryOwnMetadataKeys(O, P)
-            // https://github.com/rbuckton/ReflectDecorators/blob/master/spec/metadata.md#ordinaryownmetadatakeys--o-p-
+            // 3.1.7.1 OrdinaryOwnMetadataKeys(O, P)
+            // https://rbuckton.github.io/reflect-metadata/#ordinaryownmetadatakeys
             function OrdinaryOwnMetadataKeys(O, P) {
-                var metadataMap = GetOrCreateMetadataMap(O, P, /*create*/false);
                 var keys = [];
+                var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/false);
                 if (IsUndefined(metadataMap)) return keys;
                 var keysObj = metadataMap.keys();
                 var iterator = GetIterator(keysObj);
+                var k = 0;
                 while (true) {
                     var next = IteratorStep(iterator);
+                    if (!next) {
+                        keys.length = k;
+                        return keys;
+                    }
+                    var nextValue = IteratorValue(next);
                     try {
-                        if (!next) return keys;
-                        var nextValue = IteratorValue(next);
-                        keys.push(nextValue);
+                        keys[k] = nextValue;
                     } catch (e) {
                         try {
-                            if (next) {
-                                next = false;
-                                IteratorClose(iterator);
-                            }
+                            IteratorClose(iterator);
                         } finally {
                             throw e;
                         }
-                    } finally {
-                        if (next) IteratorClose(iterator);
                     }
+                    k++;
                 }
             }
-            // ECMAScript Specification
-            // https://tc39.github.io/ecma262/
             // 6 ECMAScript Data Typ0es and Values
             // https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values
             function Type(x) {
@@ -5388,6 +5383,18 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             function IsConstructor(argument) {
                 // NOTE: This is an approximation as we cannot check for [[Construct]] internal method.
                 return typeof argument === "function";
+            }
+            // 7.2.7 IsPropertyKey(argument)
+            // https://tc39.github.io/ecma262/#sec-ispropertykey
+            function IsPropertyKey(argument) {
+                switch (Type(argument)) {
+                    case 3 /* String */:
+                        return true;
+                    case 4 /* Symbol */:
+                        return true;
+                    default:
+                        return false;
+                }
             }
             // 7.3 Operations on Objects
             // https://tc39.github.io/ecma262/#sec-operations-on-objects
@@ -5568,14 +5575,15 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                         return this.entries();
                     };
                     Map.prototype._find = function (key, insert) {
-                        if (this._cacheKey === key) return this._cacheIndex;
-                        var index = this._keys.indexOf(key);
-                        if (index < 0 && insert) {
-                            index = this._keys.length;
+                        if (this._cacheKey !== key) {
+                            this._cacheIndex = this._keys.indexOf(this._cacheKey = key);
+                        }
+                        if (this._cacheIndex < 0 && insert) {
+                            this._cacheIndex = this._keys.length;
                             this._keys.push(key);
                             this._values.push(undefined);
                         }
-                        return this._cacheKey = key, this._cacheIndex = index;
+                        return this._cacheIndex;
                     };
                     return Map;
                 }();
@@ -5635,7 +5643,7 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
             // naive WeakMap shim
             function CreateWeakMapPolyfill() {
                 var UUID_SIZE = 16;
-                var keys = createDictionary();
+                var keys = HashMap.create();
                 var rootKey = CreateUniqueKey();
                 return function () {
                     function WeakMap() {
@@ -5673,7 +5681,7 @@ $__System.registerDynamic("4", [], false, function ($__require, $__exports, $__m
                 function GetOrCreateWeakMapTable(target, create) {
                     if (!hasOwn.call(target, rootKey)) {
                         if (!create) return undefined;
-                        Object.defineProperty(target, rootKey, { value: createDictionary() });
+                        Object.defineProperty(target, rootKey, { value: HashMap.create() });
                     }
                     return target[rootKey];
                 }
