@@ -1,4 +1,4 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==typeof c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
 
 (["5","6"], [], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
@@ -161,7 +161,7 @@ var define = $__System.amdDefine;
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core')) : typeof define === 'function' && define.amd ? define("9", ["exports", "a"], factory) : (factory((global.ng = global.ng || {}, global.ng.compiler = global.ng.compiler || {}), global.ng.core));
 }(this, function(exports, _angular_core) {
   'use strict';
-  var VERSION = new _angular_core.Version('2.4.4');
+  var VERSION = new _angular_core.Version('2.4.10');
   var TextAst = (function() {
     function TextAst(value, ngContentIndex, sourceSpan) {
       this.value = value;
@@ -1015,7 +1015,7 @@ var define = $__System.amdDefine;
   function getHtmlTagDefinition(tagName) {
     return TAG_DEFINITIONS[tagName.toLowerCase()] || _DEFAULT_TAG_DEFINITION;
   }
-  var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' + '([-\\w]+)|' + '(?:\\.([-\\w]+))|' + '(?:\\[([.-\\w*]+)(?:=([^\\]]*))?\\])|' + '(\\))|' + '(\\s*,\\s*)', 'g');
+  var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' + '([-\\w]+)|' + '(?:\\.([-\\w]+))|' + '(?:\\[([-.\\w*]+)(?:=([^\\]]*))?\\])|' + '(\\))|' + '(\\s*,\\s*)', 'g');
   var CssSelector = (function() {
     function CssSelector() {
       this.element = null;
@@ -3662,6 +3662,43 @@ var define = $__System.amdDefine;
       }
       return new ParseLocation(this.file, offset, line, col);
     };
+    ParseLocation.prototype.getContext = function(maxChars, maxLines) {
+      var content = this.file.content;
+      var startOffset = this.offset;
+      if (isPresent(startOffset)) {
+        if (startOffset > content.length - 1) {
+          startOffset = content.length - 1;
+        }
+        var endOffset = startOffset;
+        var ctxChars = 0;
+        var ctxLines = 0;
+        while (ctxChars < maxChars && startOffset > 0) {
+          startOffset--;
+          ctxChars++;
+          if (content[startOffset] == '\n') {
+            if (++ctxLines == maxLines) {
+              break;
+            }
+          }
+        }
+        ctxChars = 0;
+        ctxLines = 0;
+        while (ctxChars < maxChars && endOffset < content.length - 1) {
+          endOffset++;
+          ctxChars++;
+          if (content[endOffset] == '\n') {
+            if (++ctxLines == maxLines) {
+              break;
+            }
+          }
+        }
+        return {
+          before: content.substring(startOffset, this.offset),
+          after: content.substring(this.offset, endOffset + 1)
+        };
+      }
+      return null;
+    };
     return ParseLocation;
   }());
   var ParseSourceFile = (function() {
@@ -3700,43 +3737,9 @@ var define = $__System.amdDefine;
       this.level = level;
     }
     ParseError.prototype.toString = function() {
-      var source = this.span.start.file.content;
-      var ctxStart = this.span.start.offset;
-      var contextStr = '';
-      var details = '';
-      if (isPresent(ctxStart)) {
-        if (ctxStart > source.length - 1) {
-          ctxStart = source.length - 1;
-        }
-        var ctxEnd = ctxStart;
-        var ctxLen = 0;
-        var ctxLines = 0;
-        while (ctxLen < 100 && ctxStart > 0) {
-          ctxStart--;
-          ctxLen++;
-          if (source[ctxStart] == '\n') {
-            if (++ctxLines == 3) {
-              break;
-            }
-          }
-        }
-        ctxLen = 0;
-        ctxLines = 0;
-        while (ctxLen < 100 && ctxEnd < source.length - 1) {
-          ctxEnd++;
-          ctxLen++;
-          if (source[ctxEnd] == '\n') {
-            if (++ctxLines == 3) {
-              break;
-            }
-          }
-        }
-        var context = source.substring(ctxStart, this.span.start.offset) + '[ERROR ->]' + source.substring(this.span.start.offset, ctxEnd + 1);
-        contextStr = " (\"" + context + "\")";
-      }
-      if (this.span.details) {
-        details = ", " + this.span.details;
-      }
+      var ctx = this.span.start.getContext(100, 3);
+      var contextStr = ctx ? " (\"" + ctx.before + "[ERROR ->]" + ctx.after + "\")" : '';
+      var details = this.span.details ? ", " + this.span.details : '';
       return "" + this.msg + contextStr + ": " + this.span.start + details;
     };
     return ParseError;
@@ -4963,9 +4966,14 @@ var define = $__System.amdDefine;
       return this._hashTag("/" + tag, {}, false);
     };
     PlaceholderRegistry.prototype._generateUniqueName = function(base) {
-      var next = this._placeHolderNameCounts[base];
-      this._placeHolderNameCounts[base] = next ? next + 1 : 1;
-      return next ? base + "_" + next : base;
+      var seen = this._placeHolderNameCounts.hasOwnProperty(base);
+      if (!seen) {
+        this._placeHolderNameCounts[base] = 1;
+        return base;
+      }
+      var id = this._placeHolderNameCounts[base];
+      this._placeHolderNameCounts[base] = id + 1;
+      return base + "_" + id;
     };
     return PlaceholderRegistry;
   }());
@@ -5330,7 +5338,9 @@ var define = $__System.amdDefine;
           var message = _this._createI18nMessage([attr], meaning, '');
           var nodes = _this._translations.get(message);
           if (nodes) {
-            if (nodes[0] instanceof Text) {
+            if (nodes.length == 0) {
+              translatedAttributes.push(new Attribute$1(attr.name, '', attr.sourceSpan));
+            } else if (nodes[0] instanceof Text) {
               var value = ((nodes[0])).value;
               translatedAttributes.push(new Attribute$1(attr.name, value, attr.sourceSpan));
             } else {
@@ -5426,7 +5436,7 @@ var define = $__System.amdDefine;
   function getXmlTagDefinition(tagName) {
     return _TAG_DEFINITION;
   }
-  var __extends$8 = (this && this.__extends) || function(d, b) {
+  var __extends$9 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -5436,7 +5446,7 @@ var define = $__System.amdDefine;
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var XmlParser = (function(_super) {
-    __extends$8(XmlParser, _super);
+    __extends$9(XmlParser, _super);
     function XmlParser() {
       _super.call(this, getXmlTagDefinition);
     }
@@ -5448,7 +5458,7 @@ var define = $__System.amdDefine;
     };
     return XmlParser;
   }(Parser$1));
-  var __extends$9 = (this && this.__extends) || function(d, b) {
+  var __extends$10 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -5506,7 +5516,7 @@ var define = $__System.amdDefine;
     });
   }
   var _SerializerIgnoreIcuExpVisitor = (function(_super) {
-    __extends$9(_SerializerIgnoreIcuExpVisitor, _super);
+    __extends$10(_SerializerIgnoreIcuExpVisitor, _super);
     function _SerializerIgnoreIcuExpVisitor() {
       _super.apply(this, arguments);
     }
@@ -5653,31 +5663,25 @@ var define = $__System.amdDefine;
   function utf8Encode(str) {
     var encoded = '';
     for (var index = 0; index < str.length; index++) {
-      var codePoint = decodeSurrogatePairs(str, index);
+      var codePoint = str.charCodeAt(index);
+      if (codePoint >= 0xd800 && codePoint <= 0xdbff && str.length > (index + 1)) {
+        var low = str.charCodeAt(index + 1);
+        if (low >= 0xdc00 && low <= 0xdfff) {
+          index++;
+          codePoint = ((codePoint - 0xd800) << 10) + low - 0xdc00 + 0x10000;
+        }
+      }
       if (codePoint <= 0x7f) {
         encoded += String.fromCharCode(codePoint);
       } else if (codePoint <= 0x7ff) {
-        encoded += String.fromCharCode(0xc0 | codePoint >>> 6, 0x80 | codePoint & 0x3f);
+        encoded += String.fromCharCode(((codePoint >> 6) & 0x1F) | 0xc0, (codePoint & 0x3f) | 0x80);
       } else if (codePoint <= 0xffff) {
-        encoded += String.fromCharCode(0xe0 | codePoint >>> 12, 0x80 | codePoint >>> 6 & 0x3f, 0x80 | codePoint & 0x3f);
+        encoded += String.fromCharCode((codePoint >> 12) | 0xe0, ((codePoint >> 6) & 0x3f) | 0x80, (codePoint & 0x3f) | 0x80);
       } else if (codePoint <= 0x1fffff) {
-        encoded += String.fromCharCode(0xf0 | codePoint >>> 18, 0x80 | codePoint >>> 12 & 0x3f, 0x80 | codePoint >>> 6 & 0x3f, 0x80 | codePoint & 0x3f);
+        encoded += String.fromCharCode(((codePoint >> 18) & 0x07) | 0xf0, ((codePoint >> 12) & 0x3f) | 0x80, ((codePoint >> 6) & 0x3f) | 0x80, (codePoint & 0x3f) | 0x80);
       }
     }
     return encoded;
-  }
-  function decodeSurrogatePairs(str, index) {
-    if (index < 0 || index >= str.length) {
-      throw new Error("index=" + index + " is out of range in \"" + str + "\"");
-    }
-    var high = str.charCodeAt(index);
-    if (high >= 0xd800 && high <= 0xdfff && str.length > index + 1) {
-      var low = byteAt(str, index + 1);
-      if (low >= 0xdc00 && low <= 0xdfff) {
-        return (high - 0xd800) * 0x400 + low - 0xdc00 + 0x10000;
-      }
-    }
-    return high;
   }
   function add32(a, b) {
     return add32to64(a, b)[1];
@@ -5791,7 +5795,17 @@ var define = $__System.amdDefine;
     }
     return product;
   }
-  var __extends$10 = (this && this.__extends) || function(d, b) {
+  var Serializer = (function() {
+    function Serializer() {}
+    Serializer.prototype.write = function(messages) {};
+    Serializer.prototype.load = function(content, url) {};
+    Serializer.prototype.digest = function(message) {};
+    Serializer.prototype.createNameMapper = function(message) {
+      return null;
+    };
+    return Serializer;
+  }());
+  var __extends$11 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -5892,7 +5906,7 @@ var define = $__System.amdDefine;
     return Text;
   }());
   var CR = (function(_super) {
-    __extends$10(CR, _super);
+    __extends$11(CR, _super);
     function CR(ws) {
       if (ws === void 0) {
         ws = 0;
@@ -5907,6 +5921,15 @@ var define = $__System.amdDefine;
       return text.replace(entry[0], entry[1]);
     }, text);
   }
+  var __extends$8 = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
   var _VERSION = '1.2';
   var _XMLNS = 'urn:oasis:names:tc:xliff:document:1.2';
   var _SOURCE_LANG = 'en';
@@ -5914,8 +5937,11 @@ var define = $__System.amdDefine;
   var _SOURCE_TAG = 'source';
   var _TARGET_TAG = 'target';
   var _UNIT_TAG = 'trans-unit';
-  var Xliff = (function() {
-    function Xliff() {}
+  var Xliff = (function(_super) {
+    __extends$8(Xliff, _super);
+    function Xliff() {
+      _super.apply(this, arguments);
+    }
     Xliff.prototype.write = function(messages) {
       var _this = this;
       var visitor = new _WriteVisitor();
@@ -5984,7 +6010,7 @@ var define = $__System.amdDefine;
       return digest(message);
     };
     return Xliff;
-  }());
+  }(Serializer));
   var _WriteVisitor = (function() {
     function _WriteVisitor() {}
     _WriteVisitor.prototype.visitText = function(text, context) {
@@ -6137,13 +6163,25 @@ var define = $__System.amdDefine;
         return "x-" + tag;
     }
   }
+  var __extends$12 = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
   var _MESSAGES_TAG = 'messagebundle';
   var _MESSAGE_TAG = 'msg';
   var _PLACEHOLDER_TAG$1 = 'ph';
   var _EXEMPLE_TAG = 'ex';
   var _DOCTYPE = "<!ELEMENT messagebundle (msg)*>\n<!ATTLIST messagebundle class CDATA #IMPLIED>\n\n<!ELEMENT msg (#PCDATA|ph|source)*>\n<!ATTLIST msg id CDATA #IMPLIED>\n<!ATTLIST msg seq CDATA #IMPLIED>\n<!ATTLIST msg name CDATA #IMPLIED>\n<!ATTLIST msg desc CDATA #IMPLIED>\n<!ATTLIST msg meaning CDATA #IMPLIED>\n<!ATTLIST msg obsolete (obsolete) #IMPLIED>\n<!ATTLIST msg xml:space (default|preserve) \"default\">\n<!ATTLIST msg is_hidden CDATA #IMPLIED>\n\n<!ELEMENT source (#PCDATA)>\n\n<!ELEMENT ph (#PCDATA|ex)*>\n<!ATTLIST ph name CDATA #REQUIRED>\n\n<!ELEMENT ex (#PCDATA)>";
-  var Xmb = (function() {
-    function Xmb() {}
+  var Xmb = (function(_super) {
+    __extends$12(Xmb, _super);
+    function Xmb() {
+      _super.apply(this, arguments);
+    }
     Xmb.prototype.write = function(messages) {
       var _this = this;
       var exampleVisitor = new ExampleVisitor();
@@ -6155,6 +6193,7 @@ var define = $__System.amdDefine;
         if (visited[id])
           return;
         visited[id] = true;
+        var mapper = _this.createNameMapper(message);
         var attrs = {id: id};
         if (message.description) {
           attrs['desc'] = message.description;
@@ -6162,7 +6201,7 @@ var define = $__System.amdDefine;
         if (message.meaning) {
           attrs['meaning'] = message.meaning;
         }
-        rootNode.children.push(new CR(2), new Tag(_MESSAGE_TAG, attrs, visitor.serialize(message.nodes)));
+        rootNode.children.push(new CR(2), new Tag(_MESSAGE_TAG, attrs, visitor.serialize(message.nodes, {mapper: mapper})));
       });
       rootNode.children.push(new CR());
       return serialize([new Declaration({
@@ -6176,50 +6215,57 @@ var define = $__System.amdDefine;
     Xmb.prototype.digest = function(message) {
       return digest$1(message);
     };
+    Xmb.prototype.createNameMapper = function(message) {
+      return new XmbPlaceholderMapper(message);
+    };
     return Xmb;
-  }());
+  }(Serializer));
   var _Visitor$2 = (function() {
     function _Visitor() {}
-    _Visitor.prototype.visitText = function(text, context) {
+    _Visitor.prototype.visitText = function(text, ctx) {
       return [new Text$2(text.value)];
     };
-    _Visitor.prototype.visitContainer = function(container, context) {
+    _Visitor.prototype.visitContainer = function(container, ctx) {
       var _this = this;
       var nodes = [];
       container.children.forEach(function(node) {
-        return nodes.push.apply(nodes, node.visit(_this));
+        return nodes.push.apply(nodes, node.visit(_this, ctx));
       });
       return nodes;
     };
-    _Visitor.prototype.visitIcu = function(icu, context) {
+    _Visitor.prototype.visitIcu = function(icu, ctx) {
       var _this = this;
       var nodes = [new Text$2("{" + icu.expressionPlaceholder + ", " + icu.type + ", ")];
       Object.keys(icu.cases).forEach(function(c) {
-        nodes.push.apply(nodes, [new Text$2(c + " {")].concat(icu.cases[c].visit(_this), [new Text$2("} ")]));
+        nodes.push.apply(nodes, [new Text$2(c + " {")].concat(icu.cases[c].visit(_this, ctx), [new Text$2("} ")]));
       });
       nodes.push(new Text$2("}"));
       return nodes;
     };
-    _Visitor.prototype.visitTagPlaceholder = function(ph, context) {
+    _Visitor.prototype.visitTagPlaceholder = function(ph, ctx) {
       var startEx = new Tag(_EXEMPLE_TAG, {}, [new Text$2("<" + ph.tag + ">")]);
-      var startTagPh = new Tag(_PLACEHOLDER_TAG$1, {name: ph.startName}, [startEx]);
+      var name = ctx.mapper.toPublicName(ph.startName);
+      var startTagPh = new Tag(_PLACEHOLDER_TAG$1, {name: name}, [startEx]);
       if (ph.isVoid) {
         return [startTagPh];
       }
       var closeEx = new Tag(_EXEMPLE_TAG, {}, [new Text$2("</" + ph.tag + ">")]);
-      var closeTagPh = new Tag(_PLACEHOLDER_TAG$1, {name: ph.closeName}, [closeEx]);
-      return [startTagPh].concat(this.serialize(ph.children), [closeTagPh]);
+      name = ctx.mapper.toPublicName(ph.closeName);
+      var closeTagPh = new Tag(_PLACEHOLDER_TAG$1, {name: name}, [closeEx]);
+      return [startTagPh].concat(this.serialize(ph.children, ctx), [closeTagPh]);
     };
-    _Visitor.prototype.visitPlaceholder = function(ph, context) {
-      return [new Tag(_PLACEHOLDER_TAG$1, {name: ph.name})];
+    _Visitor.prototype.visitPlaceholder = function(ph, ctx) {
+      var name = ctx.mapper.toPublicName(ph.name);
+      return [new Tag(_PLACEHOLDER_TAG$1, {name: name})];
     };
-    _Visitor.prototype.visitIcuPlaceholder = function(ph, context) {
-      return [new Tag(_PLACEHOLDER_TAG$1, {name: ph.name})];
+    _Visitor.prototype.visitIcuPlaceholder = function(ph, ctx) {
+      var name = ctx.mapper.toPublicName(ph.name);
+      return [new Tag(_PLACEHOLDER_TAG$1, {name: name})];
     };
-    _Visitor.prototype.serialize = function(nodes) {
+    _Visitor.prototype.serialize = function(nodes, ctx) {
       var _this = this;
       return (_a = []).concat.apply(_a, nodes.map(function(node) {
-        return node.visit(_this);
+        return node.visit(_this, ctx);
       }));
       var _a;
     };
@@ -6252,11 +6298,85 @@ var define = $__System.amdDefine;
     ExampleVisitor.prototype.visitDoctype = function(doctype) {};
     return ExampleVisitor;
   }());
+  var XmbPlaceholderMapper = (function() {
+    function XmbPlaceholderMapper(message) {
+      var _this = this;
+      this.internalToXmb = {};
+      this.xmbToNextId = {};
+      this.xmbToInternal = {};
+      message.nodes.forEach(function(node) {
+        return node.visit(_this);
+      });
+    }
+    XmbPlaceholderMapper.prototype.toPublicName = function(internalName) {
+      return this.internalToXmb.hasOwnProperty(internalName) ? this.internalToXmb[internalName] : null;
+    };
+    XmbPlaceholderMapper.prototype.toInternalName = function(publicName) {
+      return this.xmbToInternal.hasOwnProperty(publicName) ? this.xmbToInternal[publicName] : null;
+    };
+    XmbPlaceholderMapper.prototype.visitText = function(text, ctx) {
+      return null;
+    };
+    XmbPlaceholderMapper.prototype.visitContainer = function(container, ctx) {
+      var _this = this;
+      container.children.forEach(function(child) {
+        return child.visit(_this);
+      });
+    };
+    XmbPlaceholderMapper.prototype.visitIcu = function(icu, ctx) {
+      var _this = this;
+      Object.keys(icu.cases).forEach(function(k) {
+        icu.cases[k].visit(_this);
+      });
+    };
+    XmbPlaceholderMapper.prototype.visitTagPlaceholder = function(ph, ctx) {
+      var _this = this;
+      this.addPlaceholder(ph.startName);
+      ph.children.forEach(function(child) {
+        return child.visit(_this);
+      });
+      this.addPlaceholder(ph.closeName);
+    };
+    XmbPlaceholderMapper.prototype.visitPlaceholder = function(ph, ctx) {
+      this.addPlaceholder(ph.name);
+    };
+    XmbPlaceholderMapper.prototype.visitIcuPlaceholder = function(ph, ctx) {
+      this.addPlaceholder(ph.name);
+    };
+    XmbPlaceholderMapper.prototype.addPlaceholder = function(internalName) {
+      if (!internalName || this.internalToXmb.hasOwnProperty(internalName)) {
+        return;
+      }
+      var xmbName = internalName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+      if (this.xmbToInternal.hasOwnProperty(xmbName)) {
+        var nextId = this.xmbToNextId[xmbName];
+        this.xmbToNextId[xmbName] = nextId + 1;
+        xmbName = xmbName + "_" + nextId;
+      } else {
+        this.xmbToNextId[xmbName] = 1;
+      }
+      this.internalToXmb[internalName] = xmbName;
+      this.xmbToInternal[xmbName] = internalName;
+    };
+    return XmbPlaceholderMapper;
+  }());
+  var __extends$13 = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
   var _TRANSLATIONS_TAG = 'translationbundle';
   var _TRANSLATION_TAG = 'translation';
   var _PLACEHOLDER_TAG$2 = 'ph';
-  var Xtb = (function() {
-    function Xtb() {}
+  var Xtb = (function(_super) {
+    __extends$13(Xtb, _super);
+    function Xtb() {
+      _super.apply(this, arguments);
+    }
     Xtb.prototype.write = function(messages) {
       throw new Error('Unsupported');
     };
@@ -6282,8 +6402,11 @@ var define = $__System.amdDefine;
     Xtb.prototype.digest = function(message) {
       return digest$1(message);
     };
+    Xtb.prototype.createNameMapper = function(message) {
+      return new XmbPlaceholderMapper(message);
+    };
     return Xtb;
-  }());
+  }(Serializer));
   var XtbParser = (function() {
     function XtbParser() {}
     XtbParser.prototype.parse = function(xtb, url) {
@@ -6381,7 +6504,7 @@ var define = $__System.amdDefine;
     };
     return XmlToI18n;
   }());
-  var __extends$11 = (this && this.__extends) || function(d, b) {
+  var __extends$14 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -6407,7 +6530,7 @@ var define = $__System.amdDefine;
       return Reflect.metadata(k, v);
   };
   var HtmlParser = (function(_super) {
-    __extends$11(HtmlParser, _super);
+    __extends$14(HtmlParser, _super);
     function HtmlParser() {
       _super.call(this, getHtmlTagDefinition);
     }
@@ -6424,20 +6547,24 @@ var define = $__System.amdDefine;
     return HtmlParser;
   }(Parser$1));
   var TranslationBundle = (function() {
-    function TranslationBundle(_i18nNodesByMsgId, digest) {
+    function TranslationBundle(_i18nNodesByMsgId, digest, mapperFactory) {
       if (_i18nNodesByMsgId === void 0) {
         _i18nNodesByMsgId = {};
       }
       this._i18nNodesByMsgId = _i18nNodesByMsgId;
       this.digest = digest;
-      this._i18nToHtml = new I18nToHtmlVisitor(_i18nNodesByMsgId, digest);
+      this.mapperFactory = mapperFactory;
+      this._i18nToHtml = new I18nToHtmlVisitor(_i18nNodesByMsgId, digest, mapperFactory);
     }
     TranslationBundle.load = function(content, url, serializer) {
       var i18nNodesByMsgId = serializer.load(content, url);
       var digestFn = function(m) {
         return serializer.digest(m);
       };
-      return new TranslationBundle(i18nNodesByMsgId, digestFn);
+      var mapperFactory = function(m) {
+        return serializer.createNameMapper(m);
+      };
+      return new TranslationBundle(i18nNodesByMsgId, digestFn, mapperFactory);
     };
     TranslationBundle.prototype.get = function(srcMsg) {
       var html = this._i18nToHtml.convert(srcMsg);
@@ -6452,17 +6579,18 @@ var define = $__System.amdDefine;
     return TranslationBundle;
   }());
   var I18nToHtmlVisitor = (function() {
-    function I18nToHtmlVisitor(_i18nNodesByMsgId, _digest) {
+    function I18nToHtmlVisitor(_i18nNodesByMsgId, _digest, _mapperFactory) {
       if (_i18nNodesByMsgId === void 0) {
         _i18nNodesByMsgId = {};
       }
       this._i18nNodesByMsgId = _i18nNodesByMsgId;
       this._digest = _digest;
-      this._srcMsgStack = [];
+      this._mapperFactory = _mapperFactory;
+      this._contextStack = [];
       this._errors = [];
     }
     I18nToHtmlVisitor.prototype.convert = function(srcMsg) {
-      this._srcMsgStack.length = 0;
+      this._contextStack.length = 0;
       this._errors.length = 0;
       var text = this._convertToText(srcMsg);
       var url = srcMsg.nodes[0].sourceSpan.start.file.url;
@@ -6490,7 +6618,7 @@ var define = $__System.amdDefine;
       return "{" + exp + ", " + icu.type + ", " + cases.join(' ') + "}";
     };
     I18nToHtmlVisitor.prototype.visitPlaceholder = function(ph, context) {
-      var phName = ph.name;
+      var phName = this._mapper(ph.name);
       if (this._srcMsg.placeholders.hasOwnProperty(phName)) {
         return this._srcMsg.placeholders[phName];
       }
@@ -6509,14 +6637,23 @@ var define = $__System.amdDefine;
     I18nToHtmlVisitor.prototype._convertToText = function(srcMsg) {
       var _this = this;
       var digest = this._digest(srcMsg);
+      var mapper = this._mapperFactory ? this._mapperFactory(srcMsg) : null;
       if (this._i18nNodesByMsgId.hasOwnProperty(digest)) {
-        this._srcMsgStack.push(this._srcMsg);
+        this._contextStack.push({
+          msg: this._srcMsg,
+          mapper: this._mapper
+        });
         this._srcMsg = srcMsg;
+        this._mapper = function(name) {
+          return mapper ? mapper.toInternalName(name) : name;
+        };
         var nodes = this._i18nNodesByMsgId[digest];
         var text = nodes.map(function(node) {
           return node.visit(_this);
         }).join('');
-        this._srcMsg = this._srcMsgStack.pop();
+        var context = this._contextStack.pop();
+        this._srcMsg = context.msg;
+        this._mapper = context.mapper;
         return text;
       }
       this._addError(srcMsg.nodes[0], "Missing translation for message " + digest);
@@ -6976,7 +7113,7 @@ var define = $__System.amdDefine;
     var resolvedEnum = reflector.resolveEnum(resolveIdentifier(enumType), name);
     return {reference: resolvedEnum};
   }
-  var __extends$12 = (this && this.__extends) || function(d, b) {
+  var __extends$15 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -6999,7 +7136,7 @@ var define = $__System.amdDefine;
     return ExpansionResult;
   }());
   var ExpansionError = (function(_super) {
-    __extends$12(ExpansionError, _super);
+    __extends$15(ExpansionError, _super);
     function ExpansionError(span, errorMsg) {
       _super.call(this, span, errorMsg);
     }
@@ -7055,7 +7192,7 @@ var define = $__System.amdDefine;
     var switchAttr = new Attribute$1('[ngSwitch]', ast.switchValue, ast.switchValueSourceSpan);
     return new Element('ng-container', [switchAttr], children, ast.sourceSpan, ast.sourceSpan, ast.sourceSpan);
   }
-  var __extends$13 = (this && this.__extends) || function(d, b) {
+  var __extends$16 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -7065,7 +7202,7 @@ var define = $__System.amdDefine;
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var ProviderError = (function(_super) {
-    __extends$13(ProviderError, _super);
+    __extends$16(ProviderError, _super);
     function ProviderError(message, span) {
       _super.call(this, span, message);
     }
@@ -7553,7 +7690,7 @@ var define = $__System.amdDefine;
   var CSS_IMPORT_REGEXP = /@import\s+(?:url\()?\s*(?:(?:['"]([^'"]*))|([^;\)\s]*))[^;]*;?/g;
   var CSS_COMMENT_REGEXP = /\/\*.+?\*\//g;
   var URL_WITH_SCHEMA_REGEXP = /^([^:/?#]+):/;
-  var __extends$14 = (this && this.__extends) || function(d, b) {
+  var __extends$17 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -7871,7 +8008,7 @@ var define = $__System.amdDefine;
     return BindingParser;
   }());
   var PipeCollector = (function(_super) {
-    __extends$14(PipeCollector, _super);
+    __extends$17(PipeCollector, _super);
     function PipeCollector() {
       _super.apply(this, arguments);
       this.pipes = new Map();
@@ -8626,9 +8763,6 @@ var define = $__System.amdDefine;
     });
     return Array.from(map.values());
   }
-  function unimplemented$2() {
-    throw new Error('unimplemented');
-  }
   var CompilerConfig = (function() {
     function CompilerConfig(_a) {
       var _b = _a === void 0 ? {} : _a,
@@ -8664,48 +8798,12 @@ var define = $__System.amdDefine;
   }());
   var RenderTypes = (function() {
     function RenderTypes() {}
-    Object.defineProperty(RenderTypes.prototype, "renderer", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderTypes.prototype, "renderText", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderTypes.prototype, "renderElement", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderTypes.prototype, "renderComment", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderTypes.prototype, "renderNode", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderTypes.prototype, "renderEvent", {
-      get: function() {
-        return unimplemented$2();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    RenderTypes.prototype.renderer = function() {};
+    RenderTypes.prototype.renderText = function() {};
+    RenderTypes.prototype.renderElement = function() {};
+    RenderTypes.prototype.renderComment = function() {};
+    RenderTypes.prototype.renderNode = function() {};
+    RenderTypes.prototype.renderEvent = function() {};
     return RenderTypes;
   }());
   var DefaultRenderTypes = (function() {
@@ -8726,7 +8824,7 @@ var define = $__System.amdDefine;
     ;
     return DefaultRenderTypes;
   }());
-  var __extends$16 = (this && this.__extends) || function(d, b) {
+  var __extends$19 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -8744,7 +8842,7 @@ var define = $__System.amdDefine;
     return AnimationAst;
   }());
   var AnimationStateAst = (function(_super) {
-    __extends$16(AnimationStateAst, _super);
+    __extends$19(AnimationStateAst, _super);
     function AnimationStateAst() {
       _super.apply(this, arguments);
     }
@@ -8752,7 +8850,7 @@ var define = $__System.amdDefine;
     return AnimationStateAst;
   }(AnimationAst));
   var AnimationEntryAst = (function(_super) {
-    __extends$16(AnimationEntryAst, _super);
+    __extends$19(AnimationEntryAst, _super);
     function AnimationEntryAst(name, stateDeclarations, stateTransitions) {
       _super.call(this);
       this.name = name;
@@ -8765,7 +8863,7 @@ var define = $__System.amdDefine;
     return AnimationEntryAst;
   }(AnimationAst));
   var AnimationStateDeclarationAst = (function(_super) {
-    __extends$16(AnimationStateDeclarationAst, _super);
+    __extends$19(AnimationStateDeclarationAst, _super);
     function AnimationStateDeclarationAst(stateName, styles) {
       _super.call(this);
       this.stateName = stateName;
@@ -8784,7 +8882,7 @@ var define = $__System.amdDefine;
     return AnimationStateTransitionExpression;
   }());
   var AnimationStateTransitionAst = (function(_super) {
-    __extends$16(AnimationStateTransitionAst, _super);
+    __extends$19(AnimationStateTransitionAst, _super);
     function AnimationStateTransitionAst(stateChanges, animation) {
       _super.call(this);
       this.stateChanges = stateChanges;
@@ -8796,7 +8894,7 @@ var define = $__System.amdDefine;
     return AnimationStateTransitionAst;
   }(AnimationStateAst));
   var AnimationStepAst = (function(_super) {
-    __extends$16(AnimationStepAst, _super);
+    __extends$19(AnimationStepAst, _super);
     function AnimationStepAst(startingStyles, keyframes, duration, delay, easing) {
       _super.call(this);
       this.startingStyles = startingStyles;
@@ -8811,7 +8909,7 @@ var define = $__System.amdDefine;
     return AnimationStepAst;
   }(AnimationAst));
   var AnimationStylesAst = (function(_super) {
-    __extends$16(AnimationStylesAst, _super);
+    __extends$19(AnimationStylesAst, _super);
     function AnimationStylesAst(styles) {
       _super.call(this);
       this.styles = styles;
@@ -8822,7 +8920,7 @@ var define = $__System.amdDefine;
     return AnimationStylesAst;
   }(AnimationAst));
   var AnimationKeyframeAst = (function(_super) {
-    __extends$16(AnimationKeyframeAst, _super);
+    __extends$19(AnimationKeyframeAst, _super);
     function AnimationKeyframeAst(offset, styles) {
       _super.call(this);
       this.offset = offset;
@@ -8834,7 +8932,7 @@ var define = $__System.amdDefine;
     return AnimationKeyframeAst;
   }(AnimationAst));
   var AnimationWithStepsAst = (function(_super) {
-    __extends$16(AnimationWithStepsAst, _super);
+    __extends$19(AnimationWithStepsAst, _super);
     function AnimationWithStepsAst(steps) {
       _super.call(this);
       this.steps = steps;
@@ -8842,7 +8940,7 @@ var define = $__System.amdDefine;
     return AnimationWithStepsAst;
   }(AnimationAst));
   var AnimationGroupAst = (function(_super) {
-    __extends$16(AnimationGroupAst, _super);
+    __extends$19(AnimationGroupAst, _super);
     function AnimationGroupAst(steps) {
       _super.call(this, steps);
     }
@@ -8852,7 +8950,7 @@ var define = $__System.amdDefine;
     return AnimationGroupAst;
   }(AnimationWithStepsAst));
   var AnimationSequenceAst = (function(_super) {
-    __extends$16(AnimationSequenceAst, _super);
+    __extends$19(AnimationSequenceAst, _super);
     function AnimationSequenceAst(steps) {
       _super.call(this, steps);
     }
@@ -8909,7 +9007,7 @@ var define = $__System.amdDefine;
     };
     return StylesCollection;
   }());
-  var __extends$15 = (this && this.__extends) || function(d, b) {
+  var __extends$18 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -8938,7 +9036,7 @@ var define = $__System.amdDefine;
   var _TERMINAL_KEYFRAME = 1;
   var _ONE_SECOND = 1000;
   var AnimationParseError = (function(_super) {
-    __extends$15(AnimationParseError, _super);
+    __extends$18(AnimationParseError, _super);
     function AnimationParseError(message) {
       _super.call(this, null, message);
     }
@@ -9675,7 +9773,7 @@ var define = $__System.amdDefine;
     };
     DirectiveNormalizer.prototype.normalizeLoadedTemplate = function(prenomData, template, templateAbsUrl) {
       var interpolationConfig = InterpolationConfig.fromArray(prenomData.interpolation);
-      var rootNodesAndErrors = this._htmlParser.parse(template, stringify(prenomData.componentType), false, interpolationConfig);
+      var rootNodesAndErrors = this._htmlParser.parse(template, stringify(prenomData.componentType), true, interpolationConfig);
       if (rootNodesAndErrors.errors.length > 0) {
         var errorString = rootNodesAndErrors.errors.join('\n');
         throw new SyntaxError("Template parse errors:\n" + errorString);
@@ -9805,6 +9903,12 @@ var define = $__System.amdDefine;
       }
       return null;
     };
+    TemplatePreparseVisitor.prototype.visitExpansion = function(ast, context) {
+      visitAll(this, ast.cases);
+    };
+    TemplatePreparseVisitor.prototype.visitExpansionCase = function(ast, context) {
+      visitAll(this, ast.expression);
+    };
     TemplatePreparseVisitor.prototype.visitComment = function(ast, context) {
       return null;
     };
@@ -9812,12 +9916,6 @@ var define = $__System.amdDefine;
       return null;
     };
     TemplatePreparseVisitor.prototype.visitText = function(ast, context) {
-      return null;
-    };
-    TemplatePreparseVisitor.prototype.visitExpansion = function(ast, context) {
-      return null;
-    };
-    TemplatePreparseVisitor.prototype.visitExpansionCase = function(ast, context) {
       return null;
     };
     return TemplatePreparseVisitor;
@@ -9984,7 +10082,7 @@ var define = $__System.amdDefine;
   function isDirectiveMetadata(type) {
     return type instanceof _angular_core.Directive;
   }
-  var __extends$17 = (this && this.__extends) || function(d, b) {
+  var __extends$20 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -10028,7 +10126,7 @@ var define = $__System.amdDefine;
   BuiltinTypeName[BuiltinTypeName.Function] = "Function";
   BuiltinTypeName[BuiltinTypeName.Null] = "Null";
   var BuiltinType = (function(_super) {
-    __extends$17(BuiltinType, _super);
+    __extends$20(BuiltinType, _super);
     function BuiltinType(name, modifiers) {
       if (modifiers === void 0) {
         modifiers = null;
@@ -10042,7 +10140,7 @@ var define = $__System.amdDefine;
     return BuiltinType;
   }(Type$1));
   var ExpressionType = (function(_super) {
-    __extends$17(ExpressionType, _super);
+    __extends$20(ExpressionType, _super);
     function ExpressionType(value, typeParams, modifiers) {
       if (typeParams === void 0) {
         typeParams = null;
@@ -10060,7 +10158,7 @@ var define = $__System.amdDefine;
     return ExpressionType;
   }(Type$1));
   var ArrayType = (function(_super) {
-    __extends$17(ArrayType, _super);
+    __extends$20(ArrayType, _super);
     function ArrayType(of, modifiers) {
       if (modifiers === void 0) {
         modifiers = null;
@@ -10074,7 +10172,7 @@ var define = $__System.amdDefine;
     return ArrayType;
   }(Type$1));
   var MapType = (function(_super) {
-    __extends$17(MapType, _super);
+    __extends$20(MapType, _super);
     function MapType(valueType, modifiers) {
       if (modifiers === void 0) {
         modifiers = null;
@@ -10223,7 +10321,7 @@ var define = $__System.amdDefine;
   BuiltinVar[BuiltinVar.CatchError] = "CatchError";
   BuiltinVar[BuiltinVar.CatchStack] = "CatchStack";
   var ReadVarExpr = (function(_super) {
-    __extends$17(ReadVarExpr, _super);
+    __extends$20(ReadVarExpr, _super);
     function ReadVarExpr(name, type) {
       if (type === void 0) {
         type = null;
@@ -10246,7 +10344,7 @@ var define = $__System.amdDefine;
     return ReadVarExpr;
   }(Expression));
   var WriteVarExpr = (function(_super) {
-    __extends$17(WriteVarExpr, _super);
+    __extends$20(WriteVarExpr, _super);
     function WriteVarExpr(name, value, type) {
       if (type === void 0) {
         type = null;
@@ -10270,7 +10368,7 @@ var define = $__System.amdDefine;
     return WriteVarExpr;
   }(Expression));
   var WriteKeyExpr = (function(_super) {
-    __extends$17(WriteKeyExpr, _super);
+    __extends$20(WriteKeyExpr, _super);
     function WriteKeyExpr(receiver, index, value, type) {
       if (type === void 0) {
         type = null;
@@ -10286,7 +10384,7 @@ var define = $__System.amdDefine;
     return WriteKeyExpr;
   }(Expression));
   var WritePropExpr = (function(_super) {
-    __extends$17(WritePropExpr, _super);
+    __extends$20(WritePropExpr, _super);
     function WritePropExpr(receiver, name, value, type) {
       if (type === void 0) {
         type = null;
@@ -10309,7 +10407,7 @@ var define = $__System.amdDefine;
   BuiltinMethod[BuiltinMethod.SubscribeObservable] = "SubscribeObservable";
   BuiltinMethod[BuiltinMethod.Bind] = "Bind";
   var InvokeMethodExpr = (function(_super) {
-    __extends$17(InvokeMethodExpr, _super);
+    __extends$20(InvokeMethodExpr, _super);
     function InvokeMethodExpr(receiver, method, args, type) {
       if (type === void 0) {
         type = null;
@@ -10331,7 +10429,7 @@ var define = $__System.amdDefine;
     return InvokeMethodExpr;
   }(Expression));
   var InvokeFunctionExpr = (function(_super) {
-    __extends$17(InvokeFunctionExpr, _super);
+    __extends$20(InvokeFunctionExpr, _super);
     function InvokeFunctionExpr(fn, args, type) {
       if (type === void 0) {
         type = null;
@@ -10346,7 +10444,7 @@ var define = $__System.amdDefine;
     return InvokeFunctionExpr;
   }(Expression));
   var InstantiateExpr = (function(_super) {
-    __extends$17(InstantiateExpr, _super);
+    __extends$20(InstantiateExpr, _super);
     function InstantiateExpr(classExpr, args, type) {
       _super.call(this, type);
       this.classExpr = classExpr;
@@ -10358,7 +10456,7 @@ var define = $__System.amdDefine;
     return InstantiateExpr;
   }(Expression));
   var LiteralExpr = (function(_super) {
-    __extends$17(LiteralExpr, _super);
+    __extends$20(LiteralExpr, _super);
     function LiteralExpr(value, type) {
       if (type === void 0) {
         type = null;
@@ -10372,7 +10470,7 @@ var define = $__System.amdDefine;
     return LiteralExpr;
   }(Expression));
   var ExternalExpr = (function(_super) {
-    __extends$17(ExternalExpr, _super);
+    __extends$20(ExternalExpr, _super);
     function ExternalExpr(value, type, typeParams) {
       if (type === void 0) {
         type = null;
@@ -10390,7 +10488,7 @@ var define = $__System.amdDefine;
     return ExternalExpr;
   }(Expression));
   var ConditionalExpr = (function(_super) {
-    __extends$17(ConditionalExpr, _super);
+    __extends$20(ConditionalExpr, _super);
     function ConditionalExpr(condition, trueCase, falseCase, type) {
       if (falseCase === void 0) {
         falseCase = null;
@@ -10409,7 +10507,7 @@ var define = $__System.amdDefine;
     return ConditionalExpr;
   }(Expression));
   var NotExpr = (function(_super) {
-    __extends$17(NotExpr, _super);
+    __extends$20(NotExpr, _super);
     function NotExpr(condition) {
       _super.call(this, BOOL_TYPE);
       this.condition = condition;
@@ -10420,7 +10518,7 @@ var define = $__System.amdDefine;
     return NotExpr;
   }(Expression));
   var CastExpr = (function(_super) {
-    __extends$17(CastExpr, _super);
+    __extends$20(CastExpr, _super);
     function CastExpr(value, type) {
       _super.call(this, type);
       this.value = value;
@@ -10441,7 +10539,7 @@ var define = $__System.amdDefine;
     return FnParam;
   }());
   var FunctionExpr = (function(_super) {
-    __extends$17(FunctionExpr, _super);
+    __extends$20(FunctionExpr, _super);
     function FunctionExpr(params, statements, type) {
       if (type === void 0) {
         type = null;
@@ -10462,7 +10560,7 @@ var define = $__System.amdDefine;
     return FunctionExpr;
   }(Expression));
   var BinaryOperatorExpr = (function(_super) {
-    __extends$17(BinaryOperatorExpr, _super);
+    __extends$20(BinaryOperatorExpr, _super);
     function BinaryOperatorExpr(operator, lhs, rhs, type) {
       if (type === void 0) {
         type = null;
@@ -10478,7 +10576,7 @@ var define = $__System.amdDefine;
     return BinaryOperatorExpr;
   }(Expression));
   var ReadPropExpr = (function(_super) {
-    __extends$17(ReadPropExpr, _super);
+    __extends$20(ReadPropExpr, _super);
     function ReadPropExpr(receiver, name, type) {
       if (type === void 0) {
         type = null;
@@ -10496,7 +10594,7 @@ var define = $__System.amdDefine;
     return ReadPropExpr;
   }(Expression));
   var ReadKeyExpr = (function(_super) {
-    __extends$17(ReadKeyExpr, _super);
+    __extends$20(ReadKeyExpr, _super);
     function ReadKeyExpr(receiver, index, type) {
       if (type === void 0) {
         type = null;
@@ -10514,7 +10612,7 @@ var define = $__System.amdDefine;
     return ReadKeyExpr;
   }(Expression));
   var LiteralArrayExpr = (function(_super) {
-    __extends$17(LiteralArrayExpr, _super);
+    __extends$20(LiteralArrayExpr, _super);
     function LiteralArrayExpr(entries, type) {
       if (type === void 0) {
         type = null;
@@ -10539,7 +10637,7 @@ var define = $__System.amdDefine;
     return LiteralMapEntry;
   }());
   var LiteralMapExpr = (function(_super) {
-    __extends$17(LiteralMapExpr, _super);
+    __extends$20(LiteralMapExpr, _super);
     function LiteralMapExpr(entries, type) {
       if (type === void 0) {
         type = null;
@@ -10584,7 +10682,7 @@ var define = $__System.amdDefine;
     return Statement;
   }());
   var DeclareVarStmt = (function(_super) {
-    __extends$17(DeclareVarStmt, _super);
+    __extends$20(DeclareVarStmt, _super);
     function DeclareVarStmt(name, value, type, modifiers) {
       if (type === void 0) {
         type = null;
@@ -10603,7 +10701,7 @@ var define = $__System.amdDefine;
     return DeclareVarStmt;
   }(Statement));
   var DeclareFunctionStmt = (function(_super) {
-    __extends$17(DeclareFunctionStmt, _super);
+    __extends$20(DeclareFunctionStmt, _super);
     function DeclareFunctionStmt(name, params, statements, type, modifiers) {
       if (type === void 0) {
         type = null;
@@ -10623,7 +10721,7 @@ var define = $__System.amdDefine;
     return DeclareFunctionStmt;
   }(Statement));
   var ExpressionStatement = (function(_super) {
-    __extends$17(ExpressionStatement, _super);
+    __extends$20(ExpressionStatement, _super);
     function ExpressionStatement(expr) {
       _super.call(this);
       this.expr = expr;
@@ -10634,7 +10732,7 @@ var define = $__System.amdDefine;
     return ExpressionStatement;
   }(Statement));
   var ReturnStatement = (function(_super) {
-    __extends$17(ReturnStatement, _super);
+    __extends$20(ReturnStatement, _super);
     function ReturnStatement(value) {
       _super.call(this);
       this.value = value;
@@ -10661,7 +10759,7 @@ var define = $__System.amdDefine;
     return AbstractClassPart;
   }());
   var ClassField = (function(_super) {
-    __extends$17(ClassField, _super);
+    __extends$20(ClassField, _super);
     function ClassField(name, type, modifiers) {
       if (type === void 0) {
         type = null;
@@ -10675,7 +10773,7 @@ var define = $__System.amdDefine;
     return ClassField;
   }(AbstractClassPart));
   var ClassMethod = (function(_super) {
-    __extends$17(ClassMethod, _super);
+    __extends$20(ClassMethod, _super);
     function ClassMethod(name, params, body, type, modifiers) {
       if (type === void 0) {
         type = null;
@@ -10691,7 +10789,7 @@ var define = $__System.amdDefine;
     return ClassMethod;
   }(AbstractClassPart));
   var ClassGetter = (function(_super) {
-    __extends$17(ClassGetter, _super);
+    __extends$20(ClassGetter, _super);
     function ClassGetter(name, body, type, modifiers) {
       if (type === void 0) {
         type = null;
@@ -10706,7 +10804,7 @@ var define = $__System.amdDefine;
     return ClassGetter;
   }(AbstractClassPart));
   var ClassStmt = (function(_super) {
-    __extends$17(ClassStmt, _super);
+    __extends$20(ClassStmt, _super);
     function ClassStmt(name, parent, fields, getters, constructorMethod, methods, modifiers) {
       if (modifiers === void 0) {
         modifiers = null;
@@ -10725,7 +10823,7 @@ var define = $__System.amdDefine;
     return ClassStmt;
   }(Statement));
   var IfStmt = (function(_super) {
-    __extends$17(IfStmt, _super);
+    __extends$20(IfStmt, _super);
     function IfStmt(condition, trueCase, falseCase) {
       if (falseCase === void 0) {
         falseCase = [];
@@ -10741,7 +10839,7 @@ var define = $__System.amdDefine;
     return IfStmt;
   }(Statement));
   var CommentStmt = (function(_super) {
-    __extends$17(CommentStmt, _super);
+    __extends$20(CommentStmt, _super);
     function CommentStmt(comment) {
       _super.call(this);
       this.comment = comment;
@@ -10752,7 +10850,7 @@ var define = $__System.amdDefine;
     return CommentStmt;
   }(Statement));
   var TryCatchStmt = (function(_super) {
-    __extends$17(TryCatchStmt, _super);
+    __extends$20(TryCatchStmt, _super);
     function TryCatchStmt(bodyStmts, catchStmts) {
       _super.call(this);
       this.bodyStmts = bodyStmts;
@@ -10764,7 +10862,7 @@ var define = $__System.amdDefine;
     return TryCatchStmt;
   }(Statement));
   var ThrowStmt = (function(_super) {
-    __extends$17(ThrowStmt, _super);
+    __extends$20(ThrowStmt, _super);
     function ThrowStmt(error) {
       _super.call(this);
       this.error = error;
@@ -11014,7 +11112,7 @@ var define = $__System.amdDefine;
     return expression.visitExpression(transformer, null);
   }
   var _ReplaceVariableTransformer = (function(_super) {
-    __extends$17(_ReplaceVariableTransformer, _super);
+    __extends$20(_ReplaceVariableTransformer, _super);
     function _ReplaceVariableTransformer(_varName, _newValue) {
       _super.call(this);
       this._varName = _varName;
@@ -11031,7 +11129,7 @@ var define = $__System.amdDefine;
     return finder.varNames;
   }
   var _VariableFinder = (function(_super) {
-    __extends$17(_VariableFinder, _super);
+    __extends$20(_VariableFinder, _super);
     function _VariableFinder() {
       _super.apply(this, arguments);
       this.varNames = new Set();
@@ -12261,7 +12359,7 @@ var define = $__System.amdDefine;
     SummaryResolver = __decorate$12([CompilerInjectable(), __metadata$12('design:paramtypes', [])], SummaryResolver);
     return SummaryResolver;
   }());
-  var __extends$18 = (this && this.__extends) || function(d, b) {
+  var __extends$21 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -12520,7 +12618,7 @@ var define = $__System.amdDefine;
     CompileMetadataResolver.prototype.getDirectiveMetadata = function(directiveType) {
       var dirMeta = this._directiveCache.get(directiveType);
       if (!dirMeta) {
-        this._reportError(new SyntaxError("Illegal state: getDirectiveMetadata can only be called after loadNgModuleMetadata for a module that declares it. Directive " + stringifyType(directiveType) + "."), directiveType);
+        this._reportError(new SyntaxError("Illegal state: getDirectiveMetadata can only be called after loadNgModuleDirectiveAndPipeMetadata for a module that declares it. Directive " + stringifyType(directiveType) + "."), directiveType);
       }
       return dirMeta;
     };
@@ -12830,7 +12928,7 @@ var define = $__System.amdDefine;
     CompileMetadataResolver.prototype.getPipeMetadata = function(pipeType) {
       var pipeMeta = this._pipeCache.get(pipeType);
       if (!pipeMeta) {
-        this._reportError(new SyntaxError("Illegal state: getPipeMetadata can only be called after loadNgModuleMetadata for a module that declares it. Pipe " + stringifyType(pipeType) + "."), pipeType);
+        this._reportError(new SyntaxError("Illegal state: getPipeMetadata can only be called after loadNgModuleDirectiveAndPipeMetadata for a module that declares it. Pipe " + stringifyType(pipeType) + "."), pipeType);
       }
       return pipeMeta;
     };
@@ -13108,7 +13206,7 @@ var define = $__System.amdDefine;
     visitValue(value, new _CompileValueConverter(), targetIdentifiers);
   }
   var _CompileValueConverter = (function(_super) {
-    __extends$18(_CompileValueConverter, _super);
+    __extends$21(_CompileValueConverter, _super);
     function _CompileValueConverter() {
       _super.apply(this, arguments);
     }
@@ -13783,7 +13881,7 @@ var define = $__System.amdDefine;
     }
     return res;
   }
-  var __extends$19 = (this && this.__extends) || function(d, b) {
+  var __extends$22 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -13829,7 +13927,7 @@ var define = $__System.amdDefine;
     return TypeScriptEmitter;
   }());
   var _TsEmitterVisitor = (function(_super) {
-    __extends$19(_TsEmitterVisitor, _super);
+    __extends$22(_TsEmitterVisitor, _super);
     function _TsEmitterVisitor(_moduleUrl) {
       _super.call(this, false);
       this._moduleUrl = _moduleUrl;
@@ -14125,7 +14223,7 @@ var define = $__System.amdDefine;
   registerContext(_angular_core.SecurityContext.STYLE, ['*|style']);
   registerContext(_angular_core.SecurityContext.URL, ['*|formAction', 'area|href', 'area|ping', 'audio|src', 'a|href', 'a|ping', 'blockquote|cite', 'body|background', 'del|cite', 'form|action', 'img|src', 'img|srcset', 'input|src', 'ins|cite', 'q|cite', 'source|src', 'source|srcset', 'track|src', 'video|poster', 'video|src']);
   registerContext(_angular_core.SecurityContext.RESOURCE_URL, ['applet|code', 'applet|codebase', 'base|href', 'embed|src', 'frame|src', 'head|profile', 'html|manifest', 'iframe|src', 'link|href', 'media|src', 'object|codebase', 'object|data', 'script|src']);
-  var __extends$20 = (this && this.__extends) || function(d, b) {
+  var __extends$23 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -14164,7 +14262,7 @@ var define = $__System.amdDefine;
     'tabindex': 'tabIndex'
   };
   var DomElementSchemaRegistry = (function(_super) {
-    __extends$20(DomElementSchemaRegistry, _super);
+    __extends$23(DomElementSchemaRegistry, _super);
     function DomElementSchemaRegistry() {
       var _this = this;
       _super.call(this);
@@ -14838,7 +14936,7 @@ var define = $__System.amdDefine;
     };
     return CompileMethod;
   }());
-  var __extends$22 = (this && this.__extends) || function(d, b) {
+  var __extends$25 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -14864,7 +14962,7 @@ var define = $__System.amdDefine;
     }
   }
   var _ReplaceViewTransformer = (function(_super) {
-    __extends$22(_ReplaceViewTransformer, _super);
+    __extends$25(_ReplaceViewTransformer, _super);
     function _ReplaceViewTransformer(_viewExpr, _view) {
       _super.call(this);
       this._viewExpr = _viewExpr;
@@ -15075,7 +15173,7 @@ var define = $__System.amdDefine;
     }
     return DirectiveWrapperDependency;
   }());
-  var __extends$21 = (this && this.__extends) || function(d, b) {
+  var __extends$24 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -15101,7 +15199,7 @@ var define = $__System.amdDefine;
     return CompileNode;
   }());
   var CompileElement = (function(_super) {
-    __extends$21(CompileElement, _super);
+    __extends$24(CompileElement, _super);
     function CompileElement(parent, view, nodeIndex, renderNode, sourceAst, component, _directives, _resolvedProvidersArray, hasViewContainer, hasEmbeddedView, references) {
       var _this = this;
       _super.call(this, parent, view, nodeIndex, renderNode, sourceAst);
@@ -16647,7 +16745,7 @@ var define = $__System.amdDefine;
     }
     return GeneratedFile;
   }());
-  var __extends$23 = (this && this.__extends) || function(d, b) {
+  var __extends$26 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -16658,7 +16756,7 @@ var define = $__System.amdDefine;
   };
   var STRIP_SRC_FILE_SUFFIXES = /(\.ts|\.d\.ts|\.js|\.jsx|\.tsx)$/;
   function serializeSummaries(host, summaryResolver, symbolResolver, symbols, types) {
-    var serializer = new Serializer(host);
+    var serializer = new Serializer$1(host);
     symbols.forEach(function(resolvedSymbol) {
       return serializer.addOrMergeSummary({
         symbol: resolvedSymbol.symbol,
@@ -16709,8 +16807,8 @@ var define = $__System.amdDefine;
     var fileNameWithoutSuffix = fileName.replace(STRIP_SRC_FILE_SUFFIXES, '');
     return fileNameWithoutSuffix + ".ngsummary.json";
   }
-  var Serializer = (function(_super) {
-    __extends$23(Serializer, _super);
+  var Serializer$1 = (function(_super) {
+    __extends$26(Serializer, _super);
     function Serializer(host) {
       _super.call(this);
       this.host = host;
@@ -16770,7 +16868,7 @@ var define = $__System.amdDefine;
     return Serializer;
   }(ValueTransformer));
   var Deserializer = (function(_super) {
-    __extends$23(Deserializer, _super);
+    __extends$26(Deserializer, _super);
     function Deserializer(symbolCache) {
       _super.call(this);
       this.symbolCache = symbolCache;
@@ -17171,7 +17269,7 @@ var define = $__System.amdDefine;
   function isStaticType(type) {
     return typeof type === 'object' && type.name && type.filePath;
   }
-  var __extends$24 = (this && this.__extends) || function(d, b) {
+  var __extends$27 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -17669,7 +17767,7 @@ var define = $__System.amdDefine;
           if (e.fileName) {
             throw positionalError(message, e.fileName, e.line, e.column);
           }
-          throw new Error(message);
+          throw new SyntaxError(message);
         }
       }
       var recordedSimplifyInContext = function(context, value, depth) {
@@ -17766,7 +17864,7 @@ var define = $__System.amdDefine;
     return BindingScope;
   }());
   var PopulatedScope = (function(_super) {
-    __extends$24(PopulatedScope, _super);
+    __extends$27(PopulatedScope, _super);
     function PopulatedScope(bindings) {
       _super.call(this);
       this.bindings = bindings;
@@ -17786,7 +17884,7 @@ var define = $__System.amdDefine;
     ((result)).column = column;
     return result;
   }
-  var __extends$25 = (this && this.__extends) || function(d, b) {
+  var __extends$28 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -17923,7 +18021,7 @@ var define = $__System.amdDefine;
     StaticSymbolResolver.prototype.createResolvedSymbol = function(sourceSymbol, metadata) {
       var self = this;
       var ReferenceTransformer = (function(_super) {
-        __extends$25(ReferenceTransformer, _super);
+        __extends$28(ReferenceTransformer, _super);
         function ReferenceTransformer() {
           _super.apply(this, arguments);
         }
@@ -18012,7 +18110,8 @@ var define = $__System.amdDefine;
     StaticSymbolResolver.prototype.getSymbolByModule = function(module, symbolName, containingFile) {
       var filePath = this.resolveModule(module, containingFile);
       if (!filePath) {
-        throw new Error("Could not resolve module " + module + " relative to " + containingFile);
+        this.reportError(new Error("Could not resolve module " + module + (containingFile ? " relative to $ {\n            containingFile\n          } " : '')), null);
+        return this.getStaticSymbol("ERROR:" + module, symbolName);
       }
       return this.getStaticSymbol(filePath, symbolName);
     };
@@ -18450,7 +18549,7 @@ var define = $__System.amdDefine;
   }
   var CATCH_ERROR_VAR$2 = 'error';
   var CATCH_STACK_VAR$2 = 'stack';
-  var __extends$27 = (this && this.__extends) || function(d, b) {
+  var __extends$30 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -18460,7 +18559,7 @@ var define = $__System.amdDefine;
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var AbstractJsEmitterVisitor = (function(_super) {
-    __extends$27(AbstractJsEmitterVisitor, _super);
+    __extends$30(AbstractJsEmitterVisitor, _super);
     function AbstractJsEmitterVisitor() {
       _super.call(this, false);
     }
@@ -18612,7 +18711,7 @@ var define = $__System.amdDefine;
     };
     return AbstractJsEmitterVisitor;
   }(AbstractEmitterVisitor));
-  var __extends$26 = (this && this.__extends) || function(d, b) {
+  var __extends$29 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -18638,7 +18737,7 @@ var define = $__System.amdDefine;
     return evalExpression(sourceUrl, resultVar, ctx.toSource(), converter.getArgs());
   }
   var JitEmitterVisitor = (function(_super) {
-    __extends$26(JitEmitterVisitor, _super);
+    __extends$29(JitEmitterVisitor, _super);
     function JitEmitterVisitor() {
       _super.apply(this, arguments);
       this._evalArgNames = [];
@@ -19058,7 +19157,6 @@ var define = $__System.amdDefine;
       var _this = this;
       var programSymbols = extractProgramSymbols(this.staticSymbolResolver, rootFiles, this.host);
       var _a = analyzeAndValidateNgModules(programSymbols, this.host, this.metadataResolver),
-          ngModuleByPipeOrDirective = _a.ngModuleByPipeOrDirective,
           files = _a.files,
           ngModules = _a.ngModules;
       return Promise.all(ngModules.map(function(ngModule) {
@@ -19134,6 +19232,7 @@ var define = $__System.amdDefine;
   var _NO_RESOURCE_LOADER = {get: function(url) {
       throw new Error("No ResourceLoader implementation has been provided. Can't read the url \"" + url + "\"");
     }};
+  var baseHtmlParser = new _angular_core.OpaqueToken('HtmlParser');
   var COMPILER_PROVIDERS = [{
     provide: Reflector,
     useValue: reflector
@@ -19143,12 +19242,18 @@ var define = $__System.amdDefine;
   }, {
     provide: ResourceLoader,
     useValue: _NO_RESOURCE_LOADER
-  }, SummaryResolver, Console, Lexer, Parser, HtmlParser, {
+  }, SummaryResolver, Console, Lexer, Parser, {
+    provide: baseHtmlParser,
+    useClass: HtmlParser
+  }, {
     provide: I18NHtmlParser,
     useFactory: function(parser, translations, format) {
       return new I18NHtmlParser(parser, translations, format);
     },
-    deps: [HtmlParser, [new _angular_core.Optional(), new _angular_core.Inject(_angular_core.TRANSLATIONS)], [new _angular_core.Optional(), new _angular_core.Inject(_angular_core.TRANSLATIONS_FORMAT)]]
+    deps: [baseHtmlParser, [new _angular_core.Optional(), new _angular_core.Inject(_angular_core.TRANSLATIONS)], [new _angular_core.Optional(), new _angular_core.Inject(_angular_core.TRANSLATIONS_FORMAT)]]
+  }, {
+    provide: HtmlParser,
+    useExisting: I18NHtmlParser
   }, TemplateParser, DirectiveNormalizer, CompileMetadataResolver, DEFAULT_PACKAGE_URL_PROVIDER, StyleCompiler, ViewCompiler, NgModuleCompiler, DirectiveWrapperCompiler, {
     provide: CompilerConfig,
     useValue: new CompilerConfig()
@@ -19325,6 +19430,7 @@ var define = $__System.amdDefine;
   exports.Extractor = Extractor;
   exports.I18NHtmlParser = I18NHtmlParser;
   exports.MessageBundle = MessageBundle;
+  exports.Serializer = Serializer;
   exports.Xliff = Xliff;
   exports.Xmb = Xmb;
   exports.Xtb = Xtb;
@@ -19482,7 +19588,7 @@ var define = $__System.amdDefine;
     INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS: INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
     ResourceLoaderImpl: ResourceLoaderImpl
   };
-  var VERSION = new _angular_core.Version('2.4.4');
+  var VERSION = new _angular_core.Version('2.4.10');
   var RESOURCE_CACHE_PROVIDER = [{
     provide: _angular_compiler.ResourceLoader,
     useClass: CachedResourceLoader
@@ -19496,11 +19602,10 @@ var define = $__System.amdDefine;
 
 })();
 $__System.registerDynamic('d', ['a', 'e', 'f'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e'), $__require('f')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common', '@angular2-material/core'], factory) : factory((global.md = global.md || {}, global.md.button = global.md.button || {}), global.ng.core, global.ng.common, global.md.core);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e'), $__require('f')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common', '@angular2-material/core'], factory) : factory((global.md = global.md || {}, global.md.button = global.md.button || {}), global.ng.core, global.ng.common, global.md.core);
     })(this, function (exports, _angular_core, _angular_common, _angular2Material_core) {
         'use strict';
 
@@ -19679,14 +19784,12 @@ $__System.registerDynamic('d', ['a', 'e', 'f'], true, function ($__require, expo
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 $__System.registerDynamic('f', ['a', '10', 'c'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('10'), $__require('c')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/Subject', '@angular/platform-browser'], factory) : factory((global.md = global.md || {}, global.md.core = global.md.core || {}), global.ng.core, global.Rx, global.ng.platformBrowser);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('10'), $__require('c')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/Subject', '@angular/platform-browser'], factory) : factory((global.md = global.md || {}, global.md.core = global.md.core || {}), global.ng.core, global.Rx, global.ng.platformBrowser);
     })(this, function (exports, _angular_core, rxjs_Subject, _angular_platformBrowser) {
         'use strict';
 
@@ -21478,14 +21581,12 @@ $__System.registerDynamic('f', ['a', '10', 'c'], true, function ($__require, exp
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 $__System.registerDynamic('11', ['a', 'e', 'f'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e'), $__require('f')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common', '@angular2-material/core'], factory) : factory((global.md = global.md || {}, global.md.sidenav = global.md.sidenav || {}), global.ng.core, global.ng.common, global.md.core);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e'), $__require('f')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common', '@angular2-material/core'], factory) : factory((global.md = global.md || {}, global.md.sidenav = global.md.sidenav || {}), global.ng.core, global.ng.common, global.md.core);
     })(this, function (exports, _angular_core, _angular_common, _angular2Material_core) {
         'use strict';
 
@@ -21922,14 +22023,12 @@ $__System.registerDynamic('11', ['a', 'e', 'f'], true, function ($__require, exp
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 $__System.registerDynamic('12', ['a'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core'], factory) : factory((global.md = global.md || {}, global.md.progressCircle = global.md.progressCircle || {}), global.ng.core);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core'], factory) : factory((global.md = global.md || {}, global.md.progressCircle = global.md.progressCircle || {}), global.ng.core);
     })(this, function (exports, _angular_core) {
         'use strict';
 
@@ -22233,7 +22332,6 @@ $__System.registerDynamic('12', ['a'], true, function ($__require, exports, modu
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 (function() {
 var define = $__System.amdDefine;
@@ -22490,6 +22588,7 @@ var define = $__System.amdDefine;
     return ListWrapper;
   }());
   var isPromise = _angular_core.__core_private__.isPromise;
+  var isObservable = _angular_core.__core_private__.isObservable;
   function isEmptyInputValue(value) {
     return value == null || value.length === 0;
   }
@@ -22964,7 +23063,11 @@ var define = $__System.amdDefine;
     }
     SelectControlValueAccessor.prototype.writeValue = function(value) {
       this.value = value;
-      var valueString = _buildValueString(this._getOptionId(value), value);
+      var id = this._getOptionId(value);
+      if (id == null) {
+        this._renderer.setElementProperty(this._elementRef.nativeElement, 'selectedIndex', -1);
+      }
+      var valueString = _buildValueString(id, value);
       this._renderer.setElementProperty(this._elementRef.nativeElement, 'value', valueString);
     };
     SelectControlValueAccessor.prototype.registerOnChange = function(fn) {
@@ -23941,6 +24044,9 @@ var define = $__System.amdDefine;
         this._status = PENDING;
         this._cancelExistingSubscription();
         var obs = toObservable(this.asyncValidator(this));
+        if (!(isObservable(obs))) {
+          throw new Error("expected the following validator to return Promise or Observable: " + this.asyncValidator + ". If you are using FormBuilder; did you forget to brace your validators in an array?");
+        }
         this._asyncValidationSubscription = obs.subscribe({next: function(res) {
             return _this.setErrors(res, {emitEvent: emitEvent});
           }});
@@ -24251,7 +24357,7 @@ var define = $__System.amdDefine;
     };
     FormGroup.prototype.getRawValue = function() {
       return this._reduceChildren({}, function(acc, control, name) {
-        acc[name] = control.value;
+        acc[name] = control instanceof FormControl ? control.value : ((control)).getRawValue();
         return acc;
       });
     };
@@ -24438,7 +24544,7 @@ var define = $__System.amdDefine;
     };
     FormArray.prototype.getRawValue = function() {
       return this.controls.map(function(control) {
-        return control.value;
+        return control instanceof FormControl ? control.value : ((control)).getRawValue();
       });
     };
     FormArray.prototype._throwIfControlMissing = function(index) {
@@ -25815,7 +25921,7 @@ var define = $__System.amdDefine;
     };
     return FormBuilder;
   }());
-  var VERSION = new _angular_core.Version('2.4.4');
+  var VERSION = new _angular_core.Version('2.4.10');
   var SHARED_FORM_DIRECTIVES = [NgSelectOption, NgSelectMultipleOption, DefaultValueAccessor, NumberValueAccessor, RangeValueAccessor, CheckboxControlValueAccessor, SelectControlValueAccessor, SelectMultipleControlValueAccessor, RadioControlValueAccessor, NgControlStatus, NgControlStatusGroup, RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator, CheckboxRequiredValidator];
   var TEMPLATE_DRIVEN_DIRECTIVES = [NgModel, NgModelGroup, NgForm];
   var REACTIVE_DRIVEN_DIRECTIVES = [FormControlDirective, FormGroupDirective, FormControlName, FormGroupName, FormArrayName];
@@ -25904,11 +26010,10 @@ var define = $__System.amdDefine;
 
 })();
 $__System.registerDynamic('17', ['a', '13'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('13')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/forms'], factory) : factory((global.md = global.md || {}, global.md.checkbox = global.md.checkbox || {}), global.ng.core, global.ng.forms);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('13')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/forms'], factory) : factory((global.md = global.md || {}, global.md.checkbox = global.md.checkbox || {}), global.ng.core, global.ng.forms);
     })(this, function (exports, _angular_core, _angular_forms) {
         'use strict';
 
@@ -26211,14 +26316,12 @@ $__System.registerDynamic('17', ['a', '13'], true, function ($__require, exports
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 $__System.registerDynamic('18', ['a', 'e'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     (function (global, factory) {
-        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e')) : typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common'], factory) : factory((global.md = global.md || {}, global.md.progressBar = global.md.progressBar || {}), global.ng.core, global.ng.common);
+        typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('a'), $__require('e')) : typeof undefined === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common'], factory) : factory((global.md = global.md || {}, global.md.progressBar = global.md.progressBar || {}), global.ng.core, global.ng.common);
     })(this, function (exports, _angular_core, _angular_common) {
         'use strict';
 
@@ -26333,7 +26436,6 @@ $__System.registerDynamic('18', ['a', 'e'], true, function ($__require, exports,
 
         Object.defineProperty(exports, '__esModule', { value: true });
     });
-    return module.exports;
 });
 $__System.register("6", ["a", "19", "1a"], function (exports_1, context_1) {
     "use strict";
@@ -26365,37 +26467,6 @@ $__System.register("6", ["a", "19", "1a"], function (exports_1, context_1) {
             AppComponent = __decorate([core_1.Component({
                 selector: 'my-app',
                 template: `<md-sidenav-layout>
-
-            <md-sidenav #sidenav mode="over" id="kbase-sidenav">
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="/#narrativemanager/start">
-                            <i class="icon-file"></i> Narrative
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/#appcatalog">
-                        <i class="icon-book"></i> App Catalog</a>
-                    </li>
-                    <li>
-                        <a href="/search/#/search/?q=*">
-                        <i class="icon-search"></i> Search</a>
-                    </li>
-                    <li>
-                        <a href="/#dashboard">
-                        <i class="icon-tachometer"></i> Dashbaord</a>
-                    </li>
-                    <li><hr class="no-margin"></li>
-                    <li>
-                        <a href="https://kbase.us/contact" target="_blank">
-                        <i  class="icon-envelope-o"></i> Contact KBase</a>
-                    </li>
-                    <li>
-                        <a href="https://kbase.us/about" target="_blank">
-                        <i class="icon-info-circle"></i> About KBase</a>
-                    </li>
-                </ul>
-            </md-sidenav>
 
             <toolbar [sidenav]="sidenav"></toolbar>
 
@@ -27496,6 +27567,20 @@ table.edit-sheet input {
                         name: 'Is Metagenome',
                         prop: "single_genome",
                         type: 'checkbox'
+                        /*   }, {
+                                name: 'Post-import Method',
+                                prop: "poststep",
+                                type: 'postdropdown'
+                            }, {
+                                name: 'Strain',
+                                prop: "strain",
+                                required: 'false',
+                                type: 'string'
+                           }, {
+                                name: 'Source',
+                                prop: "source",
+                                required: 'false',
+                                type: 'string'*/
                     }];
                     // use same spec file for paired-end for now.
                     this.pairedReadsSpec = this.singleReadsSpec;
@@ -28041,8 +28126,7 @@ $__System.register("20", ["a", "25", "2b", "19"], function (exports_1, context_1
 $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -28062,11 +28146,12 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
      */
     var BoundCallbackObservable = function (_super) {
         __extends(BoundCallbackObservable, _super);
-        function BoundCallbackObservable(callbackFunc, selector, args, scheduler) {
+        function BoundCallbackObservable(callbackFunc, selector, args, context, scheduler) {
             _super.call(this);
             this.callbackFunc = callbackFunc;
             this.selector = selector;
             this.args = args;
+            this.context = context;
             this.scheduler = scheduler;
         }
         /* tslint:enable:max-line-length */
@@ -28080,10 +28165,62 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
          * `bindCallback` is not an operator because its input and output are not
          * Observables. The input is a function `func` with some parameters, but the
          * last parameter must be a callback function that `func` calls when it is
-         * done. The output of `bindCallback` is a function that takes the same
-         * parameters as `func`, except the last one (the callback). When the output
-         * function is called with arguments, it will return an Observable where the
-         * results will be delivered to.
+         * done.
+         *
+         * The output of `bindCallback` is a function that takes the same parameters
+         * as `func`, except the last one (the callback). When the output function
+         * is called with arguments, it will return an Observable. If `func` function
+         * calls its callback with one argument, the Observable will emit that value.
+         * If on the other hand callback is called with multiple values, resulting
+         * Observable will emit an array with these arguments.
+         *
+         * It is very important to remember, that input function `func` is not called
+         * when output function is, but rather when Observable returned by output
+         * function is subscribed. This means if `func` makes AJAX request, that request
+         * will be made every time someone subscribes to resulting Observable, but not before.
+         *
+         * Optionally, selector function can be passed to `bindObservable`. That function
+         * takes the same arguments as callback, and returns value
+         * that will be emitted by Observable instead of callback parameters themselves.
+         * Even though by default multiple arguments passed to callback appear in the stream as array,
+         * selector function will be called with arguments directly, just as callback would.
+         * This means you can imagine default selector (when one is not provided explicitly)
+         * as function that aggregates all its arguments into array, or simply returns first argument,
+         * if there is only one.
+         *
+         * Last optional parameter - {@link Scheduler} - can be used to control when call
+         * to `func` happens after someone subscribes to Observable, as well as when results
+         * passed to callback will be emitted. By default subscription to Observable calls `func`
+         * synchronously, but using `Scheduler.async` as last parameter will defer call to input function,
+         * just like wrapping that call in `setTimeout` with time `0` would. So if you use async Scheduler
+         * and call `subscribe` on output Observable, all function calls that are currently executing,
+         * will end before `func` is invoked.
+         *
+         * When it comes to emitting results passed to callback, by default they are emitted
+         * immediately after `func` invokes callback. In particular, if callback is called synchronously,
+         * then subscription to resulting Observable will call `next` function synchronously as well.
+         * If you want to defer that call, using `Scheduler.async` will, again, do the job.
+         * This means that by using `Scheduler.async` you can, in a sense, ensure that `func`
+         * always calls its callback asynchronously, thus avoiding terrifying Zalgo.
+         *
+         * Note that Observable created by output function will always emit only one value
+         * and then complete right after. Even if `func` calls callback multiple times, values from
+         * second and following calls will never appear in the stream. If you need to
+         * listen for multiple calls, you probably want to use {@link fromEvent} or
+         * {@link fromEventPattern} instead.
+         *
+         * If `func` depends on some context (`this` property), that context will be set
+         * to the same context that output function has at call time. In particular, if `func`
+         * is called as method of some object, in order to preserve proper behaviour,
+         * it is recommended to set context of output function to that object as well,
+         * provided `func` is not already bound.
+         *
+         * If input function calls its callback in "node style" (i.e. first argument to callback is
+         * optional error parameter signaling whether call failed or not), {@link bindNodeCallback}
+         * provides convenient error handling and probably is a better choice.
+         * `bindCallback` will treat such functions without any difference and error parameter
+         * (whether passed or not) will always be interpreted as regular callback argument.
+         *
          *
          * @example <caption>Convert jQuery's getJSON to an Observable API</caption>
          * // Suppose we have jQuery.getJSON('/my/url', callback)
@@ -28091,13 +28228,64 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
          * var result = getJSONAsObservable('/my/url');
          * result.subscribe(x => console.log(x), e => console.error(e));
          *
+         *
+         * @example <caption>Receive array of arguments passed to callback</caption>
+         * someFunction((a, b, c) => {
+         *   console.log(a); // 5
+         *   console.log(b); // 'some string'
+         *   console.log(c); // {someProperty: 'someValue'}
+         * });
+         *
+         * const boundSomeFunction = Rx.Observable.bindCallback(someFunction);
+         * boundSomeFunction().subscribe(values => {
+         *   console.log(values) // [5, 'some string', {someProperty: 'someValue'}]
+         * });
+         *
+         *
+         * @example <caption>Use bindCallback with selector function</caption>
+         * someFunction((a, b, c) => {
+         *   console.log(a); // 'a'
+         *   console.log(b); // 'b'
+         *   console.log(c); // 'c'
+         * });
+         *
+         * const boundSomeFunction = Rx.Observable.bindCallback(someFunction, (a, b, c) => a + b + c);
+         * boundSomeFunction().subscribe(value => {
+         *   console.log(value) // 'abc'
+         * });
+         *
+         *
+         * @example <caption>Compare behaviour with and without async Scheduler</caption>
+         * function iCallMyCallbackSynchronously(cb) {
+         *   cb();
+         * }
+         *
+         * const boundSyncFn = Rx.Observable.bindCallback(iCallMyCallbackSynchronously);
+         * const boundAsyncFn = Rx.Observable.bindCallback(iCallMyCallbackSynchronously, null, Rx.Scheduler.async);
+         *
+         * boundSyncFn().subscribe(() => console.log('I was sync!'));
+         * boundAsyncFn().subscribe(() => console.log('I was async!'));
+         * console.log('This happened...');
+         *
+         * // Logs:
+         * // I was sync!
+         * // This happened...
+         * // I was async!
+         *
+         *
+         * @example <caption>Use bindCallback on object method</caption>
+         * const boundMethod = Rx.Observable.bindCallback(someObject.methodWithCallback);
+         * boundMethod.call(someObject) // make sure methodWithCallback has access to someObject
+         * .subscribe(subscriber);
+         *
+         *
          * @see {@link bindNodeCallback}
          * @see {@link from}
          * @see {@link fromPromise}
          *
          * @param {function} func Function with a callback as the last parameter.
          * @param {function} [selector] A function which takes the arguments from the
-         * callback and maps those a value to emit on the output Observable.
+         * callback and maps those to a value to emit on the output Observable.
          * @param {Scheduler} [scheduler] The scheduler on which to schedule the
          * callbacks.
          * @return {function(...params: *): Observable} A function which returns the
@@ -28115,7 +28303,7 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                return new BoundCallbackObservable(func, selector, args, scheduler);
+                return new BoundCallbackObservable(func, selector, args, this, scheduler);
             };
         };
         BoundCallbackObservable.prototype._subscribe = function (subscriber) {
@@ -28143,26 +28331,27 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
                                 subject.complete();
                             }
                         } else {
-                            subject.next(innerArgs.length === 1 ? innerArgs[0] : innerArgs);
+                            subject.next(innerArgs.length <= 1 ? innerArgs[0] : innerArgs);
                             subject.complete();
                         }
                     };
                     // use named function instance to avoid closure.
                     handler.source = this;
-                    var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
+                    var result = tryCatch_1.tryCatch(callbackFunc).apply(this.context, args.concat(handler));
                     if (result === errorObject_1.errorObject) {
                         subject.error(errorObject_1.errorObject.e);
                     }
                 }
                 return subject.subscribe(subscriber);
             } else {
-                return scheduler.schedule(BoundCallbackObservable.dispatch, 0, { source: this, subscriber: subscriber });
+                return scheduler.schedule(BoundCallbackObservable.dispatch, 0, { source: this, subscriber: subscriber, context: this.context });
             }
         };
         BoundCallbackObservable.dispatch = function (state) {
             var self = this;
             var source = state.source,
-                subscriber = state.subscriber;
+                subscriber = state.subscriber,
+                context = state.context;
             var callbackFunc = source.callbackFunc,
                 args = source.args,
                 scheduler = source.scheduler;
@@ -28185,13 +28374,13 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
                             self.add(scheduler.schedule(dispatchNext, 0, { value: result_2, subject: subject }));
                         }
                     } else {
-                        var value = innerArgs.length === 1 ? innerArgs[0] : innerArgs;
+                        var value = innerArgs.length <= 1 ? innerArgs[0] : innerArgs;
                         self.add(scheduler.schedule(dispatchNext, 0, { value: value, subject: subject }));
                     }
                 };
                 // use named function to pass values in without closure
                 handler.source = source;
-                var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
+                var result = tryCatch_1.tryCatch(callbackFunc).apply(context, args.concat(handler));
                 if (result === errorObject_1.errorObject) {
                     subject.error(errorObject_1.errorObject.e);
                 }
@@ -28213,39 +28402,30 @@ $__System.registerDynamic('31', ['15', '32', '33', '34'], true, function ($__req
         subject.error(err);
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic("35", ["31"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var BoundCallbackObservable_1 = $__require("31");
   exports.bindCallback = BoundCallbackObservable_1.BoundCallbackObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('36', ['15', '35'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bindCallback_1 = $__require('35');
   Observable_1.Observable.bindCallback = bindCallback_1.bindCallback;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -28265,11 +28445,12 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
      */
     var BoundNodeCallbackObservable = function (_super) {
         __extends(BoundNodeCallbackObservable, _super);
-        function BoundNodeCallbackObservable(callbackFunc, selector, args, scheduler) {
+        function BoundNodeCallbackObservable(callbackFunc, selector, args, context, scheduler) {
             _super.call(this);
             this.callbackFunc = callbackFunc;
             this.selector = selector;
             this.args = args;
+            this.context = context;
             this.scheduler = scheduler;
         }
         /* tslint:enable:max-line-length */
@@ -28284,11 +28465,58 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
          * Observables. The input is a function `func` with some parameters, but the
          * last parameter must be a callback function that `func` calls when it is
          * done. The callback function is expected to follow Node.js conventions,
-         * where the first argument to the callback is an error, while remaining
-         * arguments are the callback result. The output of `bindNodeCallback` is a
-         * function that takes the same parameters as `func`, except the last one (the
-         * callback). When the output function is called with arguments, it will
-         * return an Observable where the results will be delivered to.
+         * where the first argument to the callback is an error object, signaling
+         * whether call was successful. If that object is passed to callback, it means
+         * something went wrong.
+         *
+         * The output of `bindNodeCallback` is a function that takes the same
+         * parameters as `func`, except the last one (the callback). When the output
+         * function is called with arguments, it will return an Observable.
+         * If `func` calls its callback with error parameter present, Observable will
+         * error with that value as well. If error parameter is not passed, Observable will emit
+         * second parameter. If there are more parameters (third and so on),
+         * Observable will emit an array with all arguments, except first error argument.
+         *
+         * Optionally `bindNodeCallback` accepts selector function, which allows you to
+         * make resulting Observable emit value computed by selector, instead of regular
+         * callback arguments. It works similarly to {@link bindCallback} selector, but
+         * Node.js-style error argument will never be passed to that function.
+         *
+         * Note that `func` will not be called at the same time output function is,
+         * but rather whenever resulting Observable is subscribed. By default call to
+         * `func` will happen synchronously after subscription, but that can be changed
+         * with proper {@link Scheduler} provided as optional third parameter. Scheduler
+         * can also control when values from callback will be emitted by Observable.
+         * To find out more, check out documentation for {@link bindCallback}, where
+         * Scheduler works exactly the same.
+         *
+         * As in {@link bindCallback}, context (`this` property) of input function will be set to context
+         * of returned function, when it is called.
+         *
+         * After Observable emits value, it will complete immediately. This means
+         * even if `func` calls callback again, values from second and consecutive
+         * calls will never appear on the stream. If you need to handle functions
+         * that call callbacks multiple times, check out {@link fromEvent} or
+         * {@link fromEventPattern} instead.
+         *
+         * Note that `bindNodeCallback` can be used in non-Node.js environments as well.
+         * "Node.js-style" callbacks are just a convention, so if you write for
+         * browsers or any other environment and API you use implements that callback style,
+         * `bindNodeCallback` can be safely used on that API functions as well.
+         *
+         * Remember that Error object passed to callback does not have to be an instance
+         * of JavaScript built-in `Error` object. In fact, it does not even have to an object.
+         * Error parameter of callback function is interpreted as "present", when value
+         * of that parameter is truthy. It could be, for example, non-zero number, non-empty
+         * string or boolean `true`. In all of these cases resulting Observable would error
+         * with that value. This means usually regular style callbacks will fail very often when
+         * `bindNodeCallback` is used. If your Observable errors much more often then you
+         * would expect, check if callback really is called in Node.js-style and, if not,
+         * switch to {@link bindCallback} instead.
+         *
+         * Note that even if error parameter is technically present in callback, but its value
+         * is falsy, it still won't appear in array emitted by Observable or in selector function.
+         *
          *
          * @example <caption>Read a file from the filesystem and get the data as an Observable</caption>
          * import * as fs from 'fs';
@@ -28296,13 +28524,52 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
          * var result = readFileAsObservable('./roadNames.txt', 'utf8');
          * result.subscribe(x => console.log(x), e => console.error(e));
          *
+         *
+         * @example <caption>Use on function calling callback with multiple arguments</caption>
+         * someFunction((err, a, b) => {
+         *   console.log(err); // null
+         *   console.log(a); // 5
+         *   console.log(b); // "some string"
+         * });
+         * var boundSomeFunction = Rx.Observable.bindNodeCallback(someFunction);
+         * boundSomeFunction()
+         * .subscribe(value => {
+         *   console.log(value); // [5, "some string"]
+         * });
+         *
+         *
+         * @example <caption>Use with selector function</caption>
+         * someFunction((err, a, b) => {
+         *   console.log(err); // undefined
+         *   console.log(a); // "abc"
+         *   console.log(b); // "DEF"
+         * });
+         * var boundSomeFunction = Rx.Observable.bindNodeCallback(someFunction, (a, b) => a + b);
+         * boundSomeFunction()
+         * .subscribe(value => {
+         *   console.log(value); // "abcDEF"
+         * });
+         *
+         *
+         * @example <caption>Use on function calling callback in regular style</caption>
+         * someFunction(a => {
+         *   console.log(a); // 5
+         * });
+         * var boundSomeFunction = Rx.Observable.bindNodeCallback(someFunction);
+         * boundSomeFunction()
+         * .subscribe(
+         *   value => {}             // never gets called
+         *   err => console.log(err) // 5
+         *);
+         *
+         *
          * @see {@link bindCallback}
          * @see {@link from}
          * @see {@link fromPromise}
          *
-         * @param {function} func Function with a callback as the last parameter.
+         * @param {function} func Function with a Node.js-style callback as the last parameter.
          * @param {function} [selector] A function which takes the arguments from the
-         * callback and maps those a value to emit on the output Observable.
+         * callback and maps those to a value to emit on the output Observable.
          * @param {Scheduler} [scheduler] The scheduler on which to schedule the
          * callbacks.
          * @return {function(...params: *): Observable} A function which returns the
@@ -28321,7 +28588,7 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                return new BoundNodeCallbackObservable(func, selector, args, scheduler);
+                return new BoundNodeCallbackObservable(func, selector, args, this, scheduler);
             };
         };
         BoundNodeCallbackObservable.prototype._subscribe = function (subscriber) {
@@ -28352,20 +28619,20 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
                                 subject.complete();
                             }
                         } else {
-                            subject.next(innerArgs.length === 1 ? innerArgs[0] : innerArgs);
+                            subject.next(innerArgs.length <= 1 ? innerArgs[0] : innerArgs);
                             subject.complete();
                         }
                     };
                     // use named function instance to avoid closure.
                     handler.source = this;
-                    var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
+                    var result = tryCatch_1.tryCatch(callbackFunc).apply(this.context, args.concat(handler));
                     if (result === errorObject_1.errorObject) {
                         subject.error(errorObject_1.errorObject.e);
                     }
                 }
                 return subject.subscribe(subscriber);
             } else {
-                return scheduler.schedule(dispatch, 0, { source: this, subscriber: subscriber });
+                return scheduler.schedule(dispatch, 0, { source: this, subscriber: subscriber, context: this.context });
             }
         };
         return BoundNodeCallbackObservable;
@@ -28374,7 +28641,8 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
     function dispatch(state) {
         var self = this;
         var source = state.source,
-            subscriber = state.subscriber;
+            subscriber = state.subscriber,
+            context = state.context;
         // XXX: cast to `any` to access to the private field in `source`.
         var _a = source,
             callbackFunc = _a.callbackFunc,
@@ -28393,7 +28661,7 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
                     subject = source.subject;
                 var err = innerArgs.shift();
                 if (err) {
-                    subject.error(err);
+                    self.add(scheduler.schedule(dispatchError, 0, { err: err, subject: subject }));
                 } else if (selector) {
                     var result_2 = tryCatch_1.tryCatch(selector).apply(this, innerArgs);
                     if (result_2 === errorObject_1.errorObject) {
@@ -28402,15 +28670,15 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
                         self.add(scheduler.schedule(dispatchNext, 0, { value: result_2, subject: subject }));
                     }
                 } else {
-                    var value = innerArgs.length === 1 ? innerArgs[0] : innerArgs;
+                    var value = innerArgs.length <= 1 ? innerArgs[0] : innerArgs;
                     self.add(scheduler.schedule(dispatchNext, 0, { value: value, subject: subject }));
                 }
             };
             // use named function to pass values in without closure
             handler.source = source;
-            var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
+            var result = tryCatch_1.tryCatch(callbackFunc).apply(context, args.concat(handler));
             if (result === errorObject_1.errorObject) {
-                subject.error(errorObject_1.errorObject.e);
+                self.add(scheduler.schedule(dispatchError, 0, { err: errorObject_1.errorObject.e, subject: subject }));
             }
         }
         self.add(subject.subscribe(subscriber));
@@ -28427,39 +28695,30 @@ $__System.registerDynamic('37', ['15', '32', '33', '34'], true, function ($__req
         subject.error(err);
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic("38", ["37"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var BoundNodeCallbackObservable_1 = $__require("37");
   exports.bindNodeCallback = BoundNodeCallbackObservable_1.BoundNodeCallbackObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('39', ['15', '38'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bindNodeCallback_1 = $__require('38');
   Observable_1.Observable.bindNodeCallback = bindNodeCallback_1.bindNodeCallback;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('3a', ['3b', '3c', '3d', '3e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var isScheduler_1 = $__require('3b');
     var isArray_1 = $__require('3c');
@@ -28477,14 +28736,73 @@ $__System.registerDynamic('3a', ['3b', '3c', '3d', '3e'], true, function ($__req
      * <img src="./img/combineLatest.png" width="100%">
      *
      * `combineLatest` combines the values from all the Observables passed as
-     * arguments. This is done by subscribing to each Observable, in order, and
-     * collecting an array of each of the most recent values any time any of the
-     * input Observables emits, then either taking that array and passing it as
-     * arguments to an optional `project` function and emitting the return value of
-     * that, or just emitting the array of recent values directly if there is no
-     * `project` function.
+     * arguments. This is done by subscribing to each Observable in order and,
+     * whenever any Observable emits, collecting an array of the most recent
+     * values from each Observable. So if you pass `n` Observables to operator,
+     * returned Observable will always emit an array of `n` values, in order
+     * corresponding to order of passed Observables (value from the first Observable
+     * on the first place and so on).
      *
-     * @example <caption>Dynamically calculate the Body-Mass Index from an Observable of weight and one for height</caption>
+     * Static version of `combineLatest` accepts either an array of Observables
+     * or each Observable can be put directly as an argument. Note that array of
+     * Observables is good choice, if you don't know beforehand how many Observables
+     * you will combine. Passing empty array will result in Observable that
+     * completes immediately.
+     *
+     * To ensure output array has always the same length, `combineLatest` will
+     * actually wait for all input Observables to emit at least once,
+     * before it starts emitting results. This means if some Observable emits
+     * values before other Observables started emitting, all that values but last
+     * will be lost. On the other hand, is some Observable does not emit value but
+     * completes, resulting Observable will complete at the same moment without
+     * emitting anything, since it will be now impossible to include value from
+     * completed Observable in resulting array. Also, if some input Observable does
+     * not emit any value and never completes, `combineLatest` will also never emit
+     * and never complete, since, again, it will wait for all streams to emit some
+     * value.
+     *
+     * If at least one Observable was passed to `combineLatest` and all passed Observables
+     * emitted something, resulting Observable will complete when all combined
+     * streams complete. So even if some Observable completes, result of
+     * `combineLatest` will still emit values when other Observables do. In case
+     * of completed Observable, its value from now on will always be the last
+     * emitted value. On the other hand, if any Observable errors, `combineLatest`
+     * will error immediately as well, and all other Observables will be unsubscribed.
+     *
+     * `combineLatest` accepts as optional parameter `project` function, which takes
+     * as arguments all values that would normally be emitted by resulting Observable.
+     * `project` can return any kind of value, which will be then emitted by Observable
+     * instead of default array. Note that `project` does not take as argument that array
+     * of values, but values themselves. That means default `project` can be imagined
+     * as function that takes all its arguments and puts them into an array.
+     *
+     *
+     * @example <caption>Combine two timer Observables</caption>
+     * const firstTimer = Rx.Observable.timer(0, 1000); // emit 0, 1, 2... after every second, starting from now
+     * const secondTimer = Rx.Observable.timer(500, 1000); // emit 0, 1, 2... after every second, starting 0,5s from now
+     * const combinedTimers = Rx.Observable.combineLatest(firstTimer, secondTimer);
+     * combinedTimers.subscribe(value => console.log(value));
+     * // Logs
+     * // [0, 0] after 0.5s
+     * // [1, 0] after 1s
+     * // [1, 1] after 1.5s
+     * // [2, 1] after 2s
+     *
+     *
+     * @example <caption>Combine an array of Observables</caption>
+     * const observables = [1, 5, 10].map(
+     *   n => Rx.Observable.of(n).delay(n * 1000).startWith(0) // emit 0 and then emit n after n seconds
+     * );
+     * const combined = Rx.Observable.combineLatest(observables);
+     * combined.subscribe(value => console.log(value));
+     * // Logs
+     * // [0, 0, 0] immediately
+     * // [1, 0, 0] after 1s
+     * // [1, 5, 0] after 5s
+     * // [1, 5, 10] after 10s
+     *
+     *
+     * @example <caption>Use project function to dynamically calculate the Body-Mass Index</caption>
      * var weight = Rx.Observable.of(70, 72, 76, 79, 75);
      * var height = Rx.Observable.of(1.76, 1.77, 1.78);
      * var bmi = Rx.Observable.combineLatest(weight, height, (w, h) => w / (h * h));
@@ -28495,14 +28813,15 @@ $__System.registerDynamic('3a', ['3b', '3c', '3d', '3e'], true, function ($__req
      * // BMI is 23.93948099205209
      * // BMI is 23.671253629592222
      *
+     *
      * @see {@link combineAll}
      * @see {@link merge}
      * @see {@link withLatestFrom}
      *
-     * @param {Observable} observable1 An input Observable to combine with the
-     * source Observable.
-     * @param {Observable} observable2 An input Observable to combine with the
-     * source Observable. More than one input Observables may be given as argument.
+     * @param {ObservableInput} observable1 An input Observable to combine with other Observables.
+     * @param {ObservableInput} observable2 An input Observable to combine with other Observables.
+     * More than one input Observables may be given as arguments
+     * or an array of Observables may be given as the first argument.
      * @param {function} [project] An optional function to project the values from
      * the combined latest values into a new value on the output Observable.
      * @param {Scheduler} [scheduler=null] The IScheduler to use for subscribing to
@@ -28536,52 +28855,40 @@ $__System.registerDynamic('3a', ['3b', '3c', '3d', '3e'], true, function ($__req
     }
     exports.combineLatest = combineLatest;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('3f', ['15', '3a'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var combineLatest_1 = $__require('3a');
   Observable_1.Observable.combineLatest = combineLatest_1.combineLatest;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("40", ["41"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var concat_1 = $__require("41");
   exports.concat = concat_1.concatStatic;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('42', ['15', '40'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var concat_1 = $__require('40');
   Observable_1.Observable.concat = concat_1.concat;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('43', ['15', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -28640,7 +28947,7 @@ $__System.registerDynamic('43', ['15', '44', '45'], true, function ($__require, 
          *
          * @see {@link create}
          *
-         * @param {function(): Observable|Promise} observableFactory The Observable
+         * @param {function(): SubscribableOrPromise} observableFactory The Observable
          * factory function to invoke for each Observer that subscribes to the output
          * Observable. May also return a Promise, which will be converted on the fly
          * to an Observable.
@@ -28682,64 +28989,49 @@ $__System.registerDynamic('43', ['15', '44', '45'], true, function ($__require, 
         return DeferSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("46", ["43"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var DeferObservable_1 = $__require("43");
   exports.defer = DeferObservable_1.DeferObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('47', ['15', '46'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var defer_1 = $__require('46');
   Observable_1.Observable.defer = defer_1.defer;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("48", ["49"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var EmptyObservable_1 = $__require("49");
   exports.empty = EmptyObservable_1.EmptyObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('4a', ['15', '48'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var empty_1 = $__require('48');
   Observable_1.Observable.empty = empty_1.empty;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('4b', ['15', '49', '3c', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -28857,52 +29149,40 @@ $__System.registerDynamic('4b', ['15', '49', '3c', '44', '45'], true, function (
         return ForkJoinSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("4c", ["4b"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var ForkJoinObservable_1 = $__require("4b");
   exports.forkJoin = ForkJoinObservable_1.ForkJoinObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('4d', ['15', '4c'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var forkJoin_1 = $__require('4c');
   Observable_1.Observable.forkJoin = forkJoin_1.forkJoin;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('4e', ['15', '4f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var from_1 = $__require('4f');
   Observable_1.Observable.from = from_1.from;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('50', ['15', '32', '51', '33', '52'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -28917,7 +29197,7 @@ $__System.registerDynamic('50', ['15', '32', '51', '33', '52'], true, function (
     var errorObject_1 = $__require('33');
     var Subscription_1 = $__require('52');
     var toString = Object.prototype.toString;
-    function isNodeStyleEventEmmitter(sourceObj) {
+    function isNodeStyleEventEmitter(sourceObj) {
         return !!sourceObj && typeof sourceObj.addListener === 'function' && typeof sourceObj.removeListener === 'function';
     }
     function isJQueryStyleEventEmitter(sourceObj) {
@@ -29012,7 +29292,7 @@ $__System.registerDynamic('50', ['15', '32', '51', '33', '52'], true, function (
                 unsubscribe = function () {
                     return source_2.off(eventName, handler);
                 };
-            } else if (isNodeStyleEventEmmitter(sourceObj)) {
+            } else if (isNodeStyleEventEmitter(sourceObj)) {
                 var source_3 = sourceObj;
                 sourceObj.addListener(eventName, handler);
                 unsubscribe = function () {
@@ -29048,39 +29328,30 @@ $__System.registerDynamic('50', ['15', '32', '51', '33', '52'], true, function (
     }(Observable_1.Observable);
     exports.FromEventObservable = FromEventObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("53", ["50"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var FromEventObservable_1 = $__require("50");
   exports.fromEvent = FromEventObservable_1.FromEventObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('54', ['15', '53'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var fromEvent_1 = $__require('53');
   Observable_1.Observable.fromEvent = fromEvent_1.fromEvent;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('55', ['15', '52'], true, function ($__require, exports, module) {
+$__System.registerDynamic('55', ['51', '15', '52'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29089,6 +29360,7 @@ $__System.registerDynamic('55', ['15', '52'], true, function ($__require, export
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
+    var isFunction_1 = $__require('51');
     var Observable_1 = $__require('15');
     var Subscription_1 = $__require('52');
     /**
@@ -29140,9 +29412,10 @@ $__System.registerDynamic('55', ['15', '52'], true, function ($__require, export
          * @param {function(handler: Function): any} addHandler A function that takes
          * a `handler` function as argument and attaches it somehow to the actual
          * source of events.
-         * @param {function(handler: Function): void} removeHandler A function that
+         * @param {function(handler: Function, signal?: any): void} [removeHandler] An optional function that
          * takes a `handler` function as argument and removes it in case it was
-         * previously attached using `addHandler`.
+         * previously attached using `addHandler`. if addHandler returns signal to teardown when remove,
+         * removeHandler function will forward it.
          * @param {function(...args: any): T} [selector] An optional function to
          * post-process results. It takes the arguments from the event handler and
          * should return a single value.
@@ -29166,10 +29439,13 @@ $__System.registerDynamic('55', ['15', '52'], true, function ($__require, export
             } : function (e) {
                 subscriber.next(e);
             };
-            this._callAddHandler(handler, subscriber);
+            var retValue = this._callAddHandler(handler, subscriber);
+            if (!isFunction_1.isFunction(removeHandler)) {
+                return;
+            }
             subscriber.add(new Subscription_1.Subscription(function () {
                 //TODO: determine whether or not to forward to error handler
-                removeHandler(handler);
+                removeHandler(handler, retValue);
             }));
         };
         FromEventPatternObservable.prototype._callSelector = function (subscriber, args) {
@@ -29182,7 +29458,7 @@ $__System.registerDynamic('55', ['15', '52'], true, function ($__require, export
         };
         FromEventPatternObservable.prototype._callAddHandler = function (handler, errorSubscriber) {
             try {
-                this.addHandler(handler);
+                return this.addHandler(handler) || null;
             } catch (e) {
                 errorSubscriber.error(e);
             }
@@ -29191,52 +29467,40 @@ $__System.registerDynamic('55', ['15', '52'], true, function ($__require, export
     }(Observable_1.Observable);
     exports.FromEventPatternObservable = FromEventPatternObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("56", ["55"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var FromEventPatternObservable_1 = $__require("55");
   exports.fromEventPattern = FromEventPatternObservable_1.FromEventPatternObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('57', ['15', '56'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var fromEventPattern_1 = $__require('56');
   Observable_1.Observable.fromEventPattern = fromEventPattern_1.fromEventPattern;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('58', ['15', '16'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var fromPromise_1 = $__require('16');
   Observable_1.Observable.fromPromise = fromPromise_1.fromPromise;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('59', ['15', '3b'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29373,27 +29637,21 @@ $__System.registerDynamic('59', ['15', '3b'], true, function ($__require, export
     }(Observable_1.Observable);
     exports.GenerateObservable = GenerateObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('5a', ['15', '59'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var GenerateObservable_1 = $__require('59');
   Observable_1.Observable.generate = GenerateObservable_1.GenerateObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('5b', ['15', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29461,39 +29719,30 @@ $__System.registerDynamic('5b', ['15', '44', '45'], true, function ($__require, 
         return IfSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("5c", ["5b"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var IfObservable_1 = $__require("5b");
   exports._if = IfObservable_1.IfObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('5d', ['15', '5c'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var if_1 = $__require('5c');
   Observable_1.Observable.if = if_1._if;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('5e', ['5f', '15', '60'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29594,77 +29843,59 @@ $__System.registerDynamic('5e', ['5f', '15', '60'], true, function ($__require, 
     }(Observable_1.Observable);
     exports.IntervalObservable = IntervalObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("61", ["5e"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var IntervalObservable_1 = $__require("5e");
   exports.interval = IntervalObservable_1.IntervalObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('62', ['15', '61'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var interval_1 = $__require('61');
   Observable_1.Observable.interval = interval_1.interval;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("63", ["64"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var merge_1 = $__require("64");
   exports.merge = merge_1.mergeStatic;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('65', ['15', '63'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var merge_1 = $__require('63');
   Observable_1.Observable.merge = merge_1.merge;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('66', ['15', '67'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var race_1 = $__require('67');
   Observable_1.Observable.race = race_1.raceStatic;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('68', ['15', '69'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29726,65 +29957,50 @@ $__System.registerDynamic('68', ['15', '69'], true, function ($__require, export
     }(Observable_1.Observable);
     exports.NeverObservable = NeverObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("6a", ["68"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var NeverObservable_1 = $__require("68");
   exports.never = NeverObservable_1.NeverObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('6b', ['15', '6a'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var never_1 = $__require('6a');
   Observable_1.Observable.never = never_1.never;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('6c', ['15', '6d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var of_1 = $__require('6d');
   Observable_1.Observable.of = of_1.of;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('6e', ['15', '6f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var onErrorResumeNext_1 = $__require('6f');
   Observable_1.Observable.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNextStatic;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("70", ["15"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -29877,39 +30093,30 @@ $__System.registerDynamic("70", ["15"], true, function ($__require, exports, mod
     }(Observable_1.Observable);
     exports.PairsObservable = PairsObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("71", ["70"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var PairsObservable_1 = $__require("70");
   exports.pairs = PairsObservable_1.PairsObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('72', ['15', '71'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var pairs_1 = $__require('71');
   Observable_1.Observable.pairs = pairs_1.pairs;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("73", ["15"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30014,39 +30221,30 @@ $__System.registerDynamic("73", ["15"], true, function ($__require, exports, mod
     }(Observable_1.Observable);
     exports.RangeObservable = RangeObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("74", ["73"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var RangeObservable_1 = $__require("73");
   exports.range = RangeObservable_1.RangeObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('75', ['15', '74'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var range_1 = $__require('74');
   Observable_1.Observable.range = range_1.range;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('76', ['15', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30110,39 +30308,30 @@ $__System.registerDynamic('76', ['15', '44', '45'], true, function ($__require, 
         return UsingSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("77", ["76"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var UsingObservable_1 = $__require("76");
   exports.using = UsingObservable_1.UsingObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('78', ['15', '77'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var using_1 = $__require('77');
   Observable_1.Observable.using = using_1.using;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("79", ["15"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30181,7 +30370,7 @@ $__System.registerDynamic("79", ["15"], true, function ($__require, exports, mod
          * var result = Rx.Observable.throw(new Error('oops!')).startWith(7);
          * result.subscribe(x => console.log(x), e => console.error(e));
          *
-         * @example <caption>Map and flattens numbers to the sequence 'a', 'b', 'c', but throw an error for 13</caption>
+         * @example <caption>Map and flatten numbers to the sequence 'a', 'b', 'c', but throw an error for 13</caption>
          * var interval = Rx.Observable.interval(1000);
          * var result = interval.mergeMap(x =>
          *   x === 13 ?
@@ -30227,39 +30416,30 @@ $__System.registerDynamic("79", ["15"], true, function ($__require, exports, mod
     }(Observable_1.Observable);
     exports.ErrorObservable = ErrorObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("7a", ["79"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var ErrorObservable_1 = $__require("79");
   exports._throw = ErrorObservable_1.ErrorObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('7b', ['15', '7a'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var throw_1 = $__require('7a');
   Observable_1.Observable.throw = throw_1._throw;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('7c', ['5f', '15', '60', '3b', '7d'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30374,89 +30554,68 @@ $__System.registerDynamic('7c', ['5f', '15', '60', '3b', '7d'], true, function (
     }(Observable_1.Observable);
     exports.TimerObservable = TimerObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("7e", ["7c"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var TimerObservable_1 = $__require("7c");
   exports.timer = TimerObservable_1.TimerObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('7f', ['15', '7e'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var timer_1 = $__require('7e');
   Observable_1.Observable.timer = timer_1.timer;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("80", ["81"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var zip_1 = $__require("81");
   exports.zip = zip_1.zipStatic;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('82', ['15', '80'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var zip_1 = $__require('80');
   Observable_1.Observable.zip = zip_1.zip;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("83", ["84"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var AjaxObservable_1 = $__require("84");
   exports.ajax = AjaxObservable_1.AjaxObservable.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('85', ['15', '83'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var ajax_1 = $__require('83');
   Observable_1.Observable.ajax = ajax_1.ajax;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("86", ["87"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require("87");
     function assignImpl(target) {
@@ -30483,14 +30642,11 @@ $__System.registerDynamic("86", ["87"], true, function ($__require, exports, mod
     exports.getAssign = getAssign;
     exports.assign = getAssign(root_1.root);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('88', ['10', '89', '15', '52', '87', '8a', '32', '33', '86'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30538,7 +30694,38 @@ $__System.registerDynamic('88', ['10', '89', '15', '52', '87', '8a', '32', '33',
             return JSON.parse(e.data);
         };
         /**
-         * @param urlConfigOrSource
+         * Wrapper around the w3c-compatible WebSocket object provided by the browser.
+         *
+         * @example <caption>Wraps browser WebSocket</caption>
+         *
+         * let socket$ = Observable.webSocket('ws://localhost:8081');
+         *
+         * socket$.subscribe(
+         *    (msg) => console.log('message received: ' + msg),
+         *    (err) => console.log(err),
+         *    () => console.log('complete')
+         *  );
+         *
+         * socket$.next(JSON.stringify({ op: 'hello' }));
+         *
+         * @example <caption>Wraps WebSocket from nodejs-websocket (using node.js)</caption>
+         *
+         * import { w3cwebsocket } from 'websocket';
+         *
+         * let socket$ = Observable.webSocket({
+         *   url: 'ws://localhost:8081',
+         *   WebSocketCtor: w3cwebsocket
+         * });
+         *
+         * socket$.subscribe(
+         *    (msg) => console.log('message received: ' + msg),
+         *    (err) => console.log(err),
+         *    () => console.log('complete')
+         *  );
+         *
+         * socket$.next(JSON.stringify({ op: 'hello' }));
+         *
+         * @param {string | WebSocketSubjectConfig} urlConfigOrSource the source of the websocket as an url or a structure defining the websocket object
          * @return {WebSocketSubject}
          * @static true
          * @name webSocket
@@ -30600,6 +30787,9 @@ $__System.registerDynamic('88', ['10', '89', '15', '52', '87', '8a', '32', '33',
             try {
                 socket = this.protocol ? new WebSocketCtor(this.url, this.protocol) : new WebSocketCtor(this.url);
                 this.socket = socket;
+                if (this.binaryType) {
+                    this.socket.binaryType = this.binaryType;
+                }
             } catch (e) {
                 observer.error(e);
                 return;
@@ -30705,39 +30895,30 @@ $__System.registerDynamic('88', ['10', '89', '15', '52', '87', '8a', '32', '33',
     }(Subject_1.AnonymousSubject);
     exports.WebSocketSubject = WebSocketSubject;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("8b", ["88"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var WebSocketSubject_1 = $__require("88");
   exports.webSocket = WebSocketSubject_1.WebSocketSubject.create;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('8c', ['15', '8b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var webSocket_1 = $__require('8b');
   Observable_1.Observable.webSocket = webSocket_1.webSocket;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('8d', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30816,27 +30997,21 @@ $__System.registerDynamic('8d', ['45', '44'], true, function ($__require, export
         return BufferSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('8e', ['15', '8d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var buffer_1 = $__require('8d');
   Observable_1.Observable.prototype.buffer = buffer_1.buffer;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("8f", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30898,9 +31073,14 @@ $__System.registerDynamic("8f", ["89"], true, function ($__require, exports, mod
         function BufferCountOperator(bufferSize, startBufferEvery) {
             this.bufferSize = bufferSize;
             this.startBufferEvery = startBufferEvery;
+            if (!startBufferEvery || bufferSize === startBufferEvery) {
+                this.subscriberClass = BufferCountSubscriber;
+            } else {
+                this.subscriberClass = BufferSkipCountSubscriber;
+            }
         }
         BufferCountOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new BufferCountSubscriber(subscriber, this.bufferSize, this.startBufferEvery));
+            return source.subscribe(new this.subscriberClass(subscriber, this.bufferSize, this.startBufferEvery));
         };
         return BufferCountOperator;
     }();
@@ -30911,22 +31091,50 @@ $__System.registerDynamic("8f", ["89"], true, function ($__require, exports, mod
      */
     var BufferCountSubscriber = function (_super) {
         __extends(BufferCountSubscriber, _super);
-        function BufferCountSubscriber(destination, bufferSize, startBufferEvery) {
+        function BufferCountSubscriber(destination, bufferSize) {
+            _super.call(this, destination);
+            this.bufferSize = bufferSize;
+            this.buffer = [];
+        }
+        BufferCountSubscriber.prototype._next = function (value) {
+            var buffer = this.buffer;
+            buffer.push(value);
+            if (buffer.length == this.bufferSize) {
+                this.destination.next(buffer);
+                this.buffer = [];
+            }
+        };
+        BufferCountSubscriber.prototype._complete = function () {
+            var buffer = this.buffer;
+            if (buffer.length > 0) {
+                this.destination.next(buffer);
+            }
+            _super.prototype._complete.call(this);
+        };
+        return BufferCountSubscriber;
+    }(Subscriber_1.Subscriber);
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var BufferSkipCountSubscriber = function (_super) {
+        __extends(BufferSkipCountSubscriber, _super);
+        function BufferSkipCountSubscriber(destination, bufferSize, startBufferEvery) {
             _super.call(this, destination);
             this.bufferSize = bufferSize;
             this.startBufferEvery = startBufferEvery;
             this.buffers = [];
             this.count = 0;
         }
-        BufferCountSubscriber.prototype._next = function (value) {
-            var count = this.count++;
+        BufferSkipCountSubscriber.prototype._next = function (value) {
             var _a = this,
-                destination = _a.destination,
                 bufferSize = _a.bufferSize,
                 startBufferEvery = _a.startBufferEvery,
-                buffers = _a.buffers;
-            var startOn = startBufferEvery == null ? bufferSize : startBufferEvery;
-            if (count % startOn === 0) {
+                buffers = _a.buffers,
+                count = _a.count;
+            this.count++;
+            if (count % startBufferEvery === 0) {
                 buffers.push([]);
             }
             for (var i = buffers.length; i--;) {
@@ -30934,13 +31142,14 @@ $__System.registerDynamic("8f", ["89"], true, function ($__require, exports, mod
                 buffer.push(value);
                 if (buffer.length === bufferSize) {
                     buffers.splice(i, 1);
-                    destination.next(buffer);
+                    this.destination.next(buffer);
                 }
             }
         };
-        BufferCountSubscriber.prototype._complete = function () {
-            var destination = this.destination;
-            var buffers = this.buffers;
+        BufferSkipCountSubscriber.prototype._complete = function () {
+            var _a = this,
+                buffers = _a.buffers,
+                destination = _a.destination;
             while (buffers.length > 0) {
                 var buffer = buffers.shift();
                 if (buffer.length > 0) {
@@ -30949,30 +31158,24 @@ $__System.registerDynamic("8f", ["89"], true, function ($__require, exports, mod
             }
             _super.prototype._complete.call(this);
         };
-        return BufferCountSubscriber;
+        return BufferSkipCountSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('90', ['15', '8f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bufferCount_1 = $__require('8f');
   Observable_1.Observable.prototype.bufferCount = bufferCount_1.bufferCount;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('91', ['60', '89', '3b'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30984,7 +31187,7 @@ $__System.registerDynamic('91', ['60', '89', '3b'], true, function ($__require, 
     var async_1 = $__require('60');
     var Subscriber_1 = $__require('89');
     var isScheduler_1 = $__require('3b');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Buffers the source Observable values for a specific time period.
      *
@@ -31179,27 +31382,21 @@ $__System.registerDynamic('91', ['60', '89', '3b'], true, function ($__require, 
         subscriber.closeContext(context);
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic('92', ['15', '91'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bufferTime_1 = $__require('91');
   Observable_1.Observable.prototype.bufferTime = bufferTime_1.bufferTime;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('93', ['52', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -31353,27 +31550,21 @@ $__System.registerDynamic('93', ['52', '44', '45'], true, function ($__require, 
         return BufferToggleSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('94', ['15', '93'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bufferToggle_1 = $__require('93');
   Observable_1.Observable.prototype.bufferToggle = bufferToggle_1.bufferToggle;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('95', ['52', '32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -31496,27 +31687,21 @@ $__System.registerDynamic('95', ['52', '32', '33', '45', '44'], true, function (
         return BufferWhenSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('96', ['15', '95'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var bufferWhen_1 = $__require('95');
   Observable_1.Observable.prototype.bufferWhen = bufferWhen_1.bufferWhen;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("97", ["3e"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var combineLatest_1 = $__require("3e");
   /**
@@ -31564,27 +31749,21 @@ $__System.registerDynamic("97", ["3e"], true, function ($__require, exports, mod
   }
   exports.combineAll = combineAll;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('98', ['15', '97'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var combineAll_1 = $__require('97');
   Observable_1.Observable.prototype.combineAll = combineAll_1.combineAll;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('3e', ['3d', '3c', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -31598,7 +31777,7 @@ $__System.registerDynamic('3e', ['3d', '3c', '45', '44'], true, function ($__req
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
     var none = {};
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Combines multiple Observables to create an Observable whose values are
      * calculated from the latest values of each of its input Observables.
@@ -31632,7 +31811,7 @@ $__System.registerDynamic('3e', ['3d', '3c', '45', '44'], true, function ($__req
      * @see {@link merge}
      * @see {@link withLatestFrom}
      *
-     * @param {Observable} other An input Observable to combine with the source
+     * @param {ObservableInput} other An input Observable to combine with the source
      * Observable. More than one input Observables may be given as argument.
      * @param {function} [project] An optional function to project the values from
      * the combined latest values into a new value on the output Observable.
@@ -31654,7 +31833,7 @@ $__System.registerDynamic('3e', ['3d', '3c', '45', '44'], true, function ($__req
         // if the first and only other argument besides the resultSelector is an array
         // assume it's been called with `combineLatest([obs1, obs2, obs3], project)`
         if (observables.length === 1 && isArray_1.isArray(observables[0])) {
-            observables = observables[0];
+            observables = observables[0].slice();
         }
         observables.unshift(this);
         return this.lift.call(new ArrayObservable_1.ArrayObservable(observables), new CombineLatestOperator(project));
@@ -31734,69 +31913,54 @@ $__System.registerDynamic('3e', ['3d', '3c', '45', '44'], true, function ($__req
     }(OuterSubscriber_1.OuterSubscriber);
     exports.CombineLatestSubscriber = CombineLatestSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('99', ['15', '3e'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var combineLatest_1 = $__require('3e');
   Observable_1.Observable.prototype.combineLatest = combineLatest_1.combineLatest;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('9a', ['15', '41'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var concat_1 = $__require('41');
   Observable_1.Observable.prototype.concat = concat_1.concat;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('9b', ['15', '9c'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var concatAll_1 = $__require('9c');
   Observable_1.Observable.prototype.concatAll = concatAll_1.concatAll;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('9d', ['15', '9e'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var concatMap_1 = $__require('9e');
   Observable_1.Observable.prototype.concatMap = concatMap_1.concatMap;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("9f", ["a0"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var mergeMapTo_1 = $__require("a0");
-  /* tslint:disable:max-line-length */
+  /* tslint:enable:max-line-length */
   /**
    * Projects each source value to the same Observable which is merged multiple
    * times in a serialized fashion on the output Observable.
@@ -31837,7 +32001,7 @@ $__System.registerDynamic("9f", ["a0"], true, function ($__require, exports, mod
    * @see {@link mergeMapTo}
    * @see {@link switchMapTo}
    *
-   * @param {Observable} innerObservable An Observable to replace each value from
+   * @param {ObservableInput} innerObservable An Observable to replace each value from
    * the source Observable.
    * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
    * A function to produce the value on the output Observable based on the values
@@ -31858,27 +32022,21 @@ $__System.registerDynamic("9f", ["a0"], true, function ($__require, exports, mod
   }
   exports.concatMapTo = concatMapTo;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('a1', ['15', '9f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var concatMapTo_1 = $__require('9f');
   Observable_1.Observable.prototype.concatMapTo = concatMapTo_1.concatMapTo;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("a2", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -31900,7 +32058,7 @@ $__System.registerDynamic("a2", ["89"], true, function ($__require, exports, mod
      * `count` transforms an Observable that emits values into an Observable that
      * emits a single value that represents the number of values emitted by the
      * source Observable. If the source Observable terminates with an error, `count`
-     * will pass this error notification along without emitting an value first. If
+     * will pass this error notification along without emitting a value first. If
      * the source Observable does not terminate at all, `count` will neither emit
      * a value nor terminate. This operator takes an optional `predicate` function
      * as argument, in which case the output emission will represent the number of
@@ -31990,27 +32148,21 @@ $__System.registerDynamic("a2", ["89"], true, function ($__require, exports, mod
         return CountSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('a3', ['15', 'a2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var count_1 = $__require('a2');
   Observable_1.Observable.prototype.count = count_1.count;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("a4", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32087,27 +32239,21 @@ $__System.registerDynamic("a4", ["89"], true, function ($__require, exports, mod
         return DeMaterializeSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('a5', ['15', 'a4'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var dematerialize_1 = $__require('a4');
   Observable_1.Observable.prototype.dematerialize = dematerialize_1.dematerialize;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('a6', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32151,7 +32297,7 @@ $__System.registerDynamic('a6', ['45', '44'], true, function ($__require, export
      * @see {@link delayWhen}
      * @see {@link throttle}
      *
-     * @param {function(value: T): Observable|Promise} durationSelector A function
+     * @param {function(value: T): SubscribableOrPromise} durationSelector A function
      * that receives a value from the source Observable, for computing the timeout
      * duration for each source value, returned as an Observable or a Promise.
      * @return {Observable} An Observable that delays the emissions of the source
@@ -32236,27 +32382,21 @@ $__System.registerDynamic('a6', ['45', '44'], true, function ($__require, export
         return DebounceSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('a7', ['15', 'a6'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var debounce_1 = $__require('a6');
   Observable_1.Observable.prototype.debounce = debounce_1.debounce;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('a8', ['89', '60'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32377,27 +32517,21 @@ $__System.registerDynamic('a8', ['89', '60'], true, function ($__require, export
         subscriber.debouncedNext();
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic('a9', ['15', 'a8'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var debounceTime_1 = $__require('a8');
   Observable_1.Observable.prototype.debounceTime = debounceTime_1.debounceTime;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("aa", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32407,7 +32541,7 @@ $__System.registerDynamic("aa", ["89"], true, function ($__require, exports, mod
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require("89");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Emits a given value if the source Observable completes without emitting any
      * `next` value, otherwise mirrors the source Observable.
@@ -32479,27 +32613,21 @@ $__System.registerDynamic("aa", ["89"], true, function ($__require, exports, mod
         return DefaultIfEmptySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ab', ['15', 'aa'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var defaultIfEmpty_1 = $__require('aa');
   Observable_1.Observable.prototype.defaultIfEmpty = defaultIfEmpty_1.defaultIfEmpty;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('ac', ['60', '7d', '89', 'ad'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32638,27 +32766,21 @@ $__System.registerDynamic('ac', ['60', '7d', '89', 'ad'], true, function ($__req
         return DelayMessage;
     }();
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ae', ['15', 'ac'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var delay_1 = $__require('ac');
   Observable_1.Observable.prototype.delay = delay_1.delay;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('af', ['89', '15', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32788,8 +32910,10 @@ $__System.registerDynamic('af', ['89', '15', '45', '44'], true, function ($__req
         };
         DelayWhenSubscriber.prototype.tryDelay = function (delayNotifier, value) {
             var notifierSubscription = subscribeToResult_1.subscribeToResult(this, delayNotifier, value);
-            this.add(notifierSubscription);
-            this.delayNotifierSubscriptions.push(notifierSubscription);
+            if (notifierSubscription && !notifierSubscription.closed) {
+                this.add(notifierSubscription);
+                this.delayNotifierSubscriptions.push(notifierSubscription);
+            }
             this.values.push(value);
         };
         DelayWhenSubscriber.prototype.tryComplete = function () {
@@ -32849,27 +32973,21 @@ $__System.registerDynamic('af', ['89', '15', '45', '44'], true, function ($__req
         return SubscriptionDelaySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('b0', ['15', 'af'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var delayWhen_1 = $__require('af');
   Observable_1.Observable.prototype.delayWhen = delayWhen_1.delayWhen;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("b1", ["87"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require("87");
     function minimalSetImpl() {
@@ -32903,14 +33021,11 @@ $__System.registerDynamic("b1", ["87"], true, function ($__require, exports, mod
     exports.minimalSetImpl = minimalSetImpl;
     exports.Set = root_1.root.Set || minimalSetImpl();
     
-
-    return module.exports;
 });
 $__System.registerDynamic('b2', ['45', '44', 'b1'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -32961,9 +33076,9 @@ $__System.registerDynamic('b2', ['45', '44', 'b1'], true, function ($__require, 
      * @see {@link distinctUntilChanged}
      * @see {@link distinctUntilKeyChanged}
      *
-     * @param {function} [keySelector] optional function to select which value you want to check as distinct.
-     * @param {Observable} [flushes] optional Observable for flushing the internal HashSet of the operator.
-     * @return {Observable} an Observable that emits items from the source Observable with distinct values.
+     * @param {function} [keySelector] Optional function to select which value you want to check as distinct.
+     * @param {Observable} [flushes] Optional Observable for flushing the internal HashSet of the operator.
+     * @return {Observable} An Observable that emits items from the source Observable with distinct values.
      * @method distinct
      * @owner Observable
      */
@@ -33031,40 +33146,31 @@ $__System.registerDynamic('b2', ['45', '44', 'b1'], true, function ($__require, 
     }(OuterSubscriber_1.OuterSubscriber);
     exports.DistinctSubscriber = DistinctSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('b3', ['15', 'b2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var distinct_1 = $__require('b2');
   Observable_1.Observable.prototype.distinct = distinct_1.distinct;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('b4', ['15', 'b5'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var distinctUntilChanged_1 = $__require('b5');
   Observable_1.Observable.prototype.distinctUntilChanged = distinctUntilChanged_1.distinctUntilChanged;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('b5', ['89', '32', '33'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33076,7 +33182,7 @@ $__System.registerDynamic('b5', ['89', '32', '33'], true, function ($__require, 
     var Subscriber_1 = $__require('89');
     var tryCatch_1 = $__require('32');
     var errorObject_1 = $__require('33');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
      *
@@ -33111,8 +33217,8 @@ $__System.registerDynamic('b5', ['89', '32', '33'], true, function ($__require, 
      * @see {@link distinct}
      * @see {@link distinctUntilKeyChanged}
      *
-     * @param {function} [compare] optional comparison function called to test if an item is distinct from the previous item in the source.
-     * @return {Observable} an Observable that emits items from the source Observable with distinct values.
+     * @param {function} [compare] Optional comparison function called to test if an item is distinct from the previous item in the source.
+     * @return {Observable} An Observable that emits items from the source Observable with distinct values.
      * @method distinctUntilChanged
      * @owner Observable
      */
@@ -33174,17 +33280,14 @@ $__System.registerDynamic('b5', ['89', '32', '33'], true, function ($__require, 
         return DistinctUntilChangedSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("b6", ["b5"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var distinctUntilChanged_1 = $__require("b5");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item,
      * using a property accessed by using the key provided to check if the two items are distinct.
@@ -33236,9 +33339,9 @@ $__System.registerDynamic("b6", ["b5"], true, function ($__require, exports, mod
      * @see {@link distinct}
      * @see {@link distinctUntilChanged}
      *
-     * @param {string} key string key for object property lookup on each item.
-     * @param {function} [compare] optional comparison function called to test if an item is distinct from the previous item in the source.
-     * @return {Observable} an Observable that emits items from the source Observable with distinct values based on the key specified.
+     * @param {string} key String key for object property lookup on each item.
+     * @param {function} [compare] Optional comparison function called to test if an item is distinct from the previous item in the source.
+     * @return {Observable} An Observable that emits items from the source Observable with distinct values based on the key specified.
      * @method distinctUntilKeyChanged
      * @owner Observable
      */
@@ -33252,27 +33355,21 @@ $__System.registerDynamic("b6", ["b5"], true, function ($__require, exports, mod
     }
     exports.distinctUntilKeyChanged = distinctUntilKeyChanged;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('b7', ['15', 'b6'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var distinctUntilKeyChanged_1 = $__require('b6');
   Observable_1.Observable.prototype.distinctUntilKeyChanged = distinctUntilKeyChanged_1.distinctUntilKeyChanged;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('b8', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33313,9 +33410,8 @@ $__System.registerDynamic('b8', ['45', '44'], true, function ($__require, export
      * @see {@link exhaustMap}
      * @see {@link zipAll}
      *
-     * @return {Observable} Returns an Observable that takes a source of Observables
-     * and propagates the first observable exclusively until it completes before
-     * subscribing to the next.
+     * @return {Observable} An Observable that takes a source of Observables and propagates the first observable
+     * exclusively until it completes before subscribing to the next.
      * @method exhaust
      * @owner Observable
      */
@@ -33364,27 +33460,21 @@ $__System.registerDynamic('b8', ['45', '44'], true, function ($__require, export
         return SwitchFirstSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('b9', ['15', 'b8'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var exhaust_1 = $__require('b8');
   Observable_1.Observable.prototype.exhaust = exhaust_1.exhaust;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('ba', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33395,7 +33485,7 @@ $__System.registerDynamic('ba', ['45', '44'], true, function ($__require, export
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Projects each source value to an Observable which is merged in the output
      * Observable only if the previous projected Observable has completed.
@@ -33424,7 +33514,7 @@ $__System.registerDynamic('ba', ['45', '44'], true, function ($__require, export
      * @see {@link mergeMap}
      * @see {@link switchMap}
      *
-     * @param {function(value: T, ?index: number): Observable} project A function
+     * @param {function(value: T, ?index: number): ObservableInput} project A function
      * that, when applied to an item emitted by the source Observable, returns an
      * Observable.
      * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
@@ -33526,27 +33616,21 @@ $__System.registerDynamic('ba', ['45', '44'], true, function ($__require, export
         return SwitchFirstMapSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('bb', ['15', 'ba'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var exhaustMap_1 = $__require('ba');
   Observable_1.Observable.prototype.exhaustMap = exhaustMap_1.exhaustMap;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('bc', ['32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33559,7 +33643,7 @@ $__System.registerDynamic('bc', ['32', '33', '45', '44'], true, function ($__req
     var errorObject_1 = $__require('33');
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Recursively projects each source value to an Observable which is merged in
      * the output Observable.
@@ -33704,27 +33788,21 @@ $__System.registerDynamic('bc', ['32', '33', '45', '44'], true, function ($__req
     }(OuterSubscriber_1.OuterSubscriber);
     exports.ExpandSubscriber = ExpandSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('bd', ['15', 'bc'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var expand_1 = $__require('bc');
   Observable_1.Observable.prototype.expand = expand_1.expand;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('be', ['89', 'bf'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33826,40 +33904,31 @@ $__System.registerDynamic('be', ['89', 'bf'], true, function ($__require, export
         return ElementAtSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('c0', ['15', 'be'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var elementAt_1 = $__require('be');
   Observable_1.Observable.prototype.elementAt = elementAt_1.elementAt;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c1', ['15', 'c2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var filter_1 = $__require('c2');
   Observable_1.Observable.prototype.filter = filter_1.filter;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c3', ['89', '52'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33873,8 +33942,8 @@ $__System.registerDynamic('c3', ['89', '52'], true, function ($__require, export
     /**
      * Returns an Observable that mirrors the source Observable, but will call a specified function when
      * the source terminates on complete or error.
-     * @param {function} callback function to be called when source terminates.
-     * @return {Observable} an Observable that mirrors the source, but will call the specified function on termination.
+     * @param {function} callback Function to be called when source terminates.
+     * @return {Observable} An Observable that mirrors the source, but will call the specified function on termination.
      * @method finally
      * @owner Observable
      */
@@ -33905,41 +33974,32 @@ $__System.registerDynamic('c3', ['89', '52'], true, function ($__require, export
         return FinallySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('c4', ['15', 'c3'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var finally_1 = $__require('c3');
   Observable_1.Observable.prototype.finally = finally_1._finally;
   Observable_1.Observable.prototype._finally = finally_1._finally;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c5', ['15', 'c6'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var find_1 = $__require('c6');
   Observable_1.Observable.prototype.find = find_1.find;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c6', ['89'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33949,7 +34009,7 @@ $__System.registerDynamic('c6', ['89'], true, function ($__require, exports, mod
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require('89');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Emits only the first value emitted by the source Observable that meets some
      * condition.
@@ -34044,14 +34104,11 @@ $__System.registerDynamic('c6', ['89'], true, function ($__require, exports, mod
     }(Subscriber_1.Subscriber);
     exports.FindValueSubscriber = FindValueSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("c7", ["c6"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var find_1 = $__require("c6");
   /**
@@ -34093,40 +34150,31 @@ $__System.registerDynamic("c7", ["c6"], true, function ($__require, exports, mod
   }
   exports.findIndex = findIndex;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c8', ['15', 'c7'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var findIndex_1 = $__require('c7');
   Observable_1.Observable.prototype.findIndex = findIndex_1.findIndex;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('c9', ['15', 'ca'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var first_1 = $__require('ca');
   Observable_1.Observable.prototype.first = first_1.first;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("cb", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var MapPolyfill = function () {
         function MapPolyfill() {
@@ -34173,14 +34221,11 @@ $__System.registerDynamic("cb", [], true, function ($__require, exports, module)
     }();
     exports.MapPolyfill = MapPolyfill;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('cc', ['87', 'cb'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var root_1 = $__require('87');
   var MapPolyfill_1 = $__require('cb');
@@ -34188,14 +34233,11 @@ $__System.registerDynamic('cc', ['87', 'cb'], true, function ($__require, export
     return MapPolyfill_1.MapPolyfill;
   }();
   
-
-  return module.exports;
 });
 $__System.registerDynamic("cd", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var FastMap = function () {
         function FastMap() {
@@ -34227,14 +34269,11 @@ $__System.registerDynamic("cd", [], true, function ($__require, exports, module)
     }();
     exports.FastMap = FastMap;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ce', ['89', '52', '15', '10', 'cc', 'cd'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -34249,7 +34288,7 @@ $__System.registerDynamic('ce', ['89', '52', '15', '10', 'cc', 'cd'], true, func
     var Subject_1 = $__require('10');
     var Map_1 = $__require('cc');
     var FastMap_1 = $__require('cd');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Groups the items emitted by an Observable according to a specified criterion,
      * and emits these grouped items as `GroupedObservables`, one
@@ -34257,14 +34296,60 @@ $__System.registerDynamic('ce', ['89', '52', '15', '10', 'cc', 'cd'], true, func
      *
      * <img src="./img/groupBy.png" width="100%">
      *
-     * @param {function(value: T): K} keySelector a function that extracts the key
+     * @example <caption>Group objects by id and return as array</caption>
+     * Observable.of<Obj>({id: 1, name: 'aze1'},
+     *                    {id: 2, name: 'sf2'},
+     *                    {id: 2, name: 'dg2'},
+     *                    {id: 1, name: 'erg1'},
+     *                    {id: 1, name: 'df1'},
+     *                    {id: 2, name: 'sfqfb2'},
+     *                    {id: 3, name: 'qfs3'},
+     *                    {id: 2, name: 'qsgqsfg2'}
+     *     )
+     *     .groupBy(p => p.id)
+     *     .flatMap( (group$) => group$.reduce((acc, cur) => [...acc, cur], []))
+     *     .subscribe(p => console.log(p));
+     *
+     * // displays:
+     * // [ { id: 1, name: 'aze1' },
+     * //   { id: 1, name: 'erg1' },
+     * //   { id: 1, name: 'df1' } ]
+     * //
+     * // [ { id: 2, name: 'sf2' },
+     * //   { id: 2, name: 'dg2' },
+     * //   { id: 2, name: 'sfqfb2' },
+     * //   { id: 2, name: 'qsgqsfg2' } ]
+     * //
+     * // [ { id: 3, name: 'qfs3' } ]
+     *
+     * @example <caption>Pivot data on the id field</caption>
+     * Observable.of<Obj>({id: 1, name: 'aze1'},
+     *                    {id: 2, name: 'sf2'},
+     *                    {id: 2, name: 'dg2'},
+     *                    {id: 1, name: 'erg1'},
+     *                    {id: 1, name: 'df1'},
+     *                    {id: 2, name: 'sfqfb2'},
+     *                    {id: 3, name: 'qfs1'},
+     *                    {id: 2, name: 'qsgqsfg2'}
+     *                   )
+     *     .groupBy(p => p.id, p => p.anme)
+     *     .flatMap( (group$) => group$.reduce((acc, cur) => [...acc, cur], ["" + group$.key]))
+     *     .map(arr => ({'id': parseInt(arr[0]), 'values': arr.slice(1)}))
+     *     .subscribe(p => console.log(p));
+     *
+     * // displays:
+     * // { id: 1, values: [ 'aze1', 'erg1', 'df1' ] }
+     * // { id: 2, values: [ 'sf2', 'dg2', 'sfqfb2', 'qsgqsfg2' ] }
+     * // { id: 3, values: [ 'qfs1' ] }
+     *
+     * @param {function(value: T): K} keySelector A function that extracts the key
      * for each item.
-     * @param {function(value: T): R} [elementSelector] a function that extracts the
+     * @param {function(value: T): R} [elementSelector] A function that extracts the
      * return element for each item.
      * @param {function(grouped: GroupedObservable<K,R>): Observable<any>} [durationSelector]
-     * a function that returns an Observable to determine how long each group should
+     * A function that returns an Observable to determine how long each group should
      * exist.
-     * @return {Observable<GroupedObservable<K,R>>} an Observable that emits
+     * @return {Observable<GroupedObservable<K,R>>} An Observable that emits
      * GroupedObservables, each of which corresponds to a unique key value and each
      * of which emits those items from the source Observable that share that key
      * value.
@@ -34470,40 +34555,31 @@ $__System.registerDynamic('ce', ['89', '52', '15', '10', 'cc', 'cd'], true, func
         return InnerRefCountSubscription;
     }(Subscription_1.Subscription);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('cf', ['15', 'ce'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var groupBy_1 = $__require('ce');
   Observable_1.Observable.prototype.groupBy = groupBy_1.groupBy;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("69", [], true, function ($__require, exports, module) {
   "use strict";
   /* tslint:disable:no-empty */
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   function noop() {}
   exports.noop = noop;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('d0', ['89', '69'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -34519,7 +34595,7 @@ $__System.registerDynamic('d0', ['89', '69'], true, function ($__require, export
      *
      * <img src="./img/ignoreElements.png" width="100%">
      *
-     * @return {Observable} an empty Observable that only calls `complete`
+     * @return {Observable} An empty Observable that only calls `complete`
      * or `error`, based on which one is called by the source Observable.
      * @method ignoreElements
      * @owner Observable
@@ -34552,27 +34628,21 @@ $__System.registerDynamic('d0', ['89', '69'], true, function ($__require, export
         return IgnoreElementsSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('d1', ['15', 'd0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var ignoreElements_1 = $__require('d0');
   Observable_1.Observable.prototype.ignoreElements = ignoreElements_1.ignoreElements;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("d2", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -34587,7 +34657,7 @@ $__System.registerDynamic("d2", ["89"], true, function ($__require, exports, mod
      *
      * <img src="./img/isEmpty.png" width="100%">
      *
-     * @return {Observable} an Observable that emits a Boolean.
+     * @return {Observable} An Observable that emits a Boolean.
      * @method isEmpty
      * @owner Observable
      */
@@ -34626,27 +34696,21 @@ $__System.registerDynamic("d2", ["89"], true, function ($__require, exports, mod
         return IsEmptySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('d3', ['15', 'd2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var isEmpty_1 = $__require('d2');
   Observable_1.Observable.prototype.isEmpty = isEmpty_1.isEmpty;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('d4', ['32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -34691,7 +34755,7 @@ $__System.registerDynamic('d4', ['32', '33', '45', '44'], true, function ($__req
      * @see {@link sample}
      * @see {@link throttle}
      *
-     * @param {function(value: T): Observable|Promise} durationSelector A function
+     * @param {function(value: T): SubscribableOrPromise} durationSelector A function
      * that receives a value from the source Observable, for computing the silencing
      * duration, returned as an Observable or a Promise.
      * @return {Observable<T>} An Observable that performs rate-limiting of
@@ -34761,27 +34825,21 @@ $__System.registerDynamic('d4', ['32', '33', '45', '44'], true, function ($__req
         return AuditSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('d5', ['15', 'd4'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var audit_1 = $__require('d4');
   Observable_1.Observable.prototype.audit = audit_1.audit;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('d6', ['60', '89'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -34893,34 +34951,26 @@ $__System.registerDynamic('d6', ['60', '89'], true, function ($__require, export
         subscriber.clearThrottle();
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic('d7', ['15', 'd6'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var auditTime_1 = $__require('d6');
   Observable_1.Observable.prototype.auditTime = auditTime_1.auditTime;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('d8', ['15', 'd9'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var last_1 = $__require('d9');
   Observable_1.Observable.prototype.last = last_1.last;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("da", [], true, function ($__require, exports, module) {
   "use strict";
@@ -34931,49 +34981,39 @@ $__System.registerDynamic("da", [], true, function ($__require, exports, module)
    * @owner Observable
    */
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   function letProto(func) {
     return func(this);
   }
   exports.letProto = letProto;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('db', ['15', 'da'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var let_1 = $__require('da');
   Observable_1.Observable.prototype.let = let_1.letProto;
   Observable_1.Observable.prototype.letBind = let_1.letProto;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('dc', ['15', 'dd'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var every_1 = $__require('dd');
   Observable_1.Observable.prototype.every = every_1.every;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("de", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -35039,27 +35079,21 @@ $__System.registerDynamic("de", ["89"], true, function ($__require, exports, mod
         return MapToSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('df', ['15', 'de'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var mapTo_1 = $__require('de');
   Observable_1.Observable.prototype.mapTo = mapTo_1.mapTo;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('e0', ['89', 'ad'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -35151,27 +35185,21 @@ $__System.registerDynamic('e0', ['89', 'ad'], true, function ($__require, export
         return MaterializeSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('e1', ['15', 'e0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var materialize_1 = $__require('e0');
   Observable_1.Observable.prototype.materialize = materialize_1.materialize;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('e2', ['e3'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var reduce_1 = $__require('e3');
     /**
@@ -35199,9 +35227,9 @@ $__System.registerDynamic('e2', ['e3'], true, function ($__require, exports, mod
      *
      * @see {@link min}
      *
-     * @param {Function} optional comparer function that it will use instead of its default to compare the value of two
-     * items.
-     * @return {Observable} an Observable that emits item with the largest value.
+     * @param {Function} [comparer] - Optional comparer function that it will use instead of its default to compare the
+     * value of two items.
+     * @return {Observable} An Observable that emits item with the largest value.
      * @method max
      * @owner Observable
      */
@@ -35215,32 +35243,27 @@ $__System.registerDynamic('e2', ['e3'], true, function ($__require, exports, mod
     }
     exports.max = max;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('e4', ['15', 'e2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var max_1 = $__require('e2');
   Observable_1.Observable.prototype.max = max_1.max;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('64', ['15', '3d', 'e5', '3b'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
+    var Observable_1 = $__require('15');
     var ArrayObservable_1 = $__require('3d');
     var mergeAll_1 = $__require('e5');
     var isScheduler_1 = $__require('3b');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Creates an output Observable which concurrently emits all values from every
      * given input Observable.
@@ -35276,13 +35299,13 @@ $__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, 
      * @see {@link mergeMapTo}
      * @see {@link mergeScan}
      *
-     * @param {Observable} other An input Observable to merge with the source
+     * @param {ObservableInput} other An input Observable to merge with the source
      * Observable. More than one input Observables may be given as argument.
      * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
      * Observables being subscribed to concurrently.
      * @param {Scheduler} [scheduler=null] The IScheduler to use for managing
      * concurrency of input Observables.
-     * @return {Observable} an Observable that emits items that are the result of
+     * @return {Observable} An Observable that emits items that are the result of
      * every input Observable.
      * @method merge
      * @owner Observable
@@ -35345,7 +35368,7 @@ $__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, 
      * @see {@link mergeMapTo}
      * @see {@link mergeScan}
      *
-     * @param {...Observable} observables Input Observables to merge together.
+     * @param {...ObservableInput} observables Input Observables to merge together.
      * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
      * Observables being subscribed to concurrently.
      * @param {Scheduler} [scheduler=null] The IScheduler to use for managing
@@ -35372,61 +35395,49 @@ $__System.registerDynamic('64', ['3d', 'e5', '3b'], true, function ($__require, 
         } else if (typeof last === 'number') {
             concurrent = observables.pop();
         }
-        if (scheduler === null && observables.length === 1) {
+        if (scheduler === null && observables.length === 1 && observables[0] instanceof Observable_1.Observable) {
             return observables[0];
         }
         return new ArrayObservable_1.ArrayObservable(observables, scheduler).lift(new mergeAll_1.MergeAllOperator(concurrent));
     }
     exports.mergeStatic = mergeStatic;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('e6', ['15', '64'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var merge_1 = $__require('64');
   Observable_1.Observable.prototype.merge = merge_1.merge;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('e7', ['15', 'e5'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var mergeAll_1 = $__require('e5');
   Observable_1.Observable.prototype.mergeAll = mergeAll_1.mergeAll;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('e8', ['15', 'e9'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var mergeMap_1 = $__require('e9');
   Observable_1.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
   Observable_1.Observable.prototype.flatMap = mergeMap_1.mergeMap;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('a0', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -35437,7 +35448,7 @@ $__System.registerDynamic('a0', ['45', '44'], true, function ($__require, export
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Projects each source value to the same Observable which is merged multiple
      * times in the output Observable.
@@ -35463,7 +35474,7 @@ $__System.registerDynamic('a0', ['45', '44'], true, function ($__require, export
      * @see {@link mergeScan}
      * @see {@link switchMapTo}
      *
-     * @param {Observable} innerObservable An Observable to replace each value from
+     * @param {ObservableInput} innerObservable An Observable to replace each value from
      * the source Observable.
      * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
      * A function to produce the value on the output Observable based on the values
@@ -35590,28 +35601,22 @@ $__System.registerDynamic('a0', ['45', '44'], true, function ($__require, export
     }(OuterSubscriber_1.OuterSubscriber);
     exports.MergeMapToSubscriber = MergeMapToSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ea', ['15', 'a0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var mergeMapTo_1 = $__require('a0');
   Observable_1.Observable.prototype.flatMapTo = mergeMapTo_1.mergeMapTo;
   Observable_1.Observable.prototype.mergeMapTo = mergeMapTo_1.mergeMapTo;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('eb', ['32', '33', '44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -35625,28 +35630,51 @@ $__System.registerDynamic('eb', ['32', '33', '44', '45'], true, function ($__req
     var subscribeToResult_1 = $__require('44');
     var OuterSubscriber_1 = $__require('45');
     /**
-     * @param project
-     * @param seed
-     * @param concurrent
-     * @return {Observable<R>|WebSocketSubject<T>|Observable<T>}
+     * Applies an accumulator function over the source Observable where the
+     * accumulator function itself returns an Observable, then each intermediate
+     * Observable returned is merged into the output Observable.
+     *
+     * <span class="informal">It's like {@link scan}, but the Observables returned
+     * by the accumulator are merged into the outer Observable.</span>
+     *
+     * @example <caption>Count the number of click events</caption>
+     * const click$ = Rx.Observable.fromEvent(document, 'click');
+     * const one$ = click$.mapTo(1);
+     * const seed = 0;
+     * const count$ = one$.mergeScan((acc, one) => Rx.Observable.of(acc + one), seed);
+     * count$.subscribe(x => console.log(x));
+     *
+     * // Results:
+     * 1
+     * 2
+     * 3
+     * 4
+     * // ...and so on for each click
+     *
+     * @param {function(acc: R, value: T): Observable<R>} accumulator
+     * The accumulator function called on each source value.
+     * @param seed The initial accumulation value.
+     * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of
+     * input Observables being subscribed to concurrently.
+     * @return {Observable<R>} An observable of the accumulated values.
      * @method mergeScan
      * @owner Observable
      */
-    function mergeScan(project, seed, concurrent) {
+    function mergeScan(accumulator, seed, concurrent) {
         if (concurrent === void 0) {
             concurrent = Number.POSITIVE_INFINITY;
         }
-        return this.lift(new MergeScanOperator(project, seed, concurrent));
+        return this.lift(new MergeScanOperator(accumulator, seed, concurrent));
     }
     exports.mergeScan = mergeScan;
     var MergeScanOperator = function () {
-        function MergeScanOperator(project, seed, concurrent) {
-            this.project = project;
+        function MergeScanOperator(accumulator, seed, concurrent) {
+            this.accumulator = accumulator;
             this.seed = seed;
             this.concurrent = concurrent;
         }
         MergeScanOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new MergeScanSubscriber(subscriber, this.project, this.seed, this.concurrent));
+            return source.subscribe(new MergeScanSubscriber(subscriber, this.accumulator, this.seed, this.concurrent));
         };
         return MergeScanOperator;
     }();
@@ -35658,9 +35686,9 @@ $__System.registerDynamic('eb', ['32', '33', '44', '45'], true, function ($__req
      */
     var MergeScanSubscriber = function (_super) {
         __extends(MergeScanSubscriber, _super);
-        function MergeScanSubscriber(destination, project, acc, concurrent) {
+        function MergeScanSubscriber(destination, accumulator, acc, concurrent) {
             _super.call(this, destination);
-            this.project = project;
+            this.accumulator = accumulator;
             this.acc = acc;
             this.concurrent = concurrent;
             this.hasValue = false;
@@ -35672,7 +35700,7 @@ $__System.registerDynamic('eb', ['32', '33', '44', '45'], true, function ($__req
         MergeScanSubscriber.prototype._next = function (value) {
             if (this.active < this.concurrent) {
                 var index = this.index++;
-                var ish = tryCatch_1.tryCatch(this.project)(this.acc, value);
+                var ish = tryCatch_1.tryCatch(this.accumulator)(this.acc, value);
                 var destination = this.destination;
                 if (ish === errorObject_1.errorObject) {
                     destination.error(errorObject_1.errorObject.e);
@@ -35719,27 +35747,21 @@ $__System.registerDynamic('eb', ['32', '33', '44', '45'], true, function ($__req
     }(OuterSubscriber_1.OuterSubscriber);
     exports.MergeScanSubscriber = MergeScanSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ec', ['15', 'eb'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var mergeScan_1 = $__require('eb');
   Observable_1.Observable.prototype.mergeScan = mergeScan_1.mergeScan;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('ed', ['e3'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var reduce_1 = $__require('e3');
     /**
@@ -35767,8 +35789,9 @@ $__System.registerDynamic('ed', ['e3'], true, function ($__require, exports, mod
      *
      * @see {@link max}
      *
-     * @param {Function} optional comparer function that it will use instead of its default to compare the value of two items.
-     * @return {Observable<R>} an Observable that emits item with the smallest value.
+     * @param {Function} [comparer] - Optional comparer function that it will use instead of its default to compare the
+     * value of two items.
+     * @return {Observable<R>} An Observable that emits item with the smallest value.
      * @method min
      * @owner Observable
      */
@@ -35782,53 +35805,41 @@ $__System.registerDynamic('ed', ['e3'], true, function ($__require, exports, mod
     }
     exports.min = min;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ee', ['15', 'ed'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var min_1 = $__require('ed');
   Observable_1.Observable.prototype.min = min_1.min;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('ef', ['15', 'f0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var multicast_1 = $__require('f0');
   Observable_1.Observable.prototype.multicast = multicast_1.multicast;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('f1', ['15', 'f2'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var observeOn_1 = $__require('f2');
   Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('6f', ['f3', '3c', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -35841,7 +35852,68 @@ $__System.registerDynamic('6f', ['f3', '3c', '45', '44'], true, function ($__req
     var isArray_1 = $__require('3c');
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
+    /**
+     * When any of the provided Observable emits an complete or error notification, it immediately subscribes to the next one
+     * that was passed.
+     *
+     * <span class="informal">Execute series of Observables no matter what, even if it means swallowing errors.</span>
+     *
+     * <img src="./img/onErrorResumeNext.png" width="100%">
+     *
+     * `onErrorResumeNext` is an operator that accepts a series of Observables, provided either directly as
+     * arguments or as an array. If no single Observable is provided, returned Observable will simply behave the same
+     * as the source.
+     *
+     * `onErrorResumeNext` returns an Observable that starts by subscribing and re-emitting values from the source Observable.
+     * When its stream of values ends - no matter if Observable completed or emitted an error - `onErrorResumeNext`
+     * will subscribe to the first Observable that was passed as an argument to the method. It will start re-emitting
+     * its values as well and - again - when that stream ends, `onErrorResumeNext` will proceed to subscribing yet another
+     * Observable in provided series, no matter if previous Observable completed or ended with an error. This will
+     * be happening until there is no more Observables left in the series, at which point returned Observable will
+     * complete - even if the last subscribed stream ended with an error.
+     *
+     * `onErrorResumeNext` can be therefore though of as version of {@link concat} operator, which is more permissive
+     * when it comes to the errors emitted by its input Observables. While `concat` subscribes to the next Observable
+     * in series only if previous one successfully completed, `onErrorResumeNext` subscribes even if it ended with
+     * an error.
+     *
+     * Note that you do not get any access to errors emitted by the Observables. In particular do not
+     * expect these errors to appear in error callback passed to {@link subscribe}. If you want to take
+     * specific actions based on what error was emitted by an Observable, you should try out {@link catch} instead.
+     *
+     *
+     * @example <caption>Subscribe to the next Observable after map fails</caption>
+     * Rx.Observable.of(1, 2, 3, 0)
+     *   .map(x => {
+     *       if (x === 0) { throw Error(); }
+             return 10 / x;
+     *   })
+     *   .onErrorResumeNext(Rx.Observable.of(1, 2, 3))
+     *   .subscribe(
+     *     val => console.log(val),
+     *     err => console.log(err),          // Will never be called.
+     *     () => console.log('that\'s it!')
+     *   );
+     *
+     * // Logs:
+     * // 10
+     * // 5
+     * // 3.3333333333333335
+     * // 1
+     * // 2
+     * // 3
+     * // "that's it!"
+     *
+     * @see {@link concat}
+     * @see {@link catch}
+     *
+     * @param {...ObservableInput} observables Observables passed either directly or as an array.
+     * @return {Observable} An Observable that emits values from source Observable, but - if it errors - subscribes
+     * to the next passed Observable and so on, until it completes or runs out of Observables.
+     * @method onErrorResumeNext
+     * @owner Observable
+     */
     function onErrorResumeNext() {
         var nextSources = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -35906,27 +35978,21 @@ $__System.registerDynamic('6f', ['f3', '3c', '45', '44'], true, function ($__req
         return OnErrorResumeNextSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('f4', ['15', '6f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var onErrorResumeNext_1 = $__require('6f');
   Observable_1.Observable.prototype.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNext;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("f5", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36004,27 +36070,21 @@ $__System.registerDynamic("f5", ["89"], true, function ($__require, exports, mod
         return PairwiseSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('f6', ['15', 'f5'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var pairwise_1 = $__require('f5');
   Observable_1.Observable.prototype.pairwise = pairwise_1.pairwise;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("f7", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function not(pred, thisArg) {
         function notPred() {
@@ -36036,14 +36096,11 @@ $__System.registerDynamic("f7", [], true, function ($__require, exports, module)
     }
     exports.not = not;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('f8', ['f7', 'c2'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var not_1 = $__require('f7');
     var filter_1 = $__require('c2');
@@ -36093,27 +36150,21 @@ $__System.registerDynamic('f8', ['f7', 'c2'], true, function ($__require, export
     }
     exports.partition = partition;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('f9', ['15', 'f8'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var partition_1 = $__require('f8');
   Observable_1.Observable.prototype.partition = partition_1.partition;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('fa', ['fb'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var map_1 = $__require('fb');
     /**
@@ -36138,8 +36189,7 @@ $__System.registerDynamic('fa', ['fb'], true, function ($__require, exports, mod
      *
      * @param {...string} properties The nested properties to pluck from each source
      * value (an object).
-     * @return {Observable} Returns a new Observable of property values from the
-     * source values.
+     * @return {Observable} A new Observable of property values from the source values.
      * @method pluck
      * @owner Observable
      */
@@ -36171,41 +36221,35 @@ $__System.registerDynamic('fa', ['fb'], true, function ($__require, exports, mod
         return mapper;
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic('fc', ['15', 'fa'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var pluck_1 = $__require('fa');
   Observable_1.Observable.prototype.pluck = pluck_1.pluck;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('fd', ['10', 'f0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Subject_1 = $__require('10');
   var multicast_1 = $__require('f0');
-  /* tslint:disable:max-line-length */
+  /* tslint:enable:max-line-length */
   /**
    * Returns a ConnectableObservable, which is a variety of Observable that waits until its connect method is called
    * before it begins emitting items to those Observers that have subscribed to it.
    *
    * <img src="./img/publish.png" width="100%">
    *
-   * @param {Function} Optional selector function which can use the multicasted source sequence as many times as needed,
-   * without causing multiple subscriptions to the source sequence.
+   * @param {Function} [selector] - Optional selector function which can use the multicasted source sequence as many times
+   * as needed, without causing multiple subscriptions to the source sequence.
    * Subscribers to the given source will receive all notifications of the source from the time of the subscription on.
-   * @return a ConnectableObservable that upon connection causes the source Observable to emit items to its Observers.
+   * @return A ConnectableObservable that upon connection causes the source Observable to emit items to its Observers.
    * @method publish
    * @owner Observable
    */
@@ -36216,27 +36260,21 @@ $__System.registerDynamic('fd', ['10', 'f0'], true, function ($__require, export
   }
   exports.publish = publish;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('fe', ['15', 'fd'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var publish_1 = $__require('fd');
   Observable_1.Observable.prototype.publish = publish_1.publish;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('ff', ['100', 'f0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var BehaviorSubject_1 = $__require('100');
   var multicast_1 = $__require('f0');
@@ -36251,27 +36289,21 @@ $__System.registerDynamic('ff', ['100', 'f0'], true, function ($__require, expor
   }
   exports.publishBehavior = publishBehavior;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('101', ['15', 'ff'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var publishBehavior_1 = $__require('ff');
   Observable_1.Observable.prototype.publishBehavior = publishBehavior_1.publishBehavior;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('102', ['8a', 'f0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var ReplaySubject_1 = $__require('8a');
   var multicast_1 = $__require('f0');
@@ -36294,27 +36326,21 @@ $__System.registerDynamic('102', ['8a', 'f0'], true, function ($__require, expor
   }
   exports.publishReplay = publishReplay;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('103', ['15', '102'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var publishReplay_1 = $__require('102');
   Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('104', ['34', 'f0'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var AsyncSubject_1 = $__require('34');
   var multicast_1 = $__require('f0');
@@ -36328,27 +36354,21 @@ $__System.registerDynamic('104', ['34', 'f0'], true, function ($__require, expor
   }
   exports.publishLast = publishLast;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('105', ['15', '104'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var publishLast_1 = $__require('104');
   Observable_1.Observable.prototype.publishLast = publishLast_1.publishLast;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('67', ['3c', '3d', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36361,12 +36381,12 @@ $__System.registerDynamic('67', ['3c', '3d', '45', '44'], true, function ($__req
     var ArrayObservable_1 = $__require('3d');
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Returns an Observable that mirrors the first source Observable to emit an item
-     * from the combination of this Observable and supplied Observables
-     * @param {...Observables} ...observables sources used to race for which Observable emits first.
-     * @return {Observable} an Observable that mirrors the output of the first Observable to emit an item.
+     * from the combination of this Observable and supplied Observables.
+     * @param {...Observables} ...observables Sources used to race for which Observable emits first.
+     * @return {Observable} An Observable that mirrors the output of the first Observable to emit an item.
      * @method race
      * @owner Observable
      */
@@ -36389,7 +36409,7 @@ $__System.registerDynamic('67', ['3c', '3d', '45', '44'], true, function ($__req
             observables[_i - 0] = arguments[_i];
         }
         // if the only argument is an array, it was most likely called with
-        // `pair([obs1, obs2, ...])`
+        // `race([obs1, obs2, ...])`
         if (observables.length === 1) {
             if (isArray_1.isArray(observables[0])) {
                 observables = observables[0];
@@ -36459,40 +36479,31 @@ $__System.registerDynamic('67', ['3c', '3d', '45', '44'], true, function ($__req
     }(OuterSubscriber_1.OuterSubscriber);
     exports.RaceSubscriber = RaceSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('106', ['15', '67'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var race_1 = $__require('67');
   Observable_1.Observable.prototype.race = race_1.race;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('107', ['15', 'e3'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var reduce_1 = $__require('e3');
   Observable_1.Observable.prototype.reduce = reduce_1.reduce;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('108', ['89', '49'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36504,15 +36515,13 @@ $__System.registerDynamic('108', ['89', '49'], true, function ($__require, expor
     var Subscriber_1 = $__require('89');
     var EmptyObservable_1 = $__require('49');
     /**
-     * Returns an Observable that repeats the stream of items emitted by the source Observable at most count times,
-     * on a particular IScheduler.
+     * Returns an Observable that repeats the stream of items emitted by the source Observable at most count times.
      *
      * <img src="./img/repeat.png" width="100%">
      *
-     * @param {Scheduler} [scheduler] the IScheduler to emit the items on.
-     * @param {number} [count] the number of times the source Observable items are repeated, a count of 0 will yield
+     * @param {number} [count] The number of times the source Observable items are repeated, a count of 0 will yield
      * an empty Observable.
-     * @return {Observable} an Observable that repeats the stream of items emitted by the source Observable at most
+     * @return {Observable} An Observable that repeats the stream of items emitted by the source Observable at most
      * count times.
      * @method repeat
      * @owner Observable
@@ -36562,36 +36571,27 @@ $__System.registerDynamic('108', ['89', '49'], true, function ($__require, expor
                 } else if (count > -1) {
                     this.count = count - 1;
                 }
-                this.unsubscribe();
-                this.isStopped = false;
-                this.closed = false;
-                source.subscribe(this);
+                source.subscribe(this._unsubscribeAndRecycle());
             }
         };
         return RepeatSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('109', ['15', '108'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var repeat_1 = $__require('108');
   Observable_1.Observable.prototype.repeat = repeat_1.repeat;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36606,32 +36606,29 @@ $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function 
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
     /**
-     * Returns an Observable that emits the same values as the source observable with the exception of a `complete`.
-     * A `complete` will cause the emission of the Throwable that cause the complete to the Observable returned from
-     * notificationHandler. If that Observable calls onComplete or `complete` then retry will call `complete` or `error`
-     * on the child subscription. Otherwise, this Observable will resubscribe to the source observable, on a particular
-     * IScheduler.
+     * Returns an Observable that mirrors the source Observable with the exception of a `complete`. If the source
+     * Observable calls `complete`, this method will emit to the Observable returned from `notifier`. If that Observable
+     * calls `complete` or `error`, then this method will call `complete` or `error` on the child subscription. Otherwise
+     * this method will resubscribe to the source Observable.
      *
      * <img src="./img/repeatWhen.png" width="100%">
      *
-     * @param {notificationHandler} receives an Observable of notifications with which a user can `complete` or `error`,
-     * aborting the retry.
-     * @param {scheduler} the IScheduler on which to subscribe to the source Observable.
-     * @return {Observable} the source Observable modified with retry logic.
+     * @param {function(notifications: Observable): Observable} notifier - Receives an Observable of notifications with
+     * which a user can `complete` or `error`, aborting the repetition.
+     * @return {Observable} The source Observable modified with repeat logic.
      * @method repeatWhen
      * @owner Observable
      */
     function repeatWhen(notifier) {
-        return this.lift(new RepeatWhenOperator(notifier, this));
+        return this.lift(new RepeatWhenOperator(notifier));
     }
     exports.repeatWhen = repeatWhen;
     var RepeatWhenOperator = function () {
-        function RepeatWhenOperator(notifier, source) {
+        function RepeatWhenOperator(notifier) {
             this.notifier = notifier;
-            this.source = source;
         }
         RepeatWhenOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new RepeatWhenSubscriber(subscriber, this.notifier, this.source));
+            return source.subscribe(new RepeatWhenSubscriber(subscriber, this.notifier, source));
         };
         return RepeatWhenOperator;
     }();
@@ -36646,29 +36643,27 @@ $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function 
             _super.call(this, destination);
             this.notifier = notifier;
             this.source = source;
+            this.sourceIsBeingSubscribedTo = true;
         }
+        RepeatWhenSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+            this.sourceIsBeingSubscribedTo = true;
+            this.source.subscribe(this);
+        };
+        RepeatWhenSubscriber.prototype.notifyComplete = function (innerSub) {
+            if (this.sourceIsBeingSubscribedTo === false) {
+                return _super.prototype.complete.call(this);
+            }
+        };
         RepeatWhenSubscriber.prototype.complete = function () {
+            this.sourceIsBeingSubscribedTo = false;
             if (!this.isStopped) {
-                var notifications = this.notifications;
-                var retries = this.retries;
-                var retriesSubscription = this.retriesSubscription;
-                if (!retries) {
-                    notifications = new Subject_1.Subject();
-                    retries = tryCatch_1.tryCatch(this.notifier)(notifications);
-                    if (retries === errorObject_1.errorObject) {
-                        return _super.prototype.complete.call(this);
-                    }
-                    retriesSubscription = subscribeToResult_1.subscribeToResult(this, retries);
-                } else {
-                    this.notifications = null;
-                    this.retriesSubscription = null;
+                if (!this.retries) {
+                    this.subscribeToRetries();
+                } else if (this.retriesSubscription.closed) {
+                    return _super.prototype.complete.call(this);
                 }
-                this.unsubscribe();
-                this.closed = false;
-                this.notifications = notifications;
-                this.retries = retries;
-                this.retriesSubscription = retriesSubscription;
-                notifications.next();
+                this._unsubscribeAndRecycle();
+                this.notifications.next();
             }
         };
         RepeatWhenSubscriber.prototype._unsubscribe = function () {
@@ -36685,7 +36680,7 @@ $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function 
             }
             this.retries = null;
         };
-        RepeatWhenSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        RepeatWhenSubscriber.prototype._unsubscribeAndRecycle = function () {
             var _a = this,
                 notifications = _a.notifications,
                 retries = _a.retries,
@@ -36693,38 +36688,39 @@ $__System.registerDynamic('10a', ['10', '32', '33', '45', '44'], true, function 
             this.notifications = null;
             this.retries = null;
             this.retriesSubscription = null;
-            this.unsubscribe();
-            this.isStopped = false;
-            this.closed = false;
+            _super.prototype._unsubscribeAndRecycle.call(this);
             this.notifications = notifications;
             this.retries = retries;
             this.retriesSubscription = retriesSubscription;
-            this.source.subscribe(this);
+            return this;
+        };
+        RepeatWhenSubscriber.prototype.subscribeToRetries = function () {
+            this.notifications = new Subject_1.Subject();
+            var retries = tryCatch_1.tryCatch(this.notifier)(this.notifications);
+            if (retries === errorObject_1.errorObject) {
+                return _super.prototype.complete.call(this);
+            }
+            this.retries = retries;
+            this.retriesSubscription = subscribeToResult_1.subscribeToResult(this, retries);
         };
         return RepeatWhenSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('10b', ['15', '10a'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var repeatWhen_1 = $__require('10a');
   Observable_1.Observable.prototype.repeatWhen = repeatWhen_1.repeatWhen;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("10c", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36735,10 +36731,9 @@ $__System.registerDynamic("10c", ["89"], true, function ($__require, exports, mo
     };
     var Subscriber_1 = $__require("89");
     /**
-     * Returns an Observable that mirrors the source Observable, resubscribing to it if it calls `error` and the
-     * predicate returns true for that specific exception and retry count.
-     * If the source Observable calls `error`, this method will resubscribe to the source Observable for a maximum of
-     * count resubscriptions (given as a number parameter) rather than propagating the `error` call.
+     * Returns an Observable that mirrors the source Observable with the exception of an `error`. If the source Observable
+     * calls `error`, this method will resubscribe to the source Observable for a maximum of `count` resubscriptions (given
+     * as a number parameter) rather than propagating the `error` call.
      *
      * <img src="./img/retry.png" width="100%">
      *
@@ -36746,8 +36741,8 @@ $__System.registerDynamic("10c", ["89"], true, function ($__require, exports, mo
      * during failed subscriptions. For example, if an Observable fails at first but emits [1, 2] then succeeds the second
      * time and emits: [1, 2, 3, 4, 5] then the complete stream of emissions and notifications
      * would be: [1, 2, 1, 2, 3, 4, 5, `complete`].
-     * @param {number} number of retry attempts before failing.
-     * @return {Observable} the source Observable modified with the retry logic.
+     * @param {number} count - Number of retry attempts before failing.
+     * @return {Observable} The source Observable modified with the retry logic.
      * @method retry
      * @owner Observable
      */
@@ -36790,36 +36785,27 @@ $__System.registerDynamic("10c", ["89"], true, function ($__require, exports, mo
                 } else if (count > -1) {
                     this.count = count - 1;
                 }
-                this.unsubscribe();
-                this.isStopped = false;
-                this.closed = false;
-                source.subscribe(this);
+                source.subscribe(this._unsubscribeAndRecycle());
             }
         };
         return RetrySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('10d', ['15', '10c'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var retry_1 = $__require('10c');
   Observable_1.Observable.prototype.retry = retry_1.retry;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -36834,18 +36820,16 @@ $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function 
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
     /**
-     * Returns an Observable that emits the same values as the source observable with the exception of an `error`.
-     * An `error` will cause the emission of the Throwable that cause the error to the Observable returned from
-     * notificationHandler. If that Observable calls onComplete or `error` then retry will call `complete` or `error`
-     * on the child subscription. Otherwise, this Observable will resubscribe to the source observable, on a particular
-     * IScheduler.
+     * Returns an Observable that mirrors the source Observable with the exception of an `error`. If the source Observable
+     * calls `error`, this method will emit the Throwable that caused the error to the Observable returned from `notifier`.
+     * If that Observable calls `complete` or `error` then this method will call `complete` or `error` on the child
+     * subscription. Otherwise this method will resubscribe to the source Observable.
      *
      * <img src="./img/retryWhen.png" width="100%">
      *
-     * @param {notificationHandler} receives an Observable of notifications with which a user can `complete` or `error`,
-     * aborting the retry.
-     * @param {scheduler} the IScheduler on which to subscribe to the source Observable.
-     * @return {Observable} the source Observable modified with retry logic.
+     * @param {function(errors: Observable): Observable} notifier - Receives an Observable of notifications with which a
+     * user can `complete` or `error`, aborting the retry.
+     * @return {Observable} The source Observable modified with retry logic.
      * @method retryWhen
      * @owner Observable
      */
@@ -36891,8 +36875,7 @@ $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function 
                     this.errors = null;
                     this.retriesSubscription = null;
                 }
-                this.unsubscribe();
-                this.closed = false;
+                this._unsubscribeAndRecycle();
                 this.errors = errors;
                 this.retries = retries;
                 this.retriesSubscription = retriesSubscription;
@@ -36921,9 +36904,7 @@ $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function 
             this.errors = null;
             this.retries = null;
             this.retriesSubscription = null;
-            this.unsubscribe();
-            this.isStopped = false;
-            this.closed = false;
+            this._unsubscribeAndRecycle();
             this.errors = errors;
             this.retries = retries;
             this.retriesSubscription = retriesSubscription;
@@ -36932,27 +36913,21 @@ $__System.registerDynamic('10e', ['10', '32', '33', '45', '44'], true, function 
         return RetryWhenSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('10f', ['15', '10e'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var retryWhen_1 = $__require('10e');
   Observable_1.Observable.prototype.retryWhen = retryWhen_1.retryWhen;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('110', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37043,27 +37018,21 @@ $__System.registerDynamic('110', ['45', '44'], true, function ($__require, expor
         return SampleSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('111', ['15', '110'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var sample_1 = $__require('110');
   Observable_1.Observable.prototype.sample = sample_1.sample;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('112', ['89', '60'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37160,27 +37129,21 @@ $__System.registerDynamic('112', ['89', '60'], true, function ($__require, expor
         this.schedule(state, period);
     }
     
-
-    return module.exports;
 });
 $__System.registerDynamic('113', ['15', '112'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var sampleTime_1 = $__require('112');
   Observable_1.Observable.prototype.sampleTime = sampleTime_1.sampleTime;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("114", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37190,7 +37153,7 @@ $__System.registerDynamic("114", ["89"], true, function ($__require, exports, mo
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require("89");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Applies an accumulator function over the source Observable, and returns each
      * intermediate result, with an optional seed value.
@@ -37302,27 +37265,21 @@ $__System.registerDynamic("114", ["89"], true, function ($__require, exports, mo
         return ScanSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('115', ['15', '114'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var scan_1 = $__require('114');
   Observable_1.Observable.prototype.scan = scan_1.scan;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('116', ['89', '32', '33'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37379,10 +37336,10 @@ $__System.registerDynamic('116', ['89', '32', '33'], true, function ($__require,
      * @see {@link zip}
      * @see {@link withLatestFrom}
      *
-     * @param {Observable} compareTo the observable sequence to compare the source sequence to.
+     * @param {Observable} compareTo The observable sequence to compare the source sequence to.
      * @param {function} [comparor] An optional function to compare each value pair
      * @return {Observable} An Observable of a single boolean value representing whether or not
-     * the values emitted by both observables were equal in sequence
+     * the values emitted by both observables were equal in sequence.
      * @method sequenceEqual
      * @owner Observable
      */
@@ -37488,44 +37445,77 @@ $__System.registerDynamic('116', ['89', '32', '33'], true, function ($__require,
         return SequenceEqualCompareToSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('117', ['15', '116'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var sequenceEqual_1 = $__require('116');
   Observable_1.Observable.prototype.sequenceEqual = sequenceEqual_1.sequenceEqual;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('f0', ['118'], true, function ($__require, exports, module) {
+$__System.registerDynamic('118', ['f0', '10'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
-    var ConnectableObservable_1 = $__require('118');
-    /* tslint:disable:max-line-length */
+    var multicast_1 = $__require('f0');
+    var Subject_1 = $__require('10');
+    function shareSubjectFactory() {
+        return new Subject_1.Subject();
+    }
+    /**
+     * Returns a new Observable that multicasts (shares) the original Observable. As long as there is at least one
+     * Subscriber this Observable will be subscribed and emitting data. When all subscribers have unsubscribed it will
+     * unsubscribe from the source Observable. Because the Observable is multicasting it makes the stream `hot`.
+     * This is an alias for .publish().refCount().
+     *
+     * <img src="./img/share.png" width="100%">
+     *
+     * @return {Observable<T>} An Observable that upon connection causes the source Observable to emit items to its Observers.
+     * @method share
+     * @owner Observable
+     */
+    function share() {
+        return multicast_1.multicast.call(this, shareSubjectFactory).refCount();
+    }
+    exports.share = share;
+    ;
+    
+});
+$__System.registerDynamic('119', ['15', '118'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('15');
+  var share_1 = $__require('118');
+  Observable_1.Observable.prototype.share = share_1.share;
+  
+});
+$__System.registerDynamic('f0', ['11a'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var ConnectableObservable_1 = $__require('11a');
+    /* tslint:enable:max-line-length */
     /**
      * Returns an Observable that emits the results of invoking a specified selector on items
      * emitted by a ConnectableObservable that shares a single subscription to the underlying stream.
      *
      * <img src="./img/multicast.png" width="100%">
      *
-     * @param {Function|Subject} Factory function to create an intermediate subject through
+     * @param {Function|Subject} subjectOrSubjectFactory - Factory function to create an intermediate subject through
      * which the source sequence's elements will be multicast to the selector function
      * or Subject to push source elements into.
-     * @param {Function} Optional selector function that can use the multicasted source stream
+     * @param {Function} [selector] - Optional selector function that can use the multicasted source stream
      * as many times as needed, without causing multiple subscriptions to the source stream.
      * Subscribers to the given source will receive all notifications of the source from the
      * time of the subscription forward.
-     * @return {Observable} an Observable that emits the results of invoking the selector
+     * @return {Observable} An Observable that emits the results of invoking the selector
      * on the items emitted by a `ConnectableObservable` that shares a single subscription to
      * the underlying stream.
      * @method multicast
@@ -37565,59 +37555,47 @@ $__System.registerDynamic('f0', ['118'], true, function ($__require, exports, mo
     }();
     exports.MulticastOperator = MulticastOperator;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('119', ['f0', '10'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11b', ['f0', '8a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var multicast_1 = $__require('f0');
-    var Subject_1 = $__require('10');
-    function shareSubjectFactory() {
-        return new Subject_1.Subject();
-    }
+    var ReplaySubject_1 = $__require('8a');
     /**
-     * Returns a new Observable that multicasts (shares) the original Observable. As long as there is at least one
-     * Subscriber this Observable will be subscribed and emitting data. When all subscribers have unsubscribed it will
-     * unsubscribe from the source Observable. Because the Observable is multicasting it makes the stream `hot`.
-     * This is an alias for .publish().refCount().
-     *
-     * <img src="./img/share.png" width="100%">
-     *
-     * @return {Observable<T>} an Observable that upon connection causes the source Observable to emit items to its Observers
-     * @method share
+     * @method shareReplay
      * @owner Observable
      */
-    function share() {
-        return multicast_1.multicast.call(this, shareSubjectFactory).refCount();
+    function shareReplay(bufferSize, windowTime, scheduler) {
+        var subject;
+        var connectable = multicast_1.multicast.call(this, function shareReplaySubjectFactory() {
+            if (this._isComplete) {
+                return subject;
+            } else {
+                return subject = new ReplaySubject_1.ReplaySubject(bufferSize, windowTime, scheduler);
+            }
+        });
+        return connectable.refCount();
     }
-    exports.share = share;
+    exports.shareReplay = shareReplay;
     ;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('11a', ['15', '119'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11c', ['15', '11b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var share_1 = $__require('119');
-  Observable_1.Observable.prototype.share = share_1.share;
+  var shareReplay_1 = $__require('11b');
+  Observable_1.Observable.prototype.shareReplay = shareReplay_1.shareReplay;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('11b', ['89', '11c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11d', ['89', '11e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37627,7 +37605,7 @@ $__System.registerDynamic('11b', ['89', '11c'], true, function ($__require, expo
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require('89');
-    var EmptyError_1 = $__require('11c');
+    var EmptyError_1 = $__require('11e');
     /**
      * Returns an Observable that emits the single item emitted by the source Observable that matches a specified
      * predicate, if that Observable emits one such item. If the source Observable emits more than one such item or no
@@ -37637,8 +37615,8 @@ $__System.registerDynamic('11b', ['89', '11c'], true, function ($__require, expo
      *
      * @throws {EmptyError} Delivers an EmptyError to the Observer's `error`
      * callback if the Observable completes before any `next` notification was sent.
-     * @param {Function} a predicate function to evaluate items emitted by the source Observable.
-     * @return {Observable<T>} an Observable that emits the single item emitted by the source Observable that matches
+     * @param {Function} predicate - A predicate function to evaluate items emitted by the source Observable.
+     * @return {Observable<T>} An Observable that emits the single item emitted by the source Observable that matches
      * the predicate.
      .
      * @method single
@@ -37681,18 +37659,16 @@ $__System.registerDynamic('11b', ['89', '11c'], true, function ($__require, expo
             }
         };
         SingleSubscriber.prototype._next = function (value) {
-            var predicate = this.predicate;
-            this.index++;
-            if (predicate) {
-                this.tryNext(value);
+            var index = this.index++;
+            if (this.predicate) {
+                this.tryNext(value, index);
             } else {
                 this.applySingleValue(value);
             }
         };
-        SingleSubscriber.prototype.tryNext = function (value) {
+        SingleSubscriber.prototype.tryNext = function (value, index) {
             try {
-                var result = this.predicate(value, this.index, this.source);
-                if (result) {
+                if (this.predicate(value, index, this.source)) {
                     this.applySingleValue(value);
                 }
             } catch (err) {
@@ -37711,27 +37687,21 @@ $__System.registerDynamic('11b', ['89', '11c'], true, function ($__require, expo
         return SingleSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('11d', ['15', '11b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11f', ['15', '11d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var single_1 = $__require('11b');
+  var single_1 = $__require('11d');
   Observable_1.Observable.prototype.single = single_1.single;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("11e", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("120", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37742,18 +37712,18 @@ $__System.registerDynamic("11e", ["89"], true, function ($__require, exports, mo
     };
     var Subscriber_1 = $__require("89");
     /**
-     * Returns an Observable that skips `n` items emitted by an Observable.
+     * Returns an Observable that skips the first `count` items emitted by the source Observable.
      *
      * <img src="./img/skip.png" width="100%">
      *
-     * @param {Number} the `n` of times, items emitted by source Observable should be skipped.
-     * @return {Observable} an Observable that skips values emitted by the source Observable.
+     * @param {Number} count - The number of times, items emitted by source Observable should be skipped.
+     * @return {Observable} An Observable that skips values emitted by the source Observable.
      *
      * @method skip
      * @owner Observable
      */
-    function skip(total) {
-        return this.lift(new SkipOperator(total));
+    function skip(count) {
+        return this.lift(new SkipOperator(count));
     }
     exports.skip = skip;
     var SkipOperator = function () {
@@ -37785,27 +37755,129 @@ $__System.registerDynamic("11e", ["89"], true, function ($__require, exports, mo
         return SkipSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('11f', ['15', '11e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('121', ['15', '120'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var skip_1 = $__require('11e');
+  var skip_1 = $__require('120');
   Observable_1.Observable.prototype.skip = skip_1.skip;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('120', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('122', ['89', 'bf'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require('89');
+    var ArgumentOutOfRangeError_1 = $__require('bf');
+    /**
+     * Skip the last `count` values emitted by the source Observable.
+     *
+     * <img src="./img/skipLast.png" width="100%">
+     *
+     * `skipLast` returns an Observable that accumulates a queue with a length
+     * enough to store the first `count` values. As more values are received,
+     * values are taken from the front of the queue and produced on the result
+     * sequence. This causes values to be delayed.
+     *
+     * @example <caption>Skip the last 2 values of an Observable with many values</caption>
+     * var many = Rx.Observable.range(1, 5);
+     * var skipLastTwo = many.skipLast(2);
+     * skipLastTwo.subscribe(x => console.log(x));
+     *
+     * // Results in:
+     * // 1 2 3
+     *
+     * @see {@link skip}
+     * @see {@link skipUntil}
+     * @see {@link skipWhile}
+     * @see {@link take}
+     *
+     * @throws {ArgumentOutOfRangeError} When using `skipLast(i)`, it throws
+     * ArgumentOutOrRangeError if `i < 0`.
+     *
+     * @param {number} count Number of elements to skip from the end of the source Observable.
+     * @returns {Observable<T>} An Observable that skips the last count values
+     * emitted by the source Observable.
+     * @method skipLast
+     * @owner Observable
+     */
+    function skipLast(count) {
+        return this.lift(new SkipLastOperator(count));
+    }
+    exports.skipLast = skipLast;
+    var SkipLastOperator = function () {
+        function SkipLastOperator(_skipCount) {
+            this._skipCount = _skipCount;
+            if (this._skipCount < 0) {
+                throw new ArgumentOutOfRangeError_1.ArgumentOutOfRangeError();
+            }
+        }
+        SkipLastOperator.prototype.call = function (subscriber, source) {
+            if (this._skipCount === 0) {
+                // If we don't want to skip any values then just subscribe
+                // to Subscriber without any further logic.
+                return source.subscribe(new Subscriber_1.Subscriber(subscriber));
+            } else {
+                return source.subscribe(new SkipLastSubscriber(subscriber, this._skipCount));
+            }
+        };
+        return SkipLastOperator;
+    }();
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var SkipLastSubscriber = function (_super) {
+        __extends(SkipLastSubscriber, _super);
+        function SkipLastSubscriber(destination, _skipCount) {
+            _super.call(this, destination);
+            this._skipCount = _skipCount;
+            this._count = 0;
+            this._ring = new Array(_skipCount);
+        }
+        SkipLastSubscriber.prototype._next = function (value) {
+            var skipCount = this._skipCount;
+            var count = this._count++;
+            if (count < skipCount) {
+                this._ring[count] = value;
+            } else {
+                var currentIndex = count % skipCount;
+                var ring = this._ring;
+                var oldValue = ring[currentIndex];
+                ring[currentIndex] = value;
+                this.destination.next(oldValue);
+            }
+        };
+        return SkipLastSubscriber;
+    }(Subscriber_1.Subscriber);
+    
+});
+$__System.registerDynamic('123', ['15', '122'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('15');
+  var skipLast_1 = $__require('122');
+  Observable_1.Observable.prototype.skipLast = skipLast_1.skipLast;
+  
+});
+$__System.registerDynamic('124', ['45', '44'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37821,9 +37893,9 @@ $__System.registerDynamic('120', ['45', '44'], true, function ($__require, expor
      *
      * <img src="./img/skipUntil.png" width="100%">
      *
-     * @param {Observable} the second Observable that has to emit an item before the source Observable's elements begin to
+     * @param {Observable} notifier - The second Observable that has to emit an item before the source Observable's elements begin to
      * be mirrored by the resulting Observable.
-     * @return {Observable<T>} an Observable that skips items from the source Observable until the second Observable emits
+     * @return {Observable<T>} An Observable that skips items from the source Observable until the second Observable emits
      * an item, then emits the remaining items.
      * @method skipUntil
      * @owner Observable
@@ -37878,27 +37950,21 @@ $__System.registerDynamic('120', ['45', '44'], true, function ($__require, expor
         return SkipUntilSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('121', ['15', '120'], true, function ($__require, exports, module) {
+$__System.registerDynamic('125', ['15', '124'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var skipUntil_1 = $__require('120');
+  var skipUntil_1 = $__require('124');
   Observable_1.Observable.prototype.skipUntil = skipUntil_1.skipUntil;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("122", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("126", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -37914,8 +37980,8 @@ $__System.registerDynamic("122", ["89"], true, function ($__require, exports, mo
      *
      * <img src="./img/skipWhile.png" width="100%">
      *
-     * @param {Function} predicate - a function to test each item emitted from the source Observable.
-     * @return {Observable<T>} an Observable that begins emitting items emitted by the source Observable when the
+     * @param {Function} predicate - A function to test each item emitted from the source Observable.
+     * @return {Observable<T>} An Observable that begins emitting items emitted by the source Observable when the
      * specified predicate becomes false.
      * @method skipWhile
      * @owner Observable
@@ -37966,32 +38032,27 @@ $__System.registerDynamic("122", ["89"], true, function ($__require, exports, mo
         return SkipWhileSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('123', ['15', '122'], true, function ($__require, exports, module) {
+$__System.registerDynamic('127', ['15', '126'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var skipWhile_1 = $__require('122');
+  var skipWhile_1 = $__require('126');
   Observable_1.Observable.prototype.skipWhile = skipWhile_1.skipWhile;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, exports, module) {
+$__System.registerDynamic('41', ['15', '3b', '3d', 'e5'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
+    var Observable_1 = $__require('15');
     var isScheduler_1 = $__require('3b');
     var ArrayObservable_1 = $__require('3d');
     var mergeAll_1 = $__require('e5');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Creates an output Observable which sequentially emits all values from every
      * given input Observable after the current Observable.
@@ -38032,7 +38093,7 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
      * @see {@link concatMap}
      * @see {@link concatMapTo}
      *
-     * @param {Observable} other An input Observable to concatenate after the source
+     * @param {ObservableInput} other An input Observable to concatenate after the source
      * Observable. More than one input Observables may be given as argument.
      * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
      * Observable subscription on.
@@ -38051,17 +38112,41 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
     exports.concat = concat;
     /* tslint:enable:max-line-length */
     /**
-     * Creates an output Observable which sequentially emits all values from every
-     * given input Observable after the current Observable.
+     * Creates an output Observable which sequentially emits all values from given
+     * Observable and then moves on to the next.
      *
      * <span class="informal">Concatenates multiple Observables together by
      * sequentially emitting their values, one Observable after the other.</span>
      *
      * <img src="./img/concat.png" width="100%">
      *
-     * Joins multiple Observables together by subscribing to them one at a time and
-     * merging their results into the output Observable. Will wait for each
-     * Observable to complete before moving on to the next.
+     * `concat` joins multiple Observables together, by subscribing to them one at a time and
+     * merging their results into the output Observable. You can pass either an array of
+     * Observables, or put them directly as arguments. Passing an empty array will result
+     * in Observable that completes immediately.
+     *
+     * `concat` will subscribe to first input Observable and emit all its values, without
+     * changing or affecting them in any way. When that Observable completes, it will
+     * subscribe to then next Observable passed and, again, emit its values. This will be
+     * repeated, until the operator runs out of Observables. When last input Observable completes,
+     * `concat` will complete as well. At any given moment only one Observable passed to operator
+     * emits values. If you would like to emit values from passed Observables concurrently, check out
+     * {@link merge} instead, especially with optional `concurrent` parameter. As a matter of fact,
+     * `concat` is an equivalent of `merge` operator with `concurrent` parameter set to `1`.
+     *
+     * Note that if some input Observable never completes, `concat` will also never complete
+     * and Observables following the one that did not complete will never be subscribed. On the other
+     * hand, if some Observable simply completes immediately after it is subscribed, it will be
+     * invisible for `concat`, which will just move on to the next Observable.
+     *
+     * If any Observable in chain errors, instead of passing control to the next Observable,
+     * `concat` will error immediately as well. Observables that would be subscribed after
+     * the one that emitted error, never will.
+     *
+     * If you pass to `concat` the same Observable many times, its stream of values
+     * will be "replayed" on every subscription, which means you can repeat given Observable
+     * as many times as you like. If passing the same Observable to `concat` 1000 times becomes tedious,
+     * you can always use {@link repeat}.
      *
      * @example <caption>Concatenate a timer counting from 0 to 3 with a synchronous sequence from 1 to 10</caption>
      * var timer = Rx.Observable.interval(1000).take(4);
@@ -38072,11 +38157,12 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
      * // results in:
      * // 0 -1000ms-> 1 -1000ms-> 2 -1000ms-> 3 -immediate-> 1 ... 10
      *
-     * @example <caption>Concatenate 3 Observables</caption>
+     *
+     * @example <caption>Concatenate an array of 3 Observables</caption>
      * var timer1 = Rx.Observable.interval(1000).take(10);
      * var timer2 = Rx.Observable.interval(2000).take(6);
      * var timer3 = Rx.Observable.interval(500).take(10);
-     * var result = Rx.Observable.concat(timer1, timer2, timer3);
+     * var result = Rx.Observable.concat([timer1, timer2, timer3]); // note that array is passed
      * result.subscribe(x => console.log(x));
      *
      * // results in the following:
@@ -38085,12 +38171,30 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
      * // -2000ms-> 0 -2000ms-> 1 -2000ms-> ... 5
      * // -500ms-> 0 -500ms-> 1 -500ms-> ... 9
      *
+     *
+     * @example <caption>Concatenate the same Observable to repeat it</caption>
+     * const timer = Rx.Observable.interval(1000).take(2);
+     *
+     * Rx.Observable.concat(timer, timer) // concating the same Observable!
+     * .subscribe(
+     *   value => console.log(value),
+     *   err => {},
+     *   () => console.log('...and it is done!')
+     * );
+     *
+     * // Logs:
+     * // 0 after 1s
+     * // 1 after 2s
+     * // 0 after 3s
+     * // 1 after 4s
+     * // "...and it is done!" also after 4s
+     *
      * @see {@link concatAll}
      * @see {@link concatMap}
      * @see {@link concatMapTo}
      *
-     * @param {Observable} input1 An input Observable to concatenate with others.
-     * @param {Observable} input2 An input Observable to concatenate with others.
+     * @param {ObservableInput} input1 An input Observable to concatenate with others.
+     * @param {ObservableInput} input2 An input Observable to concatenate with others.
      * More than one input Observables may be given as argument.
      * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
      * Observable subscription on.
@@ -38110,36 +38214,35 @@ $__System.registerDynamic('41', ['3b', '3d', 'e5'], true, function ($__require, 
         if (isScheduler_1.isScheduler(args[observables.length - 1])) {
             scheduler = args.pop();
         }
-        if (scheduler === null && observables.length === 1) {
+        if (scheduler === null && observables.length === 1 && observables[0] instanceof Observable_1.Observable) {
             return observables[0];
         }
         return new ArrayObservable_1.ArrayObservable(observables, scheduler).lift(new mergeAll_1.MergeAllOperator(1));
     }
     exports.concatStatic = concatStatic;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('124', ['3d', '125', '49', '41', '3b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('128', ['3d', '129', '49', '41', '3b'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var ArrayObservable_1 = $__require('3d');
-    var ScalarObservable_1 = $__require('125');
+    var ScalarObservable_1 = $__require('129');
     var EmptyObservable_1 = $__require('49');
     var concat_1 = $__require('41');
     var isScheduler_1 = $__require('3b');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
-     * Returns an Observable that emits the items in a specified Iterable before it begins to emit items emitted by the
-     * source Observable.
+     * Returns an Observable that emits the items you specify as arguments before it begins to emit
+     * items emitted by the source Observable.
      *
      * <img src="./img/startWith.png" width="100%">
      *
-     * @param {Values} an Iterable that contains the items you want the modified Observable to emit first.
-     * @return {Observable} an Observable that emits the items in the specified Iterable and then emits the items
+     * @param {...T} values - Items you want the modified Observable to emit first.
+     * @param {Scheduler} [scheduler] - A {@link IScheduler} to use for scheduling
+     * the emissions of the `next` notifications.
+     * @return {Observable} An Observable that emits the items in the specified Iterable and then emits the items
      * emitted by the source Observable.
      * @method startWith
      * @owner Observable
@@ -38166,47 +38269,21 @@ $__System.registerDynamic('124', ['3d', '125', '49', '41', '3b'], true, function
     }
     exports.startWith = startWith;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('126', ['15', '124'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12a', ['15', '128'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var startWith_1 = $__require('124');
+  var startWith_1 = $__require('128');
   Observable_1.Observable.prototype.startWith = startWith_1.startWith;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("5f", ["3c"], true, function ($__require, exports, module) {
+$__System.registerDynamic('12b', ['15', '12c', '5f'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
-        GLOBAL = global;
-    var isArray_1 = $__require("3c");
-    function isNumeric(val) {
-        // parseFloat NaNs numeric-cast false positives (null|true|false|"")
-        // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-        // subtraction forces infinities to NaN
-        // adding 1 corrects loss of precision from parseFloat (#15100)
-        return !isArray_1.isArray(val) && val - parseFloat(val) + 1 >= 0;
-    }
-    exports.isNumeric = isNumeric;
-    ;
-    
-
-    return module.exports;
-});
-$__System.registerDynamic('127', ['15', '128', '5f'], true, function ($__require, exports, module) {
-    "use strict";
-
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38216,7 +38293,7 @@ $__System.registerDynamic('127', ['15', '128', '5f'], true, function ($__require
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Observable_1 = $__require('15');
-    var asap_1 = $__require('128');
+    var asap_1 = $__require('12c');
     var isNumeric_1 = $__require('5f');
     /**
      * We need this JSDoc comment for affecting ESDoc.
@@ -38269,23 +38346,20 @@ $__System.registerDynamic('127', ['15', '128', '5f'], true, function ($__require
     }(Observable_1.Observable);
     exports.SubscribeOnObservable = SubscribeOnObservable;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("129", ["127"], true, function ($__require, exports, module) {
+$__System.registerDynamic("12d", ["12b"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
-    var SubscribeOnObservable_1 = $__require("127");
+    var SubscribeOnObservable_1 = $__require("12b");
     /**
      * Asynchronously subscribes Observers to this Observable on the specified IScheduler.
      *
      * <img src="./img/subscribeOn.png" width="100%">
      *
-     * @param {Scheduler} the IScheduler to perform subscription actions on.
-     * @return {Observable<T>} the source Observable modified so that its subscriptions happen on the specified IScheduler
+     * @param {Scheduler} scheduler - The IScheduler to perform subscription actions on.
+     * @return {Observable<T>} The source Observable modified so that its subscriptions happen on the specified IScheduler.
      .
      * @method subscribeOn
      * @owner Observable
@@ -38308,27 +38382,21 @@ $__System.registerDynamic("129", ["127"], true, function ($__require, exports, m
         return SubscribeOnOperator;
     }();
     
-
-    return module.exports;
 });
-$__System.registerDynamic('12a', ['15', '129'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12e', ['15', '12d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var subscribeOn_1 = $__require('129');
+  var subscribeOn_1 = $__require('12d');
   Observable_1.Observable.prototype.subscribeOn = subscribeOn_1.subscribeOn;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('12b', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12f', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38438,28 +38506,22 @@ $__System.registerDynamic('12b', ['45', '44'], true, function ($__require, expor
         return SwitchSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('12c', ['15', '12b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('130', ['15', '12f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var switch_1 = $__require('12b');
+  var switch_1 = $__require('12f');
   Observable_1.Observable.prototype.switch = switch_1._switch;
   Observable_1.Observable.prototype._switch = switch_1._switch;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('12d', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('131', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38470,7 +38532,7 @@ $__System.registerDynamic('12d', ['45', '44'], true, function ($__require, expor
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Projects each source value to an Observable which is merged in the output
      * Observable, emitting values only from the most recently projected Observable.
@@ -38500,7 +38562,7 @@ $__System.registerDynamic('12d', ['45', '44'], true, function ($__require, expor
      * @see {@link switch}
      * @see {@link switchMapTo}
      *
-     * @param {function(value: T, ?index: number): Observable} project A function
+     * @param {function(value: T, ?index: number): ObservableInput} project A function
      * that, when applied to an item emitted by the source Observable, returns an
      * Observable.
      * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
@@ -38599,27 +38661,21 @@ $__System.registerDynamic('12d', ['45', '44'], true, function ($__require, expor
         return SwitchMapSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('12e', ['15', '12d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('132', ['15', '131'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var switchMap_1 = $__require('12d');
+  var switchMap_1 = $__require('131');
   Observable_1.Observable.prototype.switchMap = switchMap_1.switchMap;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('12f', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('133', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38630,7 +38686,7 @@ $__System.registerDynamic('12f', ['45', '44'], true, function ($__require, expor
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Projects each source value to the same Observable which is flattened multiple
      * times with {@link switch} in the output Observable.
@@ -38656,7 +38712,7 @@ $__System.registerDynamic('12f', ['45', '44'], true, function ($__require, expor
      * @see {@link switchMap}
      * @see {@link mergeMapTo}
      *
-     * @param {Observable} innerObservable An Observable to replace each value from
+     * @param {ObservableInput} innerObservable An Observable to replace each value from
      * the source Observable.
      * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
      * A function to produce the value on the output Observable based on the values
@@ -38666,8 +38722,6 @@ $__System.registerDynamic('12f', ['45', '44'], true, function ($__require, expor
      * - `innerValue`: the value that came from the projected Observable
      * - `outerIndex`: the "index" of the value that came from the source
      * - `innerIndex`: the "index" of the value from the projected Observable
-     * @return {Observable} An Observable that emits items from the given
-     * `innerObservable` every time a value is emitted on the source Observable.
      * @return {Observable} An Observable that emits items from the given
      * `innerObservable` (and optionally transformed through `resultSelector`) every
      * time a value is emitted on the source Observable, and taking only the values
@@ -38751,27 +38805,21 @@ $__System.registerDynamic('12f', ['45', '44'], true, function ($__require, expor
         return SwitchMapToSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('130', ['15', '12f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('134', ['15', '133'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var switchMapTo_1 = $__require('12f');
+  var switchMapTo_1 = $__require('133');
   Observable_1.Observable.prototype.switchMapTo = switchMapTo_1.switchMapTo;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('131', ['89', 'bf', '49'], true, function ($__require, exports, module) {
+$__System.registerDynamic('135', ['89', 'bf', '49'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38862,27 +38910,21 @@ $__System.registerDynamic('131', ['89', 'bf', '49'], true, function ($__require,
         return TakeSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('132', ['15', '131'], true, function ($__require, exports, module) {
+$__System.registerDynamic('136', ['15', '135'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var take_1 = $__require('131');
+  var take_1 = $__require('135');
   Observable_1.Observable.prototype.take = take_1.take;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('133', ['89', 'bf', '49'], true, function ($__require, exports, module) {
+$__System.registerDynamic('137', ['89', 'bf', '49'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -38990,27 +39032,21 @@ $__System.registerDynamic('133', ['89', 'bf', '49'], true, function ($__require,
         return TakeLastSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('134', ['15', '133'], true, function ($__require, exports, module) {
+$__System.registerDynamic('138', ['15', '137'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var takeLast_1 = $__require('133');
+  var takeLast_1 = $__require('137');
   Observable_1.Observable.prototype.takeLast = takeLast_1.takeLast;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('135', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('139', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39088,27 +39124,21 @@ $__System.registerDynamic('135', ['45', '44'], true, function ($__require, expor
         return TakeUntilSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('136', ['15', '135'], true, function ($__require, exports, module) {
+$__System.registerDynamic('13a', ['15', '139'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var takeUntil_1 = $__require('135');
+  var takeUntil_1 = $__require('139');
   Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("137", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("13b", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39201,27 +39231,31 @@ $__System.registerDynamic("137", ["89"], true, function ($__require, exports, mo
         return TakeWhileSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('138', ['15', '137'], true, function ($__require, exports, module) {
+$__System.registerDynamic('13c', ['15', '13b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var takeWhile_1 = $__require('137');
+  var takeWhile_1 = $__require('13b');
   Observable_1.Observable.prototype.takeWhile = takeWhile_1.takeWhile;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('139', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('13d', ['15', '13e'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('15');
+  var throttle_1 = $__require('13e');
+  Observable_1.Observable.prototype.throttle = throttle_1.throttle;
+  
+});
+$__System.registerDynamic('13e', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39232,6 +39266,10 @@ $__System.registerDynamic('139', ['45', '44'], true, function ($__require, expor
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
+    exports.defaultThrottleConfig = {
+        leading: true,
+        trailing: false
+    };
     /**
      * Emits a value from the source Observable, then ignores subsequent source
      * values for a duration determined by another Observable, then repeats this
@@ -39262,96 +39300,120 @@ $__System.registerDynamic('139', ['45', '44'], true, function ($__require, expor
      * @see {@link sample}
      * @see {@link throttleTime}
      *
-     * @param {function(value: T): Observable|Promise} durationSelector A function
+     * @param {function(value: T): SubscribableOrPromise} durationSelector A function
      * that receives a value from the source Observable, for computing the silencing
      * duration for each source value, returned as an Observable or a Promise.
+     * @param {Object} config a configuration object to define `leading` and `trailing` behavior. Defaults
+     * to `{ leading: true, trailing: false }`.
      * @return {Observable<T>} An Observable that performs the throttle operation to
      * limit the rate of emissions from the source.
      * @method throttle
      * @owner Observable
      */
-    function throttle(durationSelector) {
-        return this.lift(new ThrottleOperator(durationSelector));
+    function throttle(durationSelector, config) {
+        if (config === void 0) {
+            config = exports.defaultThrottleConfig;
+        }
+        return this.lift(new ThrottleOperator(durationSelector, config.leading, config.trailing));
     }
     exports.throttle = throttle;
     var ThrottleOperator = function () {
-        function ThrottleOperator(durationSelector) {
+        function ThrottleOperator(durationSelector, leading, trailing) {
             this.durationSelector = durationSelector;
+            this.leading = leading;
+            this.trailing = trailing;
         }
         ThrottleOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new ThrottleSubscriber(subscriber, this.durationSelector));
+            return source.subscribe(new ThrottleSubscriber(subscriber, this.durationSelector, this.leading, this.trailing));
         };
         return ThrottleOperator;
     }();
     /**
-     * We need this JSDoc comment for affecting ESDoc.
+     * We need this JSDoc comment for affecting ESDoc
      * @ignore
      * @extends {Ignored}
      */
     var ThrottleSubscriber = function (_super) {
         __extends(ThrottleSubscriber, _super);
-        function ThrottleSubscriber(destination, durationSelector) {
+        function ThrottleSubscriber(destination, durationSelector, _leading, _trailing) {
             _super.call(this, destination);
             this.destination = destination;
             this.durationSelector = durationSelector;
+            this._leading = _leading;
+            this._trailing = _trailing;
+            this._hasTrailingValue = false;
         }
         ThrottleSubscriber.prototype._next = function (value) {
-            if (!this.throttled) {
-                this.tryDurationSelector(value);
+            if (this.throttled) {
+                if (this._trailing) {
+                    this._hasTrailingValue = true;
+                    this._trailingValue = value;
+                }
+            } else {
+                var duration = this.tryDurationSelector(value);
+                if (duration) {
+                    this.add(this.throttled = subscribeToResult_1.subscribeToResult(this, duration));
+                }
+                if (this._leading) {
+                    this.destination.next(value);
+                    if (this._trailing) {
+                        this._hasTrailingValue = true;
+                        this._trailingValue = value;
+                    }
+                }
             }
         };
         ThrottleSubscriber.prototype.tryDurationSelector = function (value) {
-            var duration = null;
             try {
-                duration = this.durationSelector(value);
+                return this.durationSelector(value);
             } catch (err) {
                 this.destination.error(err);
-                return;
+                return null;
             }
-            this.emitAndThrottle(value, duration);
-        };
-        ThrottleSubscriber.prototype.emitAndThrottle = function (value, duration) {
-            this.add(this.throttled = subscribeToResult_1.subscribeToResult(this, duration));
-            this.destination.next(value);
         };
         ThrottleSubscriber.prototype._unsubscribe = function () {
-            var throttled = this.throttled;
+            var _a = this,
+                throttled = _a.throttled,
+                _trailingValue = _a._trailingValue,
+                _hasTrailingValue = _a._hasTrailingValue,
+                _trailing = _a._trailing;
+            this._trailingValue = null;
+            this._hasTrailingValue = false;
             if (throttled) {
                 this.remove(throttled);
                 this.throttled = null;
                 throttled.unsubscribe();
             }
         };
+        ThrottleSubscriber.prototype._sendTrailing = function () {
+            var _a = this,
+                destination = _a.destination,
+                throttled = _a.throttled,
+                _trailing = _a._trailing,
+                _trailingValue = _a._trailingValue,
+                _hasTrailingValue = _a._hasTrailingValue;
+            if (throttled && _trailing && _hasTrailingValue) {
+                destination.next(_trailingValue);
+                this._trailingValue = null;
+                this._hasTrailingValue = false;
+            }
+        };
         ThrottleSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+            this._sendTrailing();
             this._unsubscribe();
         };
         ThrottleSubscriber.prototype.notifyComplete = function () {
+            this._sendTrailing();
             this._unsubscribe();
         };
         return ThrottleSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('13a', ['15', '139'], true, function ($__require, exports, module) {
-  "use strict";
-
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  var Observable_1 = $__require('15');
-  var throttle_1 = $__require('139');
-  Observable_1.Observable.prototype.throttle = throttle_1.throttle;
-  
-
-  return module.exports;
-});
-$__System.registerDynamic('13b', ['89', '60'], true, function ($__require, exports, module) {
+$__System.registerDynamic('13f', ['89', '60', '13e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39362,6 +39424,7 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
     };
     var Subscriber_1 = $__require('89');
     var async_1 = $__require('60');
+    var throttle_1 = $__require('13e');
     /**
      * Emits a value from the source Observable, then ignores subsequent source
      * values for `duration` milliseconds, then repeats this process.
@@ -39401,20 +39464,25 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
      * @method throttleTime
      * @owner Observable
      */
-    function throttleTime(duration, scheduler) {
+    function throttleTime(duration, scheduler, config) {
         if (scheduler === void 0) {
             scheduler = async_1.async;
         }
-        return this.lift(new ThrottleTimeOperator(duration, scheduler));
+        if (config === void 0) {
+            config = throttle_1.defaultThrottleConfig;
+        }
+        return this.lift(new ThrottleTimeOperator(duration, scheduler, config.leading, config.trailing));
     }
     exports.throttleTime = throttleTime;
     var ThrottleTimeOperator = function () {
-        function ThrottleTimeOperator(duration, scheduler) {
+        function ThrottleTimeOperator(duration, scheduler, leading, trailing) {
             this.duration = duration;
             this.scheduler = scheduler;
+            this.leading = leading;
+            this.trailing = trailing;
         }
         ThrottleTimeOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new ThrottleTimeSubscriber(subscriber, this.duration, this.scheduler));
+            return source.subscribe(new ThrottleTimeSubscriber(subscriber, this.duration, this.scheduler, this.leading, this.trailing));
         };
         return ThrottleTimeOperator;
     }();
@@ -39425,20 +39493,36 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
      */
     var ThrottleTimeSubscriber = function (_super) {
         __extends(ThrottleTimeSubscriber, _super);
-        function ThrottleTimeSubscriber(destination, duration, scheduler) {
+        function ThrottleTimeSubscriber(destination, duration, scheduler, leading, trailing) {
             _super.call(this, destination);
             this.duration = duration;
             this.scheduler = scheduler;
+            this.leading = leading;
+            this.trailing = trailing;
+            this._hasTrailingValue = false;
+            this._trailingValue = null;
         }
         ThrottleTimeSubscriber.prototype._next = function (value) {
-            if (!this.throttled) {
+            if (this.throttled) {
+                if (this.trailing) {
+                    this._trailingValue = value;
+                    this._hasTrailingValue = true;
+                }
+            } else {
                 this.add(this.throttled = this.scheduler.schedule(dispatchNext, this.duration, { subscriber: this }));
-                this.destination.next(value);
+                if (this.leading) {
+                    this.destination.next(value);
+                }
             }
         };
         ThrottleTimeSubscriber.prototype.clearThrottle = function () {
             var throttled = this.throttled;
             if (throttled) {
+                if (this.trailing && this._hasTrailingValue) {
+                    this.destination.next(this._trailingValue);
+                    this._trailingValue = null;
+                    this._hasTrailingValue = false;
+                }
                 throttled.unsubscribe();
                 this.remove(throttled);
                 this.throttled = null;
@@ -39451,40 +39535,31 @@ $__System.registerDynamic('13b', ['89', '60'], true, function ($__require, expor
         subscriber.clearThrottle();
     }
     
-
-    return module.exports;
 });
-$__System.registerDynamic('13c', ['15', '13b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('140', ['15', '13f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var throttleTime_1 = $__require('13b');
+  var throttleTime_1 = $__require('13f');
   Observable_1.Observable.prototype.throttleTime = throttleTime_1.throttleTime;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('13d', ['15', '13e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('141', ['15', '142'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var timeInterval_1 = $__require('13e');
+  var timeInterval_1 = $__require('142');
   Observable_1.Observable.prototype.timeInterval = timeInterval_1.timeInterval;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('13f', ['60', '7d', '89', '140'], true, function ($__require, exports, module) {
+$__System.registerDynamic('143', ['60', '7d', '89', '144'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39496,7 +39571,7 @@ $__System.registerDynamic('13f', ['60', '7d', '89', '140'], true, function ($__r
     var async_1 = $__require('60');
     var isDate_1 = $__require('7d');
     var Subscriber_1 = $__require('89');
-    var TimeoutError_1 = $__require('140');
+    var TimeoutError_1 = $__require('144');
     /**
      * @param {number} due
      * @param {Scheduler} [scheduler]
@@ -39538,93 +39613,65 @@ $__System.registerDynamic('13f', ['60', '7d', '89', '140'], true, function ($__r
             this.waitFor = waitFor;
             this.scheduler = scheduler;
             this.errorInstance = errorInstance;
-            this.index = 0;
-            this._previousIndex = 0;
-            this._hasCompleted = false;
+            this.action = null;
             this.scheduleTimeout();
         }
-        Object.defineProperty(TimeoutSubscriber.prototype, "previousIndex", {
-            get: function () {
-                return this._previousIndex;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TimeoutSubscriber.prototype, "hasCompleted", {
-            get: function () {
-                return this._hasCompleted;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TimeoutSubscriber.dispatchTimeout = function (state) {
-            var source = state.subscriber;
-            var currentIndex = state.index;
-            if (!source.hasCompleted && source.previousIndex === currentIndex) {
-                source.notifyTimeout();
-            }
+        TimeoutSubscriber.dispatchTimeout = function (subscriber) {
+            subscriber.error(subscriber.errorInstance);
         };
         TimeoutSubscriber.prototype.scheduleTimeout = function () {
-            var currentIndex = this.index;
-            this.scheduler.schedule(TimeoutSubscriber.dispatchTimeout, this.waitFor, { subscriber: this, index: currentIndex });
-            this.index++;
-            this._previousIndex = currentIndex;
+            var action = this.action;
+            if (action) {
+                // Recycle the action if we've already scheduled one. All the production
+                // Scheduler Actions mutate their state/delay time and return themeselves.
+                // VirtualActions are immutable, so they create and return a clone. In this
+                // case, we need to set the action reference to the most recent VirtualAction,
+                // to ensure that's the one we clone from next time.
+                this.action = action.schedule(this, this.waitFor);
+            } else {
+                this.add(this.action = this.scheduler.schedule(TimeoutSubscriber.dispatchTimeout, this.waitFor, this));
+            }
         };
         TimeoutSubscriber.prototype._next = function (value) {
-            this.destination.next(value);
             if (!this.absoluteTimeout) {
                 this.scheduleTimeout();
             }
+            _super.prototype._next.call(this, value);
         };
-        TimeoutSubscriber.prototype._error = function (err) {
-            this.destination.error(err);
-            this._hasCompleted = true;
-        };
-        TimeoutSubscriber.prototype._complete = function () {
-            this.destination.complete();
-            this._hasCompleted = true;
-        };
-        TimeoutSubscriber.prototype.notifyTimeout = function () {
-            this.error(this.errorInstance);
+        TimeoutSubscriber.prototype._unsubscribe = function () {
+            this.action = null;
+            this.scheduler = null;
+            this.errorInstance = null;
         };
         return TimeoutSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('141', ['15', '13f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('145', ['15', '143'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var timeout_1 = $__require('13f');
+  var timeout_1 = $__require('143');
   Observable_1.Observable.prototype.timeout = timeout_1.timeout;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("7d", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function isDate(value) {
         return value instanceof Date && !isNaN(+value);
     }
     exports.isDate = isDate;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('142', ['60', '7d', '45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('146', ['60', '7d', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39637,7 +39684,7 @@ $__System.registerDynamic('142', ['60', '7d', '45', '44'], true, function ($__re
     var isDate_1 = $__require('7d');
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * @param due
      * @param withObservable
@@ -39675,105 +39722,71 @@ $__System.registerDynamic('142', ['60', '7d', '45', '44'], true, function ($__re
     var TimeoutWithSubscriber = function (_super) {
         __extends(TimeoutWithSubscriber, _super);
         function TimeoutWithSubscriber(destination, absoluteTimeout, waitFor, withObservable, scheduler) {
-            _super.call(this);
-            this.destination = destination;
+            _super.call(this, destination);
             this.absoluteTimeout = absoluteTimeout;
             this.waitFor = waitFor;
             this.withObservable = withObservable;
             this.scheduler = scheduler;
-            this.timeoutSubscription = undefined;
-            this.index = 0;
-            this._previousIndex = 0;
-            this._hasCompleted = false;
-            destination.add(this);
+            this.action = null;
             this.scheduleTimeout();
         }
-        Object.defineProperty(TimeoutWithSubscriber.prototype, "previousIndex", {
-            get: function () {
-                return this._previousIndex;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TimeoutWithSubscriber.prototype, "hasCompleted", {
-            get: function () {
-                return this._hasCompleted;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TimeoutWithSubscriber.dispatchTimeout = function (state) {
-            var source = state.subscriber;
-            var currentIndex = state.index;
-            if (!source.hasCompleted && source.previousIndex === currentIndex) {
-                source.handleTimeout();
-            }
+        TimeoutWithSubscriber.dispatchTimeout = function (subscriber) {
+            var withObservable = subscriber.withObservable;
+            subscriber._unsubscribeAndRecycle();
+            subscriber.add(subscribeToResult_1.subscribeToResult(subscriber, withObservable));
         };
         TimeoutWithSubscriber.prototype.scheduleTimeout = function () {
-            var currentIndex = this.index;
-            var timeoutState = { subscriber: this, index: currentIndex };
-            this.scheduler.schedule(TimeoutWithSubscriber.dispatchTimeout, this.waitFor, timeoutState);
-            this.index++;
-            this._previousIndex = currentIndex;
+            var action = this.action;
+            if (action) {
+                // Recycle the action if we've already scheduled one. All the production
+                // Scheduler Actions mutate their state/delay time and return themeselves.
+                // VirtualActions are immutable, so they create and return a clone. In this
+                // case, we need to set the action reference to the most recent VirtualAction,
+                // to ensure that's the one we clone from next time.
+                this.action = action.schedule(this, this.waitFor);
+            } else {
+                this.add(this.action = this.scheduler.schedule(TimeoutWithSubscriber.dispatchTimeout, this.waitFor, this));
+            }
         };
         TimeoutWithSubscriber.prototype._next = function (value) {
-            this.destination.next(value);
             if (!this.absoluteTimeout) {
                 this.scheduleTimeout();
             }
+            _super.prototype._next.call(this, value);
         };
-        TimeoutWithSubscriber.prototype._error = function (err) {
-            this.destination.error(err);
-            this._hasCompleted = true;
-        };
-        TimeoutWithSubscriber.prototype._complete = function () {
-            this.destination.complete();
-            this._hasCompleted = true;
-        };
-        TimeoutWithSubscriber.prototype.handleTimeout = function () {
-            if (!this.closed) {
-                var withObservable = this.withObservable;
-                this.unsubscribe();
-                this.destination.add(this.timeoutSubscription = subscribeToResult_1.subscribeToResult(this, withObservable));
-            }
+        TimeoutWithSubscriber.prototype._unsubscribe = function () {
+            this.action = null;
+            this.scheduler = null;
+            this.withObservable = null;
         };
         return TimeoutWithSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('143', ['15', '142'], true, function ($__require, exports, module) {
+$__System.registerDynamic('147', ['15', '146'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var timeoutWith_1 = $__require('142');
+  var timeoutWith_1 = $__require('146');
   Observable_1.Observable.prototype.timeoutWith = timeoutWith_1.timeoutWith;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('144', ['15', '145'], true, function ($__require, exports, module) {
+$__System.registerDynamic('148', ['15', '149'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var timestamp_1 = $__require('145');
+  var timestamp_1 = $__require('149');
   Observable_1.Observable.prototype.timestamp = timestamp_1.timestamp;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("146", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("14a", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -39820,33 +39833,70 @@ $__System.registerDynamic("146", ["89"], true, function ($__require, exports, mo
         return ToArraySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('147', ['15', '146'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14b', ['15', '14a'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var toArray_1 = $__require('146');
+  var toArray_1 = $__require('14a');
   Observable_1.Observable.prototype.toArray = toArray_1.toArray;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('14', ['87'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
-     * @param PromiseCtor
-     * @return {Promise<T>}
+     * Converts an Observable sequence to a ES2015 compliant promise.
+     *
+     * @example
+     * // Using normal ES2015
+     * let source = Rx.Observable
+     *   .of(42)
+     *   .toPromise();
+     *
+     * source.then((value) => console.log('Value: %s', value));
+     * // => Value: 42
+     *
+     * // Rejected Promise
+     * // Using normal ES2015
+     * let source = Rx.Observable
+     *   .throw(new Error('woops'))
+     *   .toPromise();
+     *
+     * source
+     *   .then((value) => console.log('Value: %s', value))
+     *   .catch((err) => console.log('Error: %s', err));
+     * // => Error: Error: woops
+     *
+     * // Setting via the config
+     * Rx.config.Promise = RSVP.Promise;
+     *
+     * let source = Rx.Observable
+     *   .of(42)
+     *   .toPromise();
+     *
+     * source.then((value) => console.log('Value: %s', value));
+     * // => Value: 42
+     *
+     * // Setting via the method
+     * let source = Rx.Observable
+     *   .of(42)
+     *   .toPromise(RSVP.Promise);
+     *
+     * source.then((value) => console.log('Value: %s', value));
+     * // => Value: 42
+     *
+     * @param PromiseCtor promise The constructor of the promise. If not provided,
+     * it will look for a constructor first in Rx.config.Promise then fall back to
+     * the native Promise constructor if available.
+     * @return {Promise<T>} An ES2015 compatible promise with the last value from
+     * the observable sequence.
      * @method toPromise
      * @owner Observable
      */
@@ -39875,27 +39925,21 @@ $__System.registerDynamic('14', ['87'], true, function ($__require, exports, mod
     }
     exports.toPromise = toPromise;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('148', ['15', '14'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14c', ['15', '14'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var toPromise_1 = $__require('14');
   Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('149', ['10', '45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14d', ['10', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40008,27 +40052,21 @@ $__System.registerDynamic('149', ['10', '45', '44'], true, function ($__require,
         return WindowSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('14a', ['15', '149'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14e', ['15', '14d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var window_1 = $__require('149');
+  var window_1 = $__require('14d');
   Observable_1.Observable.prototype.window = window_1.window;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('14b', ['89', '10'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14f', ['89', '10'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40164,27 +40202,38 @@ $__System.registerDynamic('14b', ['89', '10'], true, function ($__require, expor
         return WindowCountSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('14c', ['15', '14b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('150', ['15', '14f'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var windowCount_1 = $__require('14b');
+  var windowCount_1 = $__require('14f');
   Observable_1.Observable.prototype.windowCount = windowCount_1.windowCount;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require, exports, module) {
+$__System.registerDynamic("5f", ["3c"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
+        GLOBAL = global;
+    var isArray_1 = $__require("3c");
+    function isNumeric(val) {
+        // parseFloat NaNs numeric-cast false positives (null|true|false|"")
+        // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+        // subtraction forces infinities to NaN
+        // adding 1 corrects loss of precision from parseFloat (#15100)
+        return !isArray_1.isArray(val) && val - parseFloat(val) + 1 >= 0;
+    }
+    exports.isNumeric = isNumeric;
+    ;
+    
+});
+$__System.registerDynamic('151', ['10', '60', '89', '5f', '3b'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40196,76 +40245,59 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
     var Subject_1 = $__require('10');
     var async_1 = $__require('60');
     var Subscriber_1 = $__require('89');
-    /**
-     * Branch out the source Observable values as a nested Observable periodically
-     * in time.
-     *
-     * <span class="informal">It's like {@link bufferTime}, but emits a nested
-     * Observable instead of an array.</span>
-     *
-     * <img src="./img/windowTime.png" width="100%">
-     *
-     * Returns an Observable that emits windows of items it collects from the source
-     * Observable. The output Observable starts a new window periodically, as
-     * determined by the `windowCreationInterval` argument. It emits each window
-     * after a fixed timespan, specified by the `windowTimeSpan` argument. When the
-     * source Observable completes or encounters an error, the output Observable
-     * emits the current window and propagates the notification from the source
-     * Observable. If `windowCreationInterval` is not provided, the output
-     * Observable starts a new window when the previous window of duration
-     * `windowTimeSpan` completes.
-     *
-     * @example <caption>In every window of 1 second each, emit at most 2 click events</caption>
-     * var clicks = Rx.Observable.fromEvent(document, 'click');
-     * var result = clicks.windowTime(1000)
-     *   .map(win => win.take(2)) // each window has at most 2 emissions
-     *   .mergeAll(); // flatten the Observable-of-Observables
-     * result.subscribe(x => console.log(x));
-     *
-     * @example <caption>Every 5 seconds start a window 1 second long, and emit at most 2 click events per window</caption>
-     * var clicks = Rx.Observable.fromEvent(document, 'click');
-     * var result = clicks.windowTime(1000, 5000)
-     *   .map(win => win.take(2)) // each window has at most 2 emissions
-     *   .mergeAll(); // flatten the Observable-of-Observables
-     * result.subscribe(x => console.log(x));
-     *
-     * @see {@link window}
-     * @see {@link windowCount}
-     * @see {@link windowToggle}
-     * @see {@link windowWhen}
-     * @see {@link bufferTime}
-     *
-     * @param {number} windowTimeSpan The amount of time to fill each window.
-     * @param {number} [windowCreationInterval] The interval at which to start new
-     * windows.
-     * @param {Scheduler} [scheduler=async] The scheduler on which to schedule the
-     * intervals that determine window boundaries.
-     * @return {Observable<Observable<T>>} An observable of windows, which in turn
-     * are Observables.
-     * @method windowTime
-     * @owner Observable
-     */
-    function windowTime(windowTimeSpan, windowCreationInterval, scheduler) {
-        if (windowCreationInterval === void 0) {
-            windowCreationInterval = null;
+    var isNumeric_1 = $__require('5f');
+    var isScheduler_1 = $__require('3b');
+    function windowTime(windowTimeSpan) {
+        var scheduler = async_1.async;
+        var windowCreationInterval = null;
+        var maxWindowSize = Number.POSITIVE_INFINITY;
+        if (isScheduler_1.isScheduler(arguments[3])) {
+            scheduler = arguments[3];
         }
-        if (scheduler === void 0) {
-            scheduler = async_1.async;
+        if (isScheduler_1.isScheduler(arguments[2])) {
+            scheduler = arguments[2];
+        } else if (isNumeric_1.isNumeric(arguments[2])) {
+            maxWindowSize = arguments[2];
         }
-        return this.lift(new WindowTimeOperator(windowTimeSpan, windowCreationInterval, scheduler));
+        if (isScheduler_1.isScheduler(arguments[1])) {
+            scheduler = arguments[1];
+        } else if (isNumeric_1.isNumeric(arguments[1])) {
+            windowCreationInterval = arguments[1];
+        }
+        return this.lift(new WindowTimeOperator(windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler));
     }
     exports.windowTime = windowTime;
     var WindowTimeOperator = function () {
-        function WindowTimeOperator(windowTimeSpan, windowCreationInterval, scheduler) {
+        function WindowTimeOperator(windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler) {
             this.windowTimeSpan = windowTimeSpan;
             this.windowCreationInterval = windowCreationInterval;
+            this.maxWindowSize = maxWindowSize;
             this.scheduler = scheduler;
         }
         WindowTimeOperator.prototype.call = function (subscriber, source) {
-            return source.subscribe(new WindowTimeSubscriber(subscriber, this.windowTimeSpan, this.windowCreationInterval, this.scheduler));
+            return source.subscribe(new WindowTimeSubscriber(subscriber, this.windowTimeSpan, this.windowCreationInterval, this.maxWindowSize, this.scheduler));
         };
         return WindowTimeOperator;
     }();
+    var CountedSubject = function (_super) {
+        __extends(CountedSubject, _super);
+        function CountedSubject() {
+            _super.apply(this, arguments);
+            this._numberOfNextedValues = 0;
+        }
+        CountedSubject.prototype.next = function (value) {
+            this._numberOfNextedValues++;
+            _super.prototype.next.call(this, value);
+        };
+        Object.defineProperty(CountedSubject.prototype, "numberOfNextedValues", {
+            get: function () {
+                return this._numberOfNextedValues;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return CountedSubject;
+    }(Subject_1.Subject);
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -40273,22 +40305,22 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
      */
     var WindowTimeSubscriber = function (_super) {
         __extends(WindowTimeSubscriber, _super);
-        function WindowTimeSubscriber(destination, windowTimeSpan, windowCreationInterval, scheduler) {
+        function WindowTimeSubscriber(destination, windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler) {
             _super.call(this, destination);
             this.destination = destination;
             this.windowTimeSpan = windowTimeSpan;
             this.windowCreationInterval = windowCreationInterval;
+            this.maxWindowSize = maxWindowSize;
             this.scheduler = scheduler;
             this.windows = [];
+            var window = this.openWindow();
             if (windowCreationInterval !== null && windowCreationInterval >= 0) {
-                var window_1 = this.openWindow();
-                var closeState = { subscriber: this, window: window_1, context: null };
+                var closeState = { subscriber: this, window: window, context: null };
                 var creationState = { windowTimeSpan: windowTimeSpan, windowCreationInterval: windowCreationInterval, subscriber: this, scheduler: scheduler };
                 this.add(scheduler.schedule(dispatchWindowClose, windowTimeSpan, closeState));
                 this.add(scheduler.schedule(dispatchWindowCreation, windowCreationInterval, creationState));
             } else {
-                var window_2 = this.openWindow();
-                var timeSpanOnlyState = { subscriber: this, window: window_2, windowTimeSpan: windowTimeSpan };
+                var timeSpanOnlyState = { subscriber: this, window: window, windowTimeSpan: windowTimeSpan };
                 this.add(scheduler.schedule(dispatchWindowTimeSpanOnly, windowTimeSpan, timeSpanOnlyState));
             }
         }
@@ -40296,9 +40328,12 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
             var windows = this.windows;
             var len = windows.length;
             for (var i = 0; i < len; i++) {
-                var window_3 = windows[i];
-                if (!window_3.closed) {
-                    window_3.next(value);
+                var window_1 = windows[i];
+                if (!window_1.closed) {
+                    window_1.next(value);
+                    if (window_1.numberOfNextedValues >= this.maxWindowSize) {
+                        this.closeWindow(window_1);
+                    }
                 }
             }
         };
@@ -40312,15 +40347,15 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
         WindowTimeSubscriber.prototype._complete = function () {
             var windows = this.windows;
             while (windows.length > 0) {
-                var window_4 = windows.shift();
-                if (!window_4.closed) {
-                    window_4.complete();
+                var window_2 = windows.shift();
+                if (!window_2.closed) {
+                    window_2.complete();
                 }
             }
             this.destination.complete();
         };
         WindowTimeSubscriber.prototype.openWindow = function () {
-            var window = new Subject_1.Subject();
+            var window = new CountedSubject();
             this.windows.push(window);
             var destination = this.destination;
             destination.next(window);
@@ -40338,7 +40373,7 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
             windowTimeSpan = state.windowTimeSpan,
             window = state.window;
         if (window) {
-            window.complete();
+            subscriber.closeWindow(window);
         }
         state.window = subscriber.openWindow();
         this.schedule(state, windowTimeSpan);
@@ -40356,37 +40391,31 @@ $__System.registerDynamic('14d', ['10', '60', '89'], true, function ($__require,
         action.add(context.subscription);
         action.schedule(state, windowCreationInterval);
     }
-    function dispatchWindowClose(arg) {
-        var subscriber = arg.subscriber,
-            window = arg.window,
-            context = arg.context;
+    function dispatchWindowClose(state) {
+        var subscriber = state.subscriber,
+            window = state.window,
+            context = state.context;
         if (context && context.action && context.subscription) {
             context.action.remove(context.subscription);
         }
         subscriber.closeWindow(window);
     }
     
-
-    return module.exports;
 });
-$__System.registerDynamic('14e', ['15', '14d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('152', ['15', '151'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var windowTime_1 = $__require('14d');
+  var windowTime_1 = $__require('151');
   Observable_1.Observable.prototype.windowTime = windowTime_1.windowTime;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('14f', ['10', '52', '32', '33', '45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('153', ['10', '52', '32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40567,27 +40596,21 @@ $__System.registerDynamic('14f', ['10', '52', '32', '33', '45', '44'], true, fun
         return WindowToggleSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('150', ['15', '14f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('154', ['15', '153'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var windowToggle_1 = $__require('14f');
+  var windowToggle_1 = $__require('153');
   Observable_1.Observable.prototype.windowToggle = windowToggle_1.windowToggle;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('151', ['10', '32', '33', '45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('155', ['10', '32', '33', '45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40718,27 +40741,21 @@ $__System.registerDynamic('151', ['10', '32', '33', '45', '44'], true, function 
         return WindowSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('152', ['15', '151'], true, function ($__require, exports, module) {
+$__System.registerDynamic('156', ['15', '155'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var windowWhen_1 = $__require('151');
+  var windowWhen_1 = $__require('155');
   Observable_1.Observable.prototype.windowWhen = windowWhen_1.windowWhen;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('153', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('157', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40749,7 +40766,7 @@ $__System.registerDynamic('153', ['45', '44'], true, function ($__require, expor
     };
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Combines the source Observable with other Observables to create an Observable
      * whose values are calculated from the latest values of each, only when the
@@ -40775,7 +40792,7 @@ $__System.registerDynamic('153', ['45', '44'], true, function ($__require, expor
      *
      * @see {@link combineLatest}
      *
-     * @param {Observable} other An input Observable to combine with the source
+     * @param {ObservableInput} other An input Observable to combine with the source
      * Observable. More than one input Observables may be given as argument.
      * @param {Function} [project] Projection function for combining values
      * together. Receives all values in order of the Observables passed, where the
@@ -40869,40 +40886,31 @@ $__System.registerDynamic('153', ['45', '44'], true, function ($__require, expor
         return WithLatestFromSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('154', ['15', '153'], true, function ($__require, exports, module) {
+$__System.registerDynamic('158', ['15', '157'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var withLatestFrom_1 = $__require('153');
+  var withLatestFrom_1 = $__require('157');
   Observable_1.Observable.prototype.withLatestFrom = withLatestFrom_1.withLatestFrom;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('155', ['15', '81'], true, function ($__require, exports, module) {
+$__System.registerDynamic('159', ['15', '81'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var zip_1 = $__require('81');
   Observable_1.Observable.prototype.zip = zip_1.zipProto;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, function ($__require, exports, module) {
+$__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '15a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -40916,8 +40924,8 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
     var Subscriber_1 = $__require('89');
     var OuterSubscriber_1 = $__require('45');
     var subscribeToResult_1 = $__require('44');
-    var iterator_1 = $__require('156');
-    /* tslint:disable:max-line-length */
+    var iterator_1 = $__require('15a');
+    /* tslint:enable:max-line-length */
     /**
      * @param observables
      * @return {Observable<R>}
@@ -40954,9 +40962,9 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
      *     .subscribe(x => console.log(x));
      *
      * // outputs
-     * // { age: 7, name: 'Foo', isDev: true }
-     * // { age: 5, name: 'Bar', isDev: true }
-     * // { age: 9, name: 'Beer', isDev: false }
+     * // { age: 27, name: 'Foo', isDev: true }
+     * // { age: 25, name: 'Bar', isDev: true }
+     * // { age: 29, name: 'Beer', isDev: false }
      *
      * @param observables
      * @return {Observable<R>}
@@ -41007,8 +41015,8 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
             var iterators = this.iterators;
             if (isArray_1.isArray(value)) {
                 iterators.push(new StaticArrayIterator(value));
-            } else if (typeof value[iterator_1.$$iterator] === 'function') {
-                iterators.push(new StaticIterator(value[iterator_1.$$iterator]()));
+            } else if (typeof value[iterator_1.iterator] === 'function') {
+                iterators.push(new StaticIterator(value[iterator_1.iterator]()));
             } else {
                 iterators.push(new ZipBufferIterator(this.destination, this, value));
             }
@@ -41016,6 +41024,10 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
         ZipSubscriber.prototype._complete = function () {
             var iterators = this.iterators;
             var len = iterators.length;
+            if (len === 0) {
+                this.destination.complete();
+                return;
+            }
             this.active = len;
             for (var i = 0; i < len; i++) {
                 var iterator = iterators[i];
@@ -41107,7 +41119,7 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
             this.length = 0;
             this.length = array.length;
         }
-        StaticArrayIterator.prototype[iterator_1.$$iterator] = function () {
+        StaticArrayIterator.prototype[iterator_1.iterator] = function () {
             return this;
         };
         StaticArrayIterator.prototype.next = function (value) {
@@ -41138,7 +41150,7 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
             this.buffer = [];
             this.isComplete = false;
         }
-        ZipBufferIterator.prototype[iterator_1.$$iterator] = function () {
+        ZipBufferIterator.prototype[iterator_1.iterator] = function () {
             return this;
         };
         // NOTE: there is actually a name collision here with Subscriber.next and Iterator.next
@@ -41175,14 +41187,11 @@ $__System.registerDynamic('81', ['3d', '3c', '89', '45', '44', '156'], true, fun
         return ZipBufferIterator;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic("157", ["81"], true, function ($__require, exports, module) {
+$__System.registerDynamic("15b", ["81"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var zip_1 = $__require("81");
   /**
@@ -41196,27 +41205,21 @@ $__System.registerDynamic("157", ["81"], true, function ($__require, exports, mo
   }
   exports.zipAll = zipAll;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('158', ['15', '157'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15c', ['15', '15b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var zipAll_1 = $__require('157');
+  var zipAll_1 = $__require('15b');
   Observable_1.Observable.prototype.zipAll = zipAll_1.zipAll;
   
-
-  return module.exports;
 });
 $__System.registerDynamic('34', ['10', '52'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41239,12 +41242,12 @@ $__System.registerDynamic('34', ['10', '52'], true, function ($__require, export
             this.hasCompleted = false;
         }
         AsyncSubject.prototype._subscribe = function (subscriber) {
-            if (this.hasCompleted && this.hasNext) {
+            if (this.hasError) {
+                subscriber.error(this.thrownError);
+                return Subscription_1.Subscription.EMPTY;
+            } else if (this.hasCompleted && this.hasNext) {
                 subscriber.next(this.value);
                 subscriber.complete();
-                return Subscription_1.Subscription.EMPTY;
-            } else if (this.hasError) {
-                subscriber.error(this.thrownError);
                 return Subscription_1.Subscription.EMPTY;
             }
             return _super.prototype._subscribe.call(this, subscriber);
@@ -41253,6 +41256,11 @@ $__System.registerDynamic('34', ['10', '52'], true, function ($__require, export
             if (!this.hasCompleted) {
                 this.value = value;
                 this.hasNext = true;
+            }
+        };
+        AsyncSubject.prototype.error = function (error) {
+            if (!this.hasCompleted) {
+                _super.prototype.error.call(this, error);
             }
         };
         AsyncSubject.prototype.complete = function () {
@@ -41266,14 +41274,11 @@ $__System.registerDynamic('34', ['10', '52'], true, function ($__require, export
     }(Subject_1.Subject);
     exports.AsyncSubject = AsyncSubject;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('8a', ['10', '159', '52', 'f2', '15a', '15b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('8a', ['10', '15d', '52', 'f2', '15e', '15f'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41283,11 +41288,11 @@ $__System.registerDynamic('8a', ['10', '159', '52', 'f2', '15a', '15b'], true, f
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subject_1 = $__require('10');
-    var queue_1 = $__require('159');
+    var queue_1 = $__require('15d');
     var Subscription_1 = $__require('52');
     var observeOn_1 = $__require('f2');
-    var ObjectUnsubscribedError_1 = $__require('15a');
-    var SubjectSubscription_1 = $__require('15b');
+    var ObjectUnsubscribedError_1 = $__require('15e');
+    var SubjectSubscription_1 = $__require('15f');
     /**
      * @class ReplaySubject<T>
      */
@@ -41378,14 +41383,11 @@ $__System.registerDynamic('8a', ['10', '159', '52', 'f2', '15a', '15b'], true, f
         return ReplayEvent;
     }();
     
-
-    return module.exports;
 });
-$__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11a', ['10', '15', '89', '52'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41408,6 +41410,7 @@ $__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__re
             this.source = source;
             this.subjectFactory = subjectFactory;
             this._refCount = 0;
+            this._isComplete = false;
         }
         ConnectableObservable.prototype._subscribe = function (subscriber) {
             return this.getSubject().subscribe(subscriber);
@@ -41422,6 +41425,7 @@ $__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__re
         ConnectableObservable.prototype.connect = function () {
             var connection = this._connection;
             if (!connection) {
+                this._isComplete = false;
                 connection = this._connection = new Subscription_1.Subscription();
                 connection.add(this.source.subscribe(new ConnectableSubscriber(this.getSubject(), this)));
                 if (connection.closed) {
@@ -41439,13 +41443,17 @@ $__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__re
         return ConnectableObservable;
     }(Observable_1.Observable);
     exports.ConnectableObservable = ConnectableObservable;
+    var connectableProto = ConnectableObservable.prototype;
     exports.connectableObservableDescriptor = {
         operator: { value: null },
         _refCount: { value: 0, writable: true },
-        _subscribe: { value: ConnectableObservable.prototype._subscribe },
-        getSubject: { value: ConnectableObservable.prototype.getSubject },
-        connect: { value: ConnectableObservable.prototype.connect },
-        refCount: { value: ConnectableObservable.prototype.refCount }
+        _subject: { value: null, writable: true },
+        _connection: { value: null, writable: true },
+        _subscribe: { value: connectableProto._subscribe },
+        _isComplete: { value: connectableProto._isComplete, writable: true },
+        getSubject: { value: connectableProto.getSubject },
+        connect: { value: connectableProto.connect },
+        refCount: { value: connectableProto.refCount }
     };
     var ConnectableSubscriber = function (_super) {
         __extends(ConnectableSubscriber, _super);
@@ -41458,6 +41466,7 @@ $__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__re
             _super.prototype._error.call(this, err);
         };
         ConnectableSubscriber.prototype._complete = function () {
+            this.connectable._isComplete = true;
             this._unsubscribe();
             _super.prototype._complete.call(this);
         };
@@ -41548,14 +41557,11 @@ $__System.registerDynamic('118', ['10', '15', '89', '52'], true, function ($__re
         return RefCountSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('bf', [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41586,14 +41592,11 @@ $__System.registerDynamic('bf', [], true, function ($__require, exports, module)
     }(Error);
     exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('140', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('144', [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41621,14 +41624,11 @@ $__System.registerDynamic('140', [], true, function ($__require, exports, module
     }(Error);
     exports.TimeoutError = TimeoutError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('13e', ['89', '60'], true, function ($__require, exports, module) {
+$__System.registerDynamic('142', ['89', '60'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41692,14 +41692,11 @@ $__System.registerDynamic('13e', ['89', '60'], true, function ($__require, expor
         return TimeIntervalSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('145', ['89', '60'], true, function ($__require, exports, module) {
+$__System.registerDynamic('149', ['89', '60'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41754,14 +41751,11 @@ $__System.registerDynamic('145', ['89', '60'], true, function ($__require, expor
         return TimestampSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('15c', ['15', '52', '15d', '15e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('160', ['15', '52', '161', '162'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41772,8 +41766,8 @@ $__System.registerDynamic('15c', ['15', '52', '15d', '15e'], true, function ($__
     };
     var Observable_1 = $__require('15');
     var Subscription_1 = $__require('52');
-    var SubscriptionLoggable_1 = $__require('15d');
-    var applyMixins_1 = $__require('15e');
+    var SubscriptionLoggable_1 = $__require('161');
+    var applyMixins_1 = $__require('162');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -41811,16 +41805,13 @@ $__System.registerDynamic('15c', ['15', '52', '15d', '15e'], true, function ($__
     exports.ColdObservable = ColdObservable;
     applyMixins_1.applyMixins(ColdObservable, [SubscriptionLoggable_1.SubscriptionLoggable]);
     
-
-    return module.exports;
 });
-$__System.registerDynamic("15d", ["15f"], true, function ($__require, exports, module) {
+$__System.registerDynamic("161", ["163"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
-    var SubscriptionLog_1 = $__require("15f");
+    var SubscriptionLog_1 = $__require("163");
     var SubscriptionLoggable = function () {
         function SubscriptionLoggable() {
             this.subscriptions = [];
@@ -41838,14 +41829,11 @@ $__System.registerDynamic("15d", ["15f"], true, function ($__require, exports, m
     }();
     exports.SubscriptionLoggable = SubscriptionLoggable;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("15e", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("162", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function applyMixins(derivedCtor, baseCtors) {
         for (var i = 0, len = baseCtors.length; i < len; i++) {
@@ -41859,14 +41847,11 @@ $__System.registerDynamic("15e", [], true, function ($__require, exports, module
     }
     exports.applyMixins = applyMixins;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('160', ['10', '52', '15d', '15e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('164', ['10', '52', '161', '162'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41877,8 +41862,8 @@ $__System.registerDynamic('160', ['10', '52', '15d', '15e'], true, function ($__
     };
     var Subject_1 = $__require('10');
     var Subscription_1 = $__require('52');
-    var SubscriptionLoggable_1 = $__require('15d');
-    var applyMixins_1 = $__require('15e');
+    var SubscriptionLoggable_1 = $__require('161');
+    var applyMixins_1 = $__require('162');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -41919,14 +41904,11 @@ $__System.registerDynamic('160', ['10', '52', '15d', '15e'], true, function ($__
     exports.HotObservable = HotObservable;
     applyMixins_1.applyMixins(HotObservable, [SubscriptionLoggable_1.SubscriptionLoggable]);
     
-
-    return module.exports;
 });
-$__System.registerDynamic("15f", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("163", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var SubscriptionLog = function () {
         function SubscriptionLog(subscribedFrame, unsubscribedFrame) {
@@ -41940,14 +41922,11 @@ $__System.registerDynamic("15f", [], true, function ($__require, exports, module
     }();
     exports.SubscriptionLog = SubscriptionLog;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('161', ['15', 'ad', '15c', '160', '15f', '162'], true, function ($__require, exports, module) {
+$__System.registerDynamic('165', ['15', 'ad', '160', '164', '163', '166'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41958,10 +41937,10 @@ $__System.registerDynamic('161', ['15', 'ad', '15c', '160', '15f', '162'], true,
     };
     var Observable_1 = $__require('15');
     var Notification_1 = $__require('ad');
-    var ColdObservable_1 = $__require('15c');
-    var HotObservable_1 = $__require('160');
-    var SubscriptionLog_1 = $__require('15f');
-    var VirtualTimeScheduler_1 = $__require('162');
+    var ColdObservable_1 = $__require('160');
+    var HotObservable_1 = $__require('164');
+    var SubscriptionLog_1 = $__require('163');
+    var VirtualTimeScheduler_1 = $__require('166');
     var defaultMaxFrame = 750;
     var TestScheduler = function (_super) {
         __extends(TestScheduler, _super);
@@ -42175,14 +42154,11 @@ $__System.registerDynamic('161', ['15', 'ad', '15c', '160', '15f', '162'], true,
     }(VirtualTimeScheduler_1.VirtualTimeScheduler);
     exports.TestScheduler = TestScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('162', ['163', '164'], true, function ($__require, exports, module) {
+$__System.registerDynamic('166', ['167', '168'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -42191,8 +42167,8 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncAction_1 = $__require('163');
-    var AsyncScheduler_1 = $__require('164');
+    var AsyncAction_1 = $__require('167');
+    var AsyncScheduler_1 = $__require('168');
     var VirtualTimeScheduler = function (_super) {
         __extends(VirtualTimeScheduler, _super);
         function VirtualTimeScheduler(SchedulerAction, maxFrames) {
@@ -42251,6 +42227,7 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
             this.scheduler = scheduler;
             this.work = work;
             this.index = index;
+            this.active = true;
             this.index = scheduler.index = index;
         }
         VirtualAction.prototype.schedule = function (state, delay) {
@@ -42260,6 +42237,7 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
             if (!this.id) {
                 return _super.prototype.schedule.call(this, state, delay);
             }
+            this.active = false;
             // If an action is rescheduled, we save allocations by mutating its state,
             // pushing it to the end of the scheduler queue, and recycling the action.
             // But since the VirtualTimeScheduler is used for testing, VirtualActions
@@ -42284,6 +42262,11 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
             }
             return undefined;
         };
+        VirtualAction.prototype._execute = function (state, delay) {
+            if (this.active === true) {
+                return _super.prototype._execute.call(this, state, delay);
+            }
+        };
         VirtualAction.sortActions = function (a, b) {
             if (a.delay === b.delay) {
                 if (a.index === b.index) {
@@ -42303,14 +42286,11 @@ $__System.registerDynamic('162', ['163', '164'], true, function ($__require, exp
     }(AsyncAction_1.AsyncAction);
     exports.VirtualAction = VirtualAction;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -42327,11 +42307,7 @@ $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, func
     var map_1 = $__require('fb');
     function getCORSRequest() {
         if (root_1.root.XMLHttpRequest) {
-            var xhr = new root_1.root.XMLHttpRequest();
-            if ('withCredentials' in xhr) {
-                xhr.withCredentials = !!this.withCredentials;
-            }
-            return xhr;
+            return new root_1.root.XMLHttpRequest();
         } else if (!!root_1.root.XDomainRequest) {
             return new root_1.root.XDomainRequest();
         } else {
@@ -42381,6 +42357,11 @@ $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, func
         return new AjaxObservable({ method: 'PUT', url: url, body: body, headers: headers });
     }
     exports.ajaxPut = ajaxPut;
+    ;
+    function ajaxPatch(url, body, headers) {
+        return new AjaxObservable({ method: 'PATCH', url: url, body: body, headers: headers });
+    }
+    exports.ajaxPatch = ajaxPatch;
     ;
     function ajaxGetJSON(url, headers) {
         return new AjaxObservable({ method: 'GET', url: url, responseType: 'json', headers: headers }).lift(new map_1.MapOperator(function (x, index) {
@@ -42458,6 +42439,7 @@ $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, func
             create.post = ajaxPost;
             create.delete = ajaxDelete;
             create.put = ajaxPut;
+            create.patch = ajaxPatch;
             create.getJSON = ajaxGetJSON;
             return create;
         }();
@@ -42530,9 +42512,12 @@ $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, func
                     this.error(errorObject_1.errorObject.e);
                     return null;
                 }
-                // timeout and responseType can be set once the XHR is open
+                // timeout, responseType and withCredentials can be set once the XHR is open
                 xhr.timeout = request.timeout;
                 xhr.responseType = request.responseType;
+                if ('withCredentials' in xhr) {
+                    xhr.withCredentials = !!request.withCredentials;
+                }
                 // set headers
                 this.setHeaders(xhr, headers);
                 // finally send the request
@@ -42736,17 +42721,14 @@ $__System.registerDynamic('84', ['87', '32', '33', '15', '89', 'fb'], true, func
     }(AjaxError);
     exports.AjaxTimeoutError = AjaxTimeoutError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('165', ['87'], true, function ($__require, exports, module) {
+$__System.registerDynamic('169', ['87'], true, function ($__require, exports, module) {
     /**
     Some credit for this helper goes to http://github.com/YuzuJS/setImmediate
     */
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
     var ImmediateDefinition = function () {
@@ -42949,14 +42931,11 @@ $__System.registerDynamic('165', ['87'], true, function ($__require, exports, mo
     exports.ImmediateDefinition = ImmediateDefinition;
     exports.Immediate = new ImmediateDefinition(root_1.root);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('166', ['165', '163'], true, function ($__require, exports, module) {
+$__System.registerDynamic('16a', ['169', '167'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -42965,8 +42944,8 @@ $__System.registerDynamic('166', ['165', '163'], true, function ($__require, exp
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var Immediate_1 = $__require('165');
-    var AsyncAction_1 = $__require('163');
+    var Immediate_1 = $__require('169');
+    var AsyncAction_1 = $__require('167');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -43018,14 +42997,11 @@ $__System.registerDynamic('166', ['165', '163'], true, function ($__require, exp
     }(AsyncAction_1.AsyncAction);
     exports.AsapAction = AsapAction;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("167", ["164"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16b", ["168"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43034,7 +43010,7 @@ $__System.registerDynamic("167", ["164"], true, function ($__require, exports, m
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncScheduler_1 = $__require("164");
+    var AsyncScheduler_1 = $__require("168");
     var AsapScheduler = function (_super) {
         __extends(AsapScheduler, _super);
         function AsapScheduler() {
@@ -43065,40 +43041,107 @@ $__System.registerDynamic("167", ["164"], true, function ($__require, exports, m
     }(AsyncScheduler_1.AsyncScheduler);
     exports.AsapScheduler = AsapScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('128', ['166', '167'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12c', ['16a', '16b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
-  var AsapAction_1 = $__require('166');
-  var AsapScheduler_1 = $__require('167');
+  var AsapAction_1 = $__require('16a');
+  var AsapScheduler_1 = $__require('16b');
+  /**
+   *
+   * Asap Scheduler
+   *
+   * <span class="informal">Perform task as fast as it can be performed asynchronously</span>
+   *
+   * `asap` scheduler behaves the same as {@link async} scheduler when you use it to delay task
+   * in time. If however you set delay to `0`, `asap` will wait for current synchronously executing
+   * code to end and then it will try to execute given task as fast as possible.
+   *
+   * `asap` scheduler will do its best to minimize time between end of currently executing code
+   * and start of scheduled task. This makes it best candidate for performing so called "deferring".
+   * Traditionally this was achieved by calling `setTimeout(deferredTask, 0)`, but that technique involves
+   * some (although minimal) unwanted delay.
+   *
+   * Note that using `asap` scheduler does not necessarily mean that your task will be first to process
+   * after currently executing code. In particular, if some task was also scheduled with `asap` before,
+   * that task will execute first. That being said, if you need to schedule task asynchronously, but
+   * as soon as possible, `asap` scheduler is your best bet.
+   *
+   * @example <caption>Compare async and asap scheduler</caption>
+   *
+   * Rx.Scheduler.async.schedule(() => console.log('async')); // scheduling 'async' first...
+   * Rx.Scheduler.asap.schedule(() => console.log('asap'));
+   *
+   * // Logs:
+   * // "asap"
+   * // "async"
+   * // ... but 'asap' goes first!
+   *
+   * @static true
+   * @name asap
+   * @owner Scheduler
+   */
   exports.asap = new AsapScheduler_1.AsapScheduler(AsapAction_1.AsapAction);
   
-
-  return module.exports;
 });
-$__System.registerDynamic('60', ['163', '164'], true, function ($__require, exports, module) {
+$__System.registerDynamic('60', ['167', '168'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
-  var AsyncAction_1 = $__require('163');
-  var AsyncScheduler_1 = $__require('164');
+  var AsyncAction_1 = $__require('167');
+  var AsyncScheduler_1 = $__require('168');
+  /**
+   *
+   * Async Scheduler
+   *
+   * <span class="informal">Schedule task as if you used setTimeout(task, duration)</span>
+   *
+   * `async` scheduler schedules tasks asynchronously, by putting them on the JavaScript
+   * event loop queue. It is best used to delay tasks in time or to schedule tasks repeating
+   * in intervals.
+   *
+   * If you just want to "defer" task, that is to perform it right after currently
+   * executing synchronous code ends (commonly achieved by `setTimeout(deferredTask, 0)`),
+   * better choice will be the {@link asap} scheduler.
+   *
+   * @example <caption>Use async scheduler to delay task</caption>
+   * const task = () => console.log('it works!');
+   *
+   * Rx.Scheduler.async.schedule(task, 2000);
+   *
+   * // After 2 seconds logs:
+   * // "it works!"
+   *
+   *
+   * @example <caption>Use async scheduler to repeat task in intervals</caption>
+   * function task(state) {
+   *   console.log(state);
+   *   this.schedule(state + 1, 1000); // `this` references currently executing Action,
+   *                                   // which we reschedule with new state and delay
+   * }
+   *
+   * Rx.Scheduler.async.schedule(task, 3000, 0);
+   *
+   * // Logs:
+   * // 0 after 3s
+   * // 1 after 4s
+   * // 2 after 5s
+   * // 3 after 6s
+   *
+   * @static true
+   * @name async
+   * @owner Scheduler
+   */
   exports.async = new AsyncScheduler_1.AsyncScheduler(AsyncAction_1.AsyncAction);
   
-
-  return module.exports;
 });
-$__System.registerDynamic("168", ["163"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16c", ["167"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43107,7 +43150,7 @@ $__System.registerDynamic("168", ["163"], true, function ($__require, exports, m
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncAction_1 = $__require("163");
+    var AsyncAction_1 = $__require("167");
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -43152,14 +43195,11 @@ $__System.registerDynamic("168", ["163"], true, function ($__require, exports, m
     }(AsyncAction_1.AsyncAction);
     exports.QueueAction = QueueAction;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("169", ["164"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16d", ["168"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43168,7 +43208,7 @@ $__System.registerDynamic("169", ["164"], true, function ($__require, exports, m
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncScheduler_1 = $__require("164");
+    var AsyncScheduler_1 = $__require("168");
     var QueueScheduler = function (_super) {
         __extends(QueueScheduler, _super);
         function QueueScheduler() {
@@ -43178,27 +43218,82 @@ $__System.registerDynamic("169", ["164"], true, function ($__require, exports, m
     }(AsyncScheduler_1.AsyncScheduler);
     exports.QueueScheduler = QueueScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('159', ['168', '169'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15d', ['16c', '16d'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
-  var QueueAction_1 = $__require('168');
-  var QueueScheduler_1 = $__require('169');
+  var QueueAction_1 = $__require('16c');
+  var QueueScheduler_1 = $__require('16d');
+  /**
+   *
+   * Queue Scheduler
+   *
+   * <span class="informal">Put every next task on a queue, instead of executing it immediately</span>
+   *
+   * `queue` scheduler, when used with delay, behaves the same as {@link async} scheduler.
+   *
+   * When used without delay, it schedules given task synchronously - executes it right when
+   * it is scheduled. However when called recursively, that is when inside the scheduled task,
+   * another task is scheduled with queue scheduler, instead of executing immediately as well,
+   * that task will be put on a queue and wait for current one to finish.
+   *
+   * This means that when you execute task with `queue` scheduler, you are sure it will end
+   * before any other task scheduled with that scheduler will start.
+   *
+   * @examples <caption>Schedule recursively first, then do something</caption>
+   *
+   * Rx.Scheduler.queue.schedule(() => {
+   *   Rx.Scheduler.queue.schedule(() => console.log('second')); // will not happen now, but will be put on a queue
+   *
+   *   console.log('first');
+   * });
+   *
+   * // Logs:
+   * // "first"
+   * // "second"
+   *
+   *
+   * @example <caption>Reschedule itself recursively</caption>
+   *
+   * Rx.Scheduler.queue.schedule(function(state) {
+   *   if (state !== 0) {
+   *     console.log('before', state);
+   *     this.schedule(state - 1); // `this` references currently executing Action,
+   *                               // which we reschedule with new state
+   *     console.log('after', state);
+   *   }
+   * }, 0, 3);
+   *
+   * // In scheduler that runs recursively, you would expect:
+   * // "before", 3
+   * // "before", 2
+   * // "before", 1
+   * // "after", 1
+   * // "after", 2
+   * // "after", 3
+   *
+   * // But with queue it logs:
+   * // "before", 3
+   * // "after", 3
+   * // "before", 2
+   * // "after", 2
+   * // "before", 1
+   * // "after", 1
+   *
+   *
+   * @static true
+   * @name queue
+   * @owner Scheduler
+   */
   exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
   
-
-  return module.exports;
 });
-$__System.registerDynamic("16a", ["52"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16e", ["52"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43247,14 +43342,11 @@ $__System.registerDynamic("16a", ["52"], true, function ($__require, exports, mo
     }(Subscription_1.Subscription);
     exports.Action = Action;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('163', ['87', '16a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('167', ['87', '16e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43264,7 +43356,7 @@ $__System.registerDynamic('163', ['87', '16a'], true, function ($__require, expo
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var root_1 = $__require('87');
-    var Action_1 = $__require('16a');
+    var Action_1 = $__require('16e');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -43332,11 +43424,11 @@ $__System.registerDynamic('163', ['87', '16a'], true, function ($__require, expo
                 delay = 0;
             }
             // If this action is rescheduled with the same delay time, don't clear the interval id.
-            if (delay !== null && this.delay === delay) {
+            if (delay !== null && this.delay === delay && this.pending === false) {
                 return id;
             }
             // Otherwise, if the action's delay time is different from the current delay,
-            // clear the interval id
+            // or the action has been rescheduled before it's executed, clear the interval id
             return root_1.root.clearInterval(id) && undefined || undefined;
         };
         /**
@@ -43403,14 +43495,11 @@ $__System.registerDynamic('163', ['87', '16a'], true, function ($__require, expo
     }(Action_1.Action);
     exports.AsyncAction = AsyncAction;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("16b", ["87"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16f", ["87"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require("87");
     var RequestAnimationFrameDefinition = function () {
@@ -43442,14 +43531,11 @@ $__System.registerDynamic("16b", ["87"], true, function ($__require, exports, mo
     exports.RequestAnimationFrameDefinition = RequestAnimationFrameDefinition;
     exports.AnimationFrame = new RequestAnimationFrameDefinition(root_1.root);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('16c', ['163', '16b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('170', ['167', '16f'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43458,8 +43544,8 @@ $__System.registerDynamic('16c', ['163', '16b'], true, function ($__require, exp
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncAction_1 = $__require('163');
-    var AnimationFrame_1 = $__require('16b');
+    var AsyncAction_1 = $__require('167');
+    var AnimationFrame_1 = $__require('16f');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @ignore
@@ -43511,10 +43597,8 @@ $__System.registerDynamic('16c', ['163', '16b'], true, function ($__require, exp
     }(AsyncAction_1.AsyncAction);
     exports.AnimationFrameAction = AnimationFrameAction;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("16d", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("171", [], true, function ($__require, exports, module) {
     "use strict";
     /**
      * An execution context and a data structure to order tasks and schedule their
@@ -43533,8 +43617,7 @@ $__System.registerDynamic("16d", [], true, function ($__require, exports, module
      * @class Scheduler
      */
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var Scheduler = function () {
         function Scheduler(SchedulerAction, now) {
@@ -43574,14 +43657,11 @@ $__System.registerDynamic("16d", [], true, function ($__require, exports, module
     }();
     exports.Scheduler = Scheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("164", ["16d"], true, function ($__require, exports, module) {
+$__System.registerDynamic("168", ["171"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43590,7 +43670,7 @@ $__System.registerDynamic("164", ["16d"], true, function ($__require, exports, m
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var Scheduler_1 = $__require("16d");
+    var Scheduler_1 = $__require("171");
     var AsyncScheduler = function (_super) {
         __extends(AsyncScheduler, _super);
         function AsyncScheduler() {
@@ -43635,14 +43715,11 @@ $__System.registerDynamic("164", ["16d"], true, function ($__require, exports, m
     }(Scheduler_1.Scheduler);
     exports.AsyncScheduler = AsyncScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("16e", ["164"], true, function ($__require, exports, module) {
+$__System.registerDynamic("172", ["168"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43651,7 +43728,7 @@ $__System.registerDynamic("16e", ["164"], true, function ($__require, exports, m
         }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var AsyncScheduler_1 = $__require("164");
+    var AsyncScheduler_1 = $__require("168");
     var AnimationFrameScheduler = function (_super) {
         __extends(AnimationFrameScheduler, _super);
         function AnimationFrameScheduler() {
@@ -43682,31 +43759,55 @@ $__System.registerDynamic("16e", ["164"], true, function ($__require, exports, m
     }(AsyncScheduler_1.AsyncScheduler);
     exports.AnimationFrameScheduler = AnimationFrameScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('16f', ['16c', '16e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('173', ['170', '172'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
-  var AnimationFrameAction_1 = $__require('16c');
-  var AnimationFrameScheduler_1 = $__require('16e');
+  var AnimationFrameAction_1 = $__require('170');
+  var AnimationFrameScheduler_1 = $__require('172');
+  /**
+   *
+   * Animation Frame Scheduler
+   *
+   * <span class="informal">Perform task when `window.requestAnimationFrame` would fire</span>
+   *
+   * When `animationFrame` scheduler is used with delay, it will fall back to {@link async} scheduler
+   * behaviour.
+   *
+   * Without delay, `animationFrame` scheduler can be used to create smooth browser animations.
+   * It makes sure scheduled task will happen just before next browser content repaint,
+   * thus performing animations as efficiently as possible.
+   *
+   * @example <caption>Schedule div height animation</caption>
+   * const div = document.querySelector('.some-div');
+   *
+   * Rx.Scheduler.schedule(function(height) {
+   *   div.style.height = height + "px";
+   *
+   *   this.schedule(height + 1);  // `this` references currently executing Action,
+   *                               // which we reschedule with new state
+   * }, 0, 0);
+   *
+   * // You will see .some-div element growing in height
+   *
+   *
+   * @static true
+   * @name animationFrame
+   * @owner Scheduler
+   */
   exports.animationFrame = new AnimationFrameScheduler_1.AnimationFrameScheduler(AnimationFrameAction_1.AnimationFrameAction);
   
-
-  return module.exports;
 });
-$__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a', '4d', '4e', '54', '57', '58', '5a', '5d', '62', '65', '66', '6b', '6c', '6e', '72', '75', '78', '7b', '7f', '82', '85', '8c', '8e', '90', '92', '94', '96', '171', '98', '99', '9a', '9b', '9d', 'a1', 'a3', 'a5', 'a7', 'a9', 'ab', 'ae', 'b0', 'b3', 'b4', 'b7', '172', 'b9', 'bb', 'bd', 'c0', 'c1', 'c4', 'c5', 'c8', 'c9', 'cf', 'd1', 'd3', 'd5', 'd7', 'd8', 'db', 'dc', '173', 'df', 'e1', 'e4', 'e6', 'e7', 'e8', 'ea', 'ec', 'ee', 'ef', 'f1', 'f4', 'f6', 'f9', 'fc', 'fe', '101', '103', '105', '106', '107', '109', '10b', '10d', '10f', '111', '113', '115', '117', '11a', '11d', '11f', '121', '123', '126', '12a', '12c', '12e', '130', '132', '134', '136', '138', '13a', '13c', '13d', '141', '143', '144', '147', '148', '14a', '14c', '14e', '150', '152', '154', '155', '158', '52', '89', '34', '8a', '100', '118', 'ad', '11c', 'bf', '15a', '140', '174', '13e', '145', '161', '162', '84', '128', '60', '159', '16f', '175', '156', '176'], true, function ($__require, exports, module) {
+$__System.registerDynamic('174', ['10', '15', '36', '39', '3f', '42', '47', '4a', '4d', '4e', '54', '57', '58', '5a', '5d', '62', '65', '66', '6b', '6c', '6e', '72', '75', '78', '7b', '7f', '82', '85', '8c', '8e', '90', '92', '94', '96', '175', '98', '99', '9a', '9b', '9d', 'a1', 'a3', 'a5', 'a7', 'a9', 'ab', 'ae', 'b0', 'b3', 'b4', 'b7', '176', 'b9', 'bb', 'bd', 'c0', 'c1', 'c4', 'c5', 'c8', 'c9', 'cf', 'd1', 'd3', 'd5', 'd7', 'd8', 'db', 'dc', '177', 'df', 'e1', 'e4', 'e6', 'e7', 'e8', 'ea', 'ec', 'ee', 'ef', 'f1', 'f4', 'f6', 'f9', 'fc', 'fe', '101', '103', '105', '106', '107', '109', '10b', '10d', '10f', '111', '113', '115', '117', '119', '11c', '11f', '121', '123', '125', '127', '12a', '12e', '130', '132', '134', '136', '138', '13a', '13c', '13d', '140', '141', '145', '147', '148', '14b', '14c', '14e', '150', '152', '154', '156', '158', '159', '15c', '52', '89', '34', '8a', '100', '11a', 'ad', '11e', 'bf', '15e', '144', '178', '142', '149', '165', '166', '84', '12c', '60', '15d', '173', '179', '15a', '17a'], true, function ($__require, exports, module) {
   "use strict";
   /* tslint:disable:no-unused-variable */
   // Subject imported before Observable to bypass circular dependency issue since
   // Subject extends Observable and Observable references Subject in it's
   // definition
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Subject_1 = $__require('10');
   exports.Subject = Subject_1.Subject;
@@ -43750,7 +43851,7 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   $__require('92');
   $__require('94');
   $__require('96');
-  $__require('171');
+  $__require('175');
   $__require('98');
   $__require('99');
   $__require('9a');
@@ -43767,7 +43868,7 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   $__require('b3');
   $__require('b4');
   $__require('b7');
-  $__require('172');
+  $__require('176');
   $__require('b9');
   $__require('bb');
   $__require('bd');
@@ -43785,7 +43886,7 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   $__require('d8');
   $__require('db');
   $__require('dc');
-  $__require('173');
+  $__require('177');
   $__require('df');
   $__require('e1');
   $__require('e4');
@@ -43815,14 +43916,14 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   $__require('113');
   $__require('115');
   $__require('117');
-  $__require('11a');
-  $__require('11d');
+  $__require('119');
+  $__require('11c');
   $__require('11f');
   $__require('121');
   $__require('123');
-  $__require('126');
+  $__require('125');
+  $__require('127');
   $__require('12a');
-  $__require('12c');
   $__require('12e');
   $__require('130');
   $__require('132');
@@ -43832,19 +43933,21 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   $__require('13a');
   $__require('13c');
   $__require('13d');
+  $__require('140');
   $__require('141');
-  $__require('143');
-  $__require('144');
+  $__require('145');
   $__require('147');
   $__require('148');
-  $__require('14a');
+  $__require('14b');
   $__require('14c');
   $__require('14e');
   $__require('150');
   $__require('152');
   $__require('154');
-  $__require('155');
+  $__require('156');
   $__require('158');
+  $__require('159');
+  $__require('15c');
   /* tslint:disable:no-unused-variable */
   var Subscription_1 = $__require('52');
   exports.Subscription = Subscription_1.Subscription;
@@ -43856,39 +43959,39 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
   exports.ReplaySubject = ReplaySubject_1.ReplaySubject;
   var BehaviorSubject_1 = $__require('100');
   exports.BehaviorSubject = BehaviorSubject_1.BehaviorSubject;
-  var ConnectableObservable_1 = $__require('118');
+  var ConnectableObservable_1 = $__require('11a');
   exports.ConnectableObservable = ConnectableObservable_1.ConnectableObservable;
   var Notification_1 = $__require('ad');
   exports.Notification = Notification_1.Notification;
-  var EmptyError_1 = $__require('11c');
+  var EmptyError_1 = $__require('11e');
   exports.EmptyError = EmptyError_1.EmptyError;
   var ArgumentOutOfRangeError_1 = $__require('bf');
   exports.ArgumentOutOfRangeError = ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
-  var ObjectUnsubscribedError_1 = $__require('15a');
+  var ObjectUnsubscribedError_1 = $__require('15e');
   exports.ObjectUnsubscribedError = ObjectUnsubscribedError_1.ObjectUnsubscribedError;
-  var TimeoutError_1 = $__require('140');
+  var TimeoutError_1 = $__require('144');
   exports.TimeoutError = TimeoutError_1.TimeoutError;
-  var UnsubscriptionError_1 = $__require('174');
+  var UnsubscriptionError_1 = $__require('178');
   exports.UnsubscriptionError = UnsubscriptionError_1.UnsubscriptionError;
-  var timeInterval_1 = $__require('13e');
+  var timeInterval_1 = $__require('142');
   exports.TimeInterval = timeInterval_1.TimeInterval;
-  var timestamp_1 = $__require('145');
+  var timestamp_1 = $__require('149');
   exports.Timestamp = timestamp_1.Timestamp;
-  var TestScheduler_1 = $__require('161');
+  var TestScheduler_1 = $__require('165');
   exports.TestScheduler = TestScheduler_1.TestScheduler;
-  var VirtualTimeScheduler_1 = $__require('162');
+  var VirtualTimeScheduler_1 = $__require('166');
   exports.VirtualTimeScheduler = VirtualTimeScheduler_1.VirtualTimeScheduler;
   var AjaxObservable_1 = $__require('84');
   exports.AjaxResponse = AjaxObservable_1.AjaxResponse;
   exports.AjaxError = AjaxObservable_1.AjaxError;
   exports.AjaxTimeoutError = AjaxObservable_1.AjaxTimeoutError;
-  var asap_1 = $__require('128');
+  var asap_1 = $__require('12c');
   var async_1 = $__require('60');
-  var queue_1 = $__require('159');
-  var animationFrame_1 = $__require('16f');
-  var rxSubscriber_1 = $__require('175');
-  var iterator_1 = $__require('156');
-  var observable_1 = $__require('176');
+  var queue_1 = $__require('15d');
+  var animationFrame_1 = $__require('173');
+  var rxSubscriber_1 = $__require('179');
+  var iterator_1 = $__require('15a');
+  var observable_1 = $__require('17a');
   /* tslint:enable:no-unused-variable */
   /**
    * @typedef {Object} Rx.Scheduler
@@ -43924,16 +44027,14 @@ $__System.registerDynamic('170', ['10', '15', '36', '39', '3f', '42', '47', '4a'
    * to retrieve an iterator from an object.
    */
   var Symbol = {
-    rxSubscriber: rxSubscriber_1.$$rxSubscriber,
-    observable: observable_1.$$observable,
-    iterator: iterator_1.$$iterator
+    rxSubscriber: rxSubscriber_1.rxSubscriber,
+    observable: observable_1.observable,
+    iterator: iterator_1.iterator
   };
   exports.Symbol = Symbol;
   
-
-  return module.exports;
 });
-$__System.register("2b", ["a", "170", "2d", "1a", "19"], function (exports_1, context_1) {
+$__System.register("2b", ["a", "174", "2d", "1a", "19"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -44308,24 +44409,20 @@ $__System.register("30", ["a"], function (exports_1, context_1) {
     };
 });
 
-$__System.registerDynamic('173', ['15', 'fb'], true, function ($__require, exports, module) {
+$__System.registerDynamic('177', ['15', 'fb'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
   var map_1 = $__require('fb');
   Observable_1.Observable.prototype.map = map_1.map;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("177", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("17b", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -44335,13 +44432,13 @@ $__System.registerDynamic("177", ["89"], true, function ($__require, exports, mo
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require("89");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Perform a side effect for every emission on the source Observable, but return
      * an Observable that is identical to the source.
      *
      * <span class="informal">Intercepts each emission on the source and runs a
-     * function, but returns an output which is identical to the source.</span>
+     * function, but returns an output which is identical to the source as long as errors don't occur.</span>
      *
      * <img src="./img/do.png" width="100%">
      *
@@ -44438,38 +44535,30 @@ $__System.registerDynamic("177", ["89"], true, function ($__require, exports, mo
         return DoSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('172', ['15', '177'], true, function ($__require, exports, module) {
+$__System.registerDynamic('176', ['15', '17b'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var do_1 = $__require('177');
+  var do_1 = $__require('17b');
   Observable_1.Observable.prototype.do = do_1._do;
   Observable_1.Observable.prototype._do = do_1._do;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('171', ['15', '178'], true, function ($__require, exports, module) {
+$__System.registerDynamic('175', ['15', '17c'], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var Observable_1 = $__require('15');
-  var catch_1 = $__require('178');
+  var catch_1 = $__require('17c');
   Observable_1.Observable.prototype.catch = catch_1._catch;
   Observable_1.Observable.prototype._catch = catch_1._catch;
   
-
-  return module.exports;
 });
-$__System.register("19", ["a", "179", "15", "10", "100", "173", "172", "171", "26", "1a"], function (exports_1, context_1) {
+$__System.register("19", ["a", "17d", "15", "10", "100", "177", "176", "175", "26", "1a"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -44648,7 +44737,7 @@ $__System.register("19", ["a", "179", "15", "10", "100", "173", "172", "171", "2
 (function() {
 var define = $__System.amdDefine;
 (function(global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Observable'), require('@angular/platform-browser')) : typeof define === 'function' && define.amd ? define("179", ["exports", "a", "15", "c"], factory) : (factory((global.ng = global.ng || {}, global.ng.http = global.ng.http || {}), global.ng.core, global.Rx, global.ng.platformBrowser));
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Observable'), require('@angular/platform-browser')) : typeof define === 'function' && define.amd ? define("17d", ["exports", "a", "15", "c"], factory) : (factory((global.ng = global.ng || {}, global.ng.http = global.ng.http || {}), global.ng.core, global.Rx, global.ng.platformBrowser));
 }(this, function(exports, _angular_core, rxjs_Observable, _angular_platformBrowser) {
   'use strict';
   var BrowserXhr = (function() {
@@ -45756,7 +45845,7 @@ var define = $__System.amdDefine;
     };
     return JsonpModule;
   }());
-  var VERSION = new _angular_core.Version('2.4.4');
+  var VERSION = new _angular_core.Version('2.4.10');
   exports.BrowserXhr = BrowserXhr;
   exports.JSONPBackend = JSONPBackend;
   exports.JSONPConnection = JSONPConnection;
@@ -45787,7 +45876,7 @@ var define = $__System.amdDefine;
 }));
 
 })();
-$__System.register("2d", ["a", "179", "1a", "2f", "15"], function (exports_1, context_1) {
+$__System.register("2d", ["a", "17d", "1a", "2f", "15"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -45967,11 +46056,10 @@ $__System.register("1a", ["a", "25", "26"], function (exports_1, context_1) {
     };
 });
 
-$__System.registerDynamic('100', ['10', '15a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('100', ['10', '15e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -45981,7 +46069,7 @@ $__System.registerDynamic('100', ['10', '15a'], true, function ($__require, expo
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subject_1 = $__require('10');
-    var ObjectUnsubscribedError_1 = $__require('15a');
+    var ObjectUnsubscribedError_1 = $__require('15e');
     /**
      * @class BehaviorSubject<T>
      */
@@ -46021,14 +46109,11 @@ $__System.registerDynamic('100', ['10', '15a'], true, function ($__require, expo
     }(Subject_1.Subject);
     exports.BehaviorSubject = BehaviorSubject;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17e', ['87', '15', '15a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46039,7 +46124,7 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
     };
     var root_1 = $__require('87');
     var Observable_1 = $__require('15');
-    var iterator_1 = $__require('156');
+    var iterator_1 = $__require('15a');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @extends {Ignored}
@@ -46124,7 +46209,7 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
             this.idx = idx;
             this.len = len;
         }
-        StringIterator.prototype[iterator_1.$$iterator] = function () {
+        StringIterator.prototype[iterator_1.iterator] = function () {
             return this;
         };
         StringIterator.prototype.next = function () {
@@ -46150,7 +46235,7 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
             this.idx = idx;
             this.len = len;
         }
-        ArrayIterator.prototype[iterator_1.$$iterator] = function () {
+        ArrayIterator.prototype[iterator_1.iterator] = function () {
             return this;
         };
         ArrayIterator.prototype.next = function () {
@@ -46165,7 +46250,7 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
         return ArrayIterator;
     }();
     function getIterator(obj) {
-        var i = obj[iterator_1.$$iterator];
+        var i = obj[iterator_1.iterator];
         if (!i && typeof obj === 'string') {
             return new StringIterator(obj);
         }
@@ -46175,7 +46260,7 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
         if (!i) {
             throw new TypeError('object is not iterable');
         }
-        return obj[iterator_1.$$iterator]();
+        return obj[iterator_1.iterator]();
     }
     var maxSafeInteger = Math.pow(2, 53) - 1;
     function toLength(o) {
@@ -46209,14 +46294,11 @@ $__System.registerDynamic('17a', ['87', '15', '156'], true, function ($__require
         return valueAsNumber < 0 ? -1 : 1;
     }
     
-
-    return module.exports;
 });
-$__System.registerDynamic('17b', ['15', '125', '49'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17f', ['15', '129', '49'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46226,7 +46308,7 @@ $__System.registerDynamic('17b', ['15', '125', '49'], true, function ($__require
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Observable_1 = $__require('15');
-    var ScalarObservable_1 = $__require('125');
+    var ScalarObservable_1 = $__require('129');
     var EmptyObservable_1 = $__require('49');
     /**
      * We need this JSDoc comment for affecting ESDoc.
@@ -46291,14 +46373,11 @@ $__System.registerDynamic('17b', ['15', '125', '49'], true, function ($__require
     }(Observable_1.Observable);
     exports.ArrayLikeObservable = ArrayLikeObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('ad', ['15'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var Observable_1 = $__require('15');
     /**
@@ -46425,14 +46504,11 @@ $__System.registerDynamic('ad', ['15'], true, function ($__require, exports, mod
     }();
     exports.Notification = Notification;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('f2', ['89', 'ad'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46444,11 +46520,48 @@ $__System.registerDynamic('f2', ['89', 'ad'], true, function ($__require, export
     var Subscriber_1 = $__require('89');
     var Notification_1 = $__require('ad');
     /**
-     * @see {@link Notification}
      *
-     * @param scheduler
-     * @param delay
-     * @return {Observable<R>|WebSocketSubject<T>|Observable<T>}
+     * Re-emits all notifications from source Observable with specified scheduler.
+     *
+     * <span class="informal">Ensure a specific scheduler is used, from outside of an Observable.</span>
+     *
+     * `observeOn` is an operator that accepts a scheduler as a first parameter, which will be used to reschedule
+     * notifications emitted by the source Observable. It might be useful, if you do not have control over
+     * internal scheduler of a given Observable, but want to control when its values are emitted nevertheless.
+     *
+     * Returned Observable emits the same notifications (nexted values, complete and error events) as the source Observable,
+     * but rescheduled with provided scheduler. Note that this doesn't mean that source Observables internal
+     * scheduler will be replaced in any way. Original scheduler still will be used, but when the source Observable emits
+     * notification, it will be immediately scheduled again - this time with scheduler passed to `observeOn`.
+     * An anti-pattern would be calling `observeOn` on Observable that emits lots of values synchronously, to split
+     * that emissions into asynchronous chunks. For this to happen, scheduler would have to be passed into the source
+     * Observable directly (usually into the operator that creates it). `observeOn` simply delays notifications a
+     * little bit more, to ensure that they are emitted at expected moments.
+     *
+     * As a matter of fact, `observeOn` accepts second parameter, which specifies in milliseconds with what delay notifications
+     * will be emitted. The main difference between {@link delay} operator and `observeOn` is that `observeOn`
+     * will delay all notifications - including error notifications - while `delay` will pass through error
+     * from source Observable immediately when it is emitted. In general it is highly recommended to use `delay` operator
+     * for any kind of delaying of values in the stream, while using `observeOn` to specify which scheduler should be used
+     * for notification emissions in general.
+     *
+     * @example <caption>Ensure values in subscribe are called just before browser repaint.</caption>
+     * const intervals = Rx.Observable.interval(10); // Intervals are scheduled
+     *                                               // with async scheduler by default...
+     *
+     * intervals
+     * .observeOn(Rx.Scheduler.animationFrame)       // ...but we will observe on animationFrame
+     * .subscribe(val => {                           // scheduler to ensure smooth animation.
+     *   someDiv.style.height = val + 'px';
+     * });
+     *
+     * @see {@link delay}
+     *
+     * @param {IScheduler} scheduler Scheduler that will be used to reschedule notifications from source Observable.
+     * @param {number} [delay] Number of milliseconds that states with what delay every notification should be rescheduled.
+     * @return {Observable<T>} Observable that emits the same notifications as the source Observable,
+     * but with provided scheduler.
+     *
      * @method observeOn
      * @owner Observable
      */
@@ -46490,16 +46603,12 @@ $__System.registerDynamic('f2', ['89', 'ad'], true, function ($__require, export
         }
         ObserveOnSubscriber.dispatch = function (arg) {
             var notification = arg.notification,
-                destination = arg.destination,
-                subscription = arg.subscription;
+                destination = arg.destination;
             notification.observe(destination);
-            if (subscription) {
-                subscription.unsubscribe();
-            }
+            this.unsubscribe();
         };
         ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
-            var message = new ObserveOnMessage(notification, this.destination);
-            message.subscription = this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, message));
+            this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
         };
         ObserveOnSubscriber.prototype._next = function (value) {
             this.scheduleMessage(Notification_1.Notification.createNext(value));
@@ -46522,14 +46631,11 @@ $__System.registerDynamic('f2', ['89', 'ad'], true, function ($__require, export
     }();
     exports.ObserveOnMessage = ObserveOnMessage;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('f3', ['3c', '17c', '17d', '17a', '3d', '17b', '156', '15', 'f2', '176'], true, function ($__require, exports, module) {
+$__System.registerDynamic('f3', ['3c', '180', '181', '182', '17e', '3d', '17f', '15a', '15', 'f2', '17a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46539,18 +46645,16 @@ $__System.registerDynamic('f3', ['3c', '17c', '17d', '17a', '3d', '17b', '156', 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var isArray_1 = $__require('3c');
-    var isPromise_1 = $__require('17c');
-    var PromiseObservable_1 = $__require('17d');
-    var IteratorObservable_1 = $__require('17a');
+    var isArrayLike_1 = $__require('180');
+    var isPromise_1 = $__require('181');
+    var PromiseObservable_1 = $__require('182');
+    var IteratorObservable_1 = $__require('17e');
     var ArrayObservable_1 = $__require('3d');
-    var ArrayLikeObservable_1 = $__require('17b');
-    var iterator_1 = $__require('156');
+    var ArrayLikeObservable_1 = $__require('17f');
+    var iterator_1 = $__require('15a');
     var Observable_1 = $__require('15');
     var observeOn_1 = $__require('f2');
-    var observable_1 = $__require('176');
-    var isArrayLike = function (x) {
-        return x && typeof x.length === 'number';
-    };
+    var observable_1 = $__require('17a');
     /**
      * We need this JSDoc comment for affecting ESDoc.
      * @extends {Ignored}
@@ -46621,7 +46725,7 @@ $__System.registerDynamic('f3', ['3c', '17c', '17d', '17a', '3d', '17b', '156', 
          */
         FromObservable.create = function (ish, scheduler) {
             if (ish != null) {
-                if (typeof ish[observable_1.$$observable] === 'function') {
+                if (typeof ish[observable_1.observable] === 'function') {
                     if (ish instanceof Observable_1.Observable && !scheduler) {
                         return ish;
                     }
@@ -46630,9 +46734,9 @@ $__System.registerDynamic('f3', ['3c', '17c', '17d', '17a', '3d', '17b', '156', 
                     return new ArrayObservable_1.ArrayObservable(ish, scheduler);
                 } else if (isPromise_1.isPromise(ish)) {
                     return new PromiseObservable_1.PromiseObservable(ish, scheduler);
-                } else if (typeof ish[iterator_1.$$iterator] === 'function' || typeof ish === 'string') {
+                } else if (typeof ish[iterator_1.iterator] === 'function' || typeof ish === 'string') {
                     return new IteratorObservable_1.IteratorObservable(ish, scheduler);
-                } else if (isArrayLike(ish)) {
+                } else if (isArrayLike_1.isArrayLike(ish)) {
                     return new ArrayLikeObservable_1.ArrayLikeObservable(ish, scheduler);
                 }
             }
@@ -46642,35 +46746,29 @@ $__System.registerDynamic('f3', ['3c', '17c', '17d', '17a', '3d', '17b', '156', 
             var ish = this.ish;
             var scheduler = this.scheduler;
             if (scheduler == null) {
-                return ish[observable_1.$$observable]().subscribe(subscriber);
+                return ish[observable_1.observable]().subscribe(subscriber);
             } else {
-                return ish[observable_1.$$observable]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
+                return ish[observable_1.observable]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
             }
         };
         return FromObservable;
     }(Observable_1.Observable);
     exports.FromObservable = FromObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("4f", ["f3"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var FromObservable_1 = $__require("f3");
   exports.from = FromObservable_1.FromObservable.create;
   
-
-  return module.exports;
 });
-$__System.registerDynamic("125", ["15"], true, function ($__require, exports, module) {
+$__System.registerDynamic("129", ["15"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46732,14 +46830,11 @@ $__System.registerDynamic("125", ["15"], true, function ($__require, exports, mo
     }(Observable_1.Observable);
     exports.ScalarObservable = ScalarObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("49", ["15"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46822,28 +46917,22 @@ $__System.registerDynamic("49", ["15"], true, function ($__require, exports, mod
     }(Observable_1.Observable);
     exports.EmptyObservable = EmptyObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("3b", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function isScheduler(value) {
         return value && typeof value.schedule === 'function';
     }
     exports.isScheduler = isScheduler;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('3d', ['15', '125', '49', '3b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('3d', ['15', '129', '49', '3b'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -46853,7 +46942,7 @@ $__System.registerDynamic('3d', ['15', '125', '49', '3b'], true, function ($__re
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Observable_1 = $__require('15');
-    var ScalarObservable_1 = $__require('125');
+    var ScalarObservable_1 = $__require('129');
     var EmptyObservable_1 = $__require('49');
     var isScheduler_1 = $__require('3b');
     /**
@@ -46967,29 +47056,23 @@ $__System.registerDynamic('3d', ['15', '125', '49', '3b'], true, function ($__re
     }(Observable_1.Observable);
     exports.ArrayObservable = ArrayObservable;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("6d", ["3d"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var ArrayObservable_1 = $__require("3d");
   exports.of = ArrayObservable_1.ArrayObservable.of;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("9e", ["e9"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var mergeMap_1 = $__require("e9");
-  /* tslint:disable:max-line-length */
+  /* tslint:enable:max-line-length */
   /**
    * Projects each source value to an Observable which is merged in the output
    * Observable, in a serialized fashion waiting for each one to complete before
@@ -47031,7 +47114,7 @@ $__System.registerDynamic("9e", ["e9"], true, function ($__require, exports, mod
    * @see {@link mergeMap}
    * @see {@link switchMap}
    *
-   * @param {function(value: T, ?index: number): Observable} project A function
+   * @param {function(value: T, ?index: number): ObservableInput} project A function
    * that, when applied to an item emitted by the source Observable, returns an
    * Observable.
    * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
@@ -47042,7 +47125,7 @@ $__System.registerDynamic("9e", ["e9"], true, function ($__require, exports, mod
    * - `innerValue`: the value that came from the projected Observable
    * - `outerIndex`: the "index" of the value that came from the source
    * - `innerIndex`: the "index" of the value from the projected Observable
-   * @return {Observable} an observable of values merged from the projected
+   * @return {Observable} An observable of values merged from the projected
    * Observables as they were subscribed to, one at a time. Optionally, these
    * values may have been projected from a passed `projectResult` argument.
    * @return {Observable} An Observable that emits the result of applying the
@@ -47057,14 +47140,11 @@ $__System.registerDynamic("9e", ["e9"], true, function ($__require, exports, mod
   }
   exports.concatMap = concatMap;
   
-
-  return module.exports;
 });
 $__System.registerDynamic("dd", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47082,9 +47162,9 @@ $__System.registerDynamic("dd", ["89"], true, function ($__require, exports, mod
      *     .every(x => x < 5)
      *     .subscribe(x => console.log(x)); // -> false
      *
-     * @param {function} predicate a function for determining if an item meets a specified condition.
-     * @param {any} [thisArg] optional object to use for `this` in the callback
-     * @return {Observable} an Observable of booleans that determines if all items of the source Observable meet the condition specified.
+     * @param {function} predicate A function for determining if an item meets a specified condition.
+     * @param {any} [thisArg] Optional object to use for `this` in the callback.
+     * @return {Observable} An Observable of booleans that determines if all items of the source Observable meet the condition specified.
      * @method every
      * @owner Observable
      */
@@ -47140,14 +47220,11 @@ $__System.registerDynamic("dd", ["89"], true, function ($__require, exports, mod
         return EverySubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('ca', ['89', '11c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('ca', ['89', '11e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47157,7 +47234,7 @@ $__System.registerDynamic('ca', ['89', '11c'], true, function ($__require, expor
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require('89');
-    var EmptyError_1 = $__require('11c');
+    var EmptyError_1 = $__require('11e');
     /**
      * Emits only the first value (or the first value that meets some condition)
      * emitted by the source Observable.
@@ -47202,7 +47279,7 @@ $__System.registerDynamic('ca', ['89', '11c'], true, function ($__require, expor
      * - `index`: the "index" of the value from the source.
      * @param {R} [defaultValue] The default value emitted in case no valid value
      * was found on the source.
-     * @return {Observable<T|R>} an Observable of the first item that matches the
+     * @return {Observable<T|R>} An Observable of the first item that matches the
      * condition.
      * @method first
      * @owner Observable
@@ -47298,14 +47375,11 @@ $__System.registerDynamic('ca', ['89', '11c'], true, function ($__require, expor
         return FirstSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('fb', ['89'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47329,7 +47403,7 @@ $__System.registerDynamic('fb', ['89'], true, function ($__require, exports, mod
      * applies a projection to each value and emits that projection in the output
      * Observable.
      *
-     * @example <caption>Map every every click to the clientX position of that click</caption>
+     * @example <caption>Map every click to the clientX position of that click</caption>
      * var clicks = Rx.Observable.fromEvent(document, 'click');
      * var positions = clicks.map(ev => ev.clientX);
      * positions.subscribe(x => console.log(x));
@@ -47394,14 +47468,11 @@ $__System.registerDynamic('fb', ['89'], true, function ($__require, exports, mod
         return MapSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic('e9', ['44', '45'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47412,7 +47483,7 @@ $__System.registerDynamic('e9', ['44', '45'], true, function ($__require, export
     };
     var subscribeToResult_1 = $__require('44');
     var OuterSubscriber_1 = $__require('45');
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Projects each source value to an Observable which is merged in the output
      * Observable.
@@ -47451,7 +47522,7 @@ $__System.registerDynamic('e9', ['44', '45'], true, function ($__require, export
      * @see {@link mergeScan}
      * @see {@link switchMap}
      *
-     * @param {function(value: T, ?index: number): Observable} project A function
+     * @param {function(value: T, ?index: number): ObservableInput} project A function
      * that, when applied to an item emitted by the source Observable, returns an
      * Observable.
      * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
@@ -47576,14 +47647,11 @@ $__System.registerDynamic('e9', ['44', '45'], true, function ($__require, export
     }(OuterSubscriber_1.OuterSubscriber);
     exports.MergeMapSubscriber = MergeMapSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47593,7 +47661,7 @@ $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, mod
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require("89");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Applies an accumulator function over the source Observable, and returns the
      * accumulated result when the source completes, given an optional seed value.
@@ -47630,10 +47698,9 @@ $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, mod
      * @see {@link mergeScan}
      * @see {@link scan}
      *
-     * @param {function(acc: R, value: T): R} accumulator The accumulator function
+     * @param {function(acc: R, value: T, index: number): R} accumulator The accumulator function
      * called on each source value.
      * @param {R} [seed] The initial accumulation value.
-     * @return {Observable<R>} An observable of the accumulated values.
      * @return {Observable<R>} An Observable that emits a single value that is the
      * result of accumulating the values emitted by the source Observable.
      * @method reduce
@@ -47678,8 +47745,12 @@ $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, mod
             _super.call(this, destination);
             this.accumulator = accumulator;
             this.hasSeed = hasSeed;
+            this.index = 0;
             this.hasValue = false;
             this.acc = seed;
+            if (!this.hasSeed) {
+                this.index++;
+            }
         }
         ReduceSubscriber.prototype._next = function (value) {
             if (this.hasValue || (this.hasValue = this.hasSeed)) {
@@ -47692,7 +47763,7 @@ $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, mod
         ReduceSubscriber.prototype._tryReduce = function (value) {
             var result;
             try {
-                result = this.accumulator(this.acc, value);
+                result = this.accumulator(this.acc, value, this.index++);
             } catch (err) {
                 this.destination.error(err);
                 return;
@@ -47709,14 +47780,11 @@ $__System.registerDynamic("e3", ["89"], true, function ($__require, exports, mod
     }(Subscriber_1.Subscriber);
     exports.ReduceSubscriber = ReduceSubscriber;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('178', ['45', '44'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17c', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47729,10 +47797,58 @@ $__System.registerDynamic('178', ['45', '44'], true, function ($__require, expor
     var subscribeToResult_1 = $__require('44');
     /**
      * Catches errors on the observable to be handled by returning a new observable or throwing an error.
+     *
+     * <img src="./img/catch.png" width="100%">
+     *
+     * @example <caption>Continues with a different Observable when there's an error</caption>
+     *
+     * Observable.of(1, 2, 3, 4, 5)
+     *   .map(n => {
+     * 	   if (n == 4) {
+     * 	     throw 'four!';
+     *     }
+     *	   return n;
+     *   })
+     *   .catch(err => Observable.of('I', 'II', 'III', 'IV', 'V'))
+     *   .subscribe(x => console.log(x));
+     *   // 1, 2, 3, I, II, III, IV, V
+     *
+     * @example <caption>Retries the caught source Observable again in case of error, similar to retry() operator</caption>
+     *
+     * Observable.of(1, 2, 3, 4, 5)
+     *   .map(n => {
+     * 	   if (n === 4) {
+     * 	     throw 'four!';
+     *     }
+     * 	   return n;
+     *   })
+     *   .catch((err, caught) => caught)
+     *   .take(30)
+     *   .subscribe(x => console.log(x));
+     *   // 1, 2, 3, 1, 2, 3, ...
+     *
+     * @example <caption>Throws a new error when the source Observable throws an error</caption>
+     *
+     * Observable.of(1, 2, 3, 4, 5)
+     *   .map(n => {
+     *     if (n == 4) {
+     *       throw 'four!';
+     *     }
+     *     return n;
+     *   })
+     *   .catch(err => {
+     *     throw 'error in source. Details: ' + err;
+     *   })
+     *   .subscribe(
+     *     x => console.log(x),
+     *     err => console.log(err)
+     *   );
+     *   // 1, 2, 3, error in source. Details: four!
+     *
      * @param {function} selector a function that takes as arguments `err`, which is the error, and `caught`, which
      *  is the source observable, in case you'd like to "retry" that observable by returning it again. Whatever observable
      *  is returned by the `selector` will be used to continue the observable chain.
-     * @return {Observable} an observable that originates from either the source or the observable returned by the
+     * @return {Observable} An observable that originates from either the source or the observable returned by the
      *  catch `selector` function.
      * @method catch
      * @name catch
@@ -47766,35 +47882,34 @@ $__System.registerDynamic('178', ['45', '44'], true, function ($__require, expor
             this.caught = caught;
         }
         // NOTE: overriding `error` instead of `_error` because we don't want
-        // to have this flag this subscriber as `isStopped`.
+        // to have this flag this subscriber as `isStopped`. We can mimic the
+        // behavior of the RetrySubscriber (from the `retry` operator), where
+        // we unsubscribe from our source chain, reset our Subscriber flags,
+        // then subscribe to the selector result.
         CatchSubscriber.prototype.error = function (err) {
             if (!this.isStopped) {
                 var result = void 0;
                 try {
                     result = this.selector(err, this.caught);
-                } catch (err) {
-                    this.destination.error(err);
+                } catch (err2) {
+                    _super.prototype.error.call(this, err2);
                     return;
                 }
-                this.unsubscribe();
-                this.destination.remove(this);
-                subscribeToResult_1.subscribeToResult(this, result);
+                this._unsubscribeAndRecycle();
+                this.add(subscribeToResult_1.subscribeToResult(this, result));
             }
         };
         return CatchSubscriber;
     }(OuterSubscriber_1.OuterSubscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("9c", ["e5"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var mergeAll_1 = $__require("e5");
-  /* tslint:disable:max-line-length */
+  /* tslint:enable:max-line-length */
   /**
    * Converts a higher-order Observable into a first-order Observable by
    * concatenating the inner Observables in order.
@@ -47848,14 +47963,11 @@ $__System.registerDynamic("9c", ["e5"], true, function ($__require, exports, mod
   }
   exports.concatAll = concatAll;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('17d', ['87', '15'], true, function ($__require, exports, module) {
+$__System.registerDynamic('182', ['87', '15'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -47896,7 +48008,7 @@ $__System.registerDynamic('17d', ['87', '15'], true, function ($__require, expor
          * @see {@link bindCallback}
          * @see {@link from}
          *
-         * @param {Promise<T>} promise The promise to be converted.
+         * @param {PromiseLike<T>} promise The promise to be converted.
          * @param {Scheduler} [scheduler] An optional IScheduler to use for scheduling
          * the delivery of the resolved value (or the rejection).
          * @return {Observable<T>} An Observable which wraps the Promise.
@@ -47980,26 +48092,20 @@ $__System.registerDynamic('17d', ['87', '15'], true, function ($__require, expor
         }
     }
     
-
-    return module.exports;
 });
-$__System.registerDynamic("16", ["17d"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16", ["182"], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
-  var PromiseObservable_1 = $__require("17d");
+  var PromiseObservable_1 = $__require("182");
   exports.fromPromise = PromiseObservable_1.PromiseObservable.create;
   
-
-  return module.exports;
 });
-$__System.registerDynamic('11c', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('11e', [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -48030,14 +48136,11 @@ $__System.registerDynamic('11c', [], true, function ($__require, exports, module
     }(Error);
     exports.EmptyError = EmptyError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('d9', ['89', '11c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('d9', ['89', '11e'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -48047,8 +48150,8 @@ $__System.registerDynamic('d9', ['89', '11c'], true, function ($__require, expor
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require('89');
-    var EmptyError_1 = $__require('11c');
-    /* tslint:disable:max-line-length */
+    var EmptyError_1 = $__require('11e');
+    /* tslint:enable:max-line-length */
     /**
      * Returns an Observable that emits only the last item emitted by the source Observable.
      * It optionally takes a predicate function as a parameter, in which case, rather than emitting
@@ -48059,8 +48162,8 @@ $__System.registerDynamic('d9', ['89', '11c'], true, function ($__require, expor
      *
      * @throws {EmptyError} Delivers an EmptyError to the Observer's `error`
      * callback if the Observable completes before any `next` notification was sent.
-     * @param {function} predicate - the condition any source emitted item has to satisfy.
-     * @return {Observable} an Observable that emits only the last item satisfying the given condition
+     * @param {function} predicate - The condition any source emitted item has to satisfy.
+     * @return {Observable} An Observable that emits only the last item satisfying the given condition
      * from the source, or an NoSuchElementException if no such items are emitted.
      * @throws - Throws if no items that match the predicate are emitted by the source Observable.
      * @method last
@@ -48155,14 +48258,11 @@ $__System.registerDynamic('d9', ['89', '11c'], true, function ($__require, expor
         return LastSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 $__System.registerDynamic("45", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -48195,28 +48295,32 @@ $__System.registerDynamic("45", ["89"], true, function ($__require, exports, mod
     }(Subscriber_1.Subscriber);
     exports.OuterSubscriber = OuterSubscriber;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('17c', [], true, function ($__require, exports, module) {
+$__System.registerDynamic("180", [], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  exports.isArrayLike = function (x) {
+    return x && typeof x.length === 'number';
+  };
+  
+});
+$__System.registerDynamic('181', [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function isPromise(value) {
         return value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
     }
     exports.isPromise = isPromise;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('156', ['87'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15a', ['87'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
     function symbolIteratorPonyfill(root) {
@@ -48248,16 +48352,17 @@ $__System.registerDynamic('156', ['87'], true, function ($__require, exports, mo
         }
     }
     exports.symbolIteratorPonyfill = symbolIteratorPonyfill;
-    exports.$$iterator = symbolIteratorPonyfill(root_1.root);
+    exports.iterator = symbolIteratorPonyfill(root_1.root);
+    /**
+     * @deprecated use iterator instead
+     */
+    exports.$$iterator = exports.iterator;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("17e", ["89"], true, function ($__require, exports, module) {
+$__System.registerDynamic("183", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -48296,23 +48401,20 @@ $__System.registerDynamic("17e", ["89"], true, function ($__require, exports, mo
     }(Subscriber_1.Subscriber);
     exports.InnerSubscriber = InnerSubscriber;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('44', ['87', '3c', '17c', '17f', '15', '156', '17e', '176'], true, function ($__require, exports, module) {
+$__System.registerDynamic('44', ['87', '180', '181', '184', '15', '15a', '183', '17a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
-    var isArray_1 = $__require('3c');
-    var isPromise_1 = $__require('17c');
-    var isObject_1 = $__require('17f');
+    var isArrayLike_1 = $__require('180');
+    var isPromise_1 = $__require('181');
+    var isObject_1 = $__require('184');
     var Observable_1 = $__require('15');
-    var iterator_1 = $__require('156');
-    var InnerSubscriber_1 = $__require('17e');
-    var observable_1 = $__require('176');
+    var iterator_1 = $__require('15a');
+    var InnerSubscriber_1 = $__require('183');
+    var observable_1 = $__require('17a');
     function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
         var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
         if (destination.closed) {
@@ -48326,7 +48428,7 @@ $__System.registerDynamic('44', ['87', '3c', '17c', '17f', '15', '156', '17e', '
             } else {
                 return result.subscribe(destination);
             }
-        } else if (isArray_1.isArray(result)) {
+        } else if (isArrayLike_1.isArrayLike(result)) {
             for (var i = 0, len = result.length; i < len && !destination.closed; i++) {
                 destination.next(result[i]);
             }
@@ -48348,8 +48450,8 @@ $__System.registerDynamic('44', ['87', '3c', '17c', '17f', '15', '156', '17e', '
                 });
             });
             return destination;
-        } else if (result && typeof result[iterator_1.$$iterator] === 'function') {
-            var iterator = result[iterator_1.$$iterator]();
+        } else if (result && typeof result[iterator_1.iterator] === 'function') {
+            var iterator = result[iterator_1.iterator]();
             do {
                 var item = iterator.next();
                 if (item.done) {
@@ -48361,8 +48463,8 @@ $__System.registerDynamic('44', ['87', '3c', '17c', '17f', '15', '156', '17e', '
                     break;
                 }
             } while (true);
-        } else if (result && typeof result[observable_1.$$observable] === 'function') {
-            var obs = result[observable_1.$$observable]();
+        } else if (result && typeof result[observable_1.observable] === 'function') {
+            var obs = result[observable_1.observable]();
             if (typeof obs.subscribe !== 'function') {
                 destination.error(new TypeError('Provided object does not correctly implement Symbol.observable'));
             } else {
@@ -48377,14 +48479,11 @@ $__System.registerDynamic('44', ['87', '3c', '17c', '17f', '15', '156', '17e', '
     }
     exports.subscribeToResult = subscribeToResult;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('e5', ['45', '44'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -48498,8 +48597,6 @@ $__System.registerDynamic('e5', ['45', '44'], true, function ($__require, export
     }(OuterSubscriber_1.OuterSubscriber);
     exports.MergeAllSubscriber = MergeAllSubscriber;
     
-
-    return module.exports;
 });
 (function() {
 var define = $__System.amdDefine;
@@ -48539,6 +48636,7 @@ var define = $__System.amdDefine;
     PlatformLocation.prototype.back = function() {};
     return PlatformLocation;
   }());
+  var LOCATION_INITIALIZED = new _angular_core.OpaqueToken('Location Initialized');
   var LocationStrategy = (function() {
     function LocationStrategy() {}
     LocationStrategy.prototype.path = function(includeHash) {};
@@ -48572,9 +48670,6 @@ var define = $__System.amdDefine;
   }
   function isBlank(obj) {
     return obj == null;
-  }
-  function isDate(obj) {
-    return obj instanceof Date && !isNaN(obj.valueOf());
   }
   function stringify(token) {
     if (typeof token === 'string') {
@@ -49903,6 +49998,7 @@ var define = $__System.amdDefine;
   }());
   var COMMON_DIRECTIVES = [NgClass, NgFor, NgIf, NgTemplateOutlet, NgStyle, NgSwitch, NgSwitchCase, NgSwitchDefault, NgPlural, NgPluralCase];
   var isPromise = _angular_core.__core_private__.isPromise;
+  var isObservable = _angular_core.__core_private__.isObservable;
   var __extends$4 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
@@ -50057,7 +50153,7 @@ var define = $__System.amdDefine;
       if (isPromise(obj)) {
         return _promiseStrategy;
       }
-      if (((obj)).subscribe) {
+      if (isObservable(obj)) {
         return _observableStrategy;
       }
       throw new InvalidPipeArgumentError(AsyncPipe, obj);
@@ -50261,6 +50357,7 @@ var define = $__System.amdDefine;
     };
     return DateFormatter;
   }());
+  var ISO8601_DATE_REGEX = /^(\d{4})-?(\d\d)-?(\d\d)(?:T(\d\d)(?::?(\d\d)(?::?(\d\d)(?:\.(\d+))?)?)?(Z|([+-])(\d\d):?(\d\d))?)?$/;
   var DatePipe = (function() {
     function DatePipe(_locale) {
       this._locale = _locale;
@@ -50270,7 +50367,7 @@ var define = $__System.amdDefine;
         pattern = 'mediumDate';
       }
       var date;
-      if (isBlank$1(value))
+      if (isBlank$1(value) || value !== value)
         return null;
       if (typeof value === 'string') {
         value = value.trim();
@@ -50291,7 +50388,12 @@ var define = $__System.amdDefine;
         date = new Date(value);
       }
       if (!isDate(date)) {
-        throw new InvalidPipeArgumentError(DatePipe, value);
+        var match = void 0;
+        if ((typeof value === 'string') && (match = value.match(ISO8601_DATE_REGEX))) {
+          date = isoStringToDate(match);
+        } else {
+          throw new InvalidPipeArgumentError(DatePipe, value);
+        }
       }
       return DateFormatter.format(date, this._locale, DatePipe._ALIASES[pattern] || pattern);
     };
@@ -50325,6 +50427,30 @@ var define = $__System.amdDefine;
   }());
   function isBlank$1(obj) {
     return obj == null || obj === '';
+  }
+  function isDate(obj) {
+    return obj instanceof Date && !isNaN(obj.valueOf());
+  }
+  function isoStringToDate(match) {
+    var date = new Date(0);
+    var tzHour = 0;
+    var tzMin = 0;
+    var dateSetter = match[8] ? date.setUTCFullYear : date.setFullYear;
+    var timeSetter = match[8] ? date.setUTCHours : date.setHours;
+    if (match[9]) {
+      tzHour = toInt(match[9] + match[10]);
+      tzMin = toInt(match[9] + match[11]);
+    }
+    dateSetter.call(date, toInt(match[1]), toInt(match[2]) - 1, toInt(match[3]));
+    var h = toInt(match[4] || '0') - tzHour;
+    var m = toInt(match[5] || '0') - tzMin;
+    var s = toInt(match[6] || '0');
+    var ms = Math.round(parseFloat('0.' + (match[7] || 0)) * 1000);
+    timeSetter.call(date, h, m, s, ms);
+    return date;
+  }
+  function toInt(str) {
+    return parseInt(str, 10);
   }
   var _INTERPOLATION_REGEXP = /#/g;
   var I18nPluralPipe = (function() {
@@ -50605,7 +50731,7 @@ var define = $__System.amdDefine;
     };
     return CommonModule;
   }());
-  var VERSION = new _angular_core.Version('2.4.4');
+  var VERSION = new _angular_core.Version('2.4.10');
   exports.NgLocalization = NgLocalization;
   exports.CommonModule = CommonModule;
   exports.NgClass = NgClass;
@@ -50632,6 +50758,7 @@ var define = $__System.amdDefine;
   exports.VERSION = VERSION;
   exports.Version = _angular_core.Version;
   exports.PlatformLocation = PlatformLocation;
+  exports.LOCATION_INITIALIZED = LOCATION_INITIALIZED;
   exports.LocationStrategy = LocationStrategy;
   exports.APP_BASE_HREF = APP_BASE_HREF;
   exports.HashLocationStrategy = HashLocationStrategy;
@@ -51955,24 +52082,22 @@ var define = $__System.amdDefine;
   };
   var SharedStylesHost = (function() {
     function SharedStylesHost() {
-      this._styles = [];
       this._stylesSet = new Set();
     }
     SharedStylesHost.prototype.addStyles = function(styles) {
       var _this = this;
-      var additions = [];
+      var additions = new Set();
       styles.forEach(function(style) {
         if (!_this._stylesSet.has(style)) {
           _this._stylesSet.add(style);
-          _this._styles.push(style);
-          additions.push(style);
+          additions.add(style);
         }
       });
       this.onStylesAdded(additions);
     };
     SharedStylesHost.prototype.onStylesAdded = function(additions) {};
     SharedStylesHost.prototype.getAllStyles = function() {
-      return this._styles;
+      return Array.from(this._stylesSet);
     };
     SharedStylesHost.decorators = [{type: core.Injectable}];
     SharedStylesHost.ctorParameters = function() {
@@ -51982,20 +52107,23 @@ var define = $__System.amdDefine;
   }());
   var DomSharedStylesHost = (function(_super) {
     __extends$4(DomSharedStylesHost, _super);
-    function DomSharedStylesHost(doc) {
+    function DomSharedStylesHost(_doc) {
       _super.call(this);
+      this._doc = _doc;
       this._hostNodes = new Set();
-      this._hostNodes.add(doc.head);
+      this._styleNodes = new Set();
+      this._hostNodes.add(_doc.head);
     }
     DomSharedStylesHost.prototype._addStylesToHost = function(styles, host) {
-      for (var i = 0; i < styles.length; i++) {
-        var styleEl = document.createElement('style');
-        styleEl.textContent = styles[i];
-        host.appendChild(styleEl);
-      }
+      var _this = this;
+      styles.forEach(function(style) {
+        var styleEl = _this._doc.createElement('style');
+        styleEl.textContent = style;
+        _this._styleNodes.add(host.appendChild(styleEl));
+      });
     };
     DomSharedStylesHost.prototype.addHost = function(hostNode) {
-      this._addStylesToHost(this._styles, hostNode);
+      this._addStylesToHost(this._stylesSet, hostNode);
       this._hostNodes.add(hostNode);
     };
     DomSharedStylesHost.prototype.removeHost = function(hostNode) {
@@ -52004,7 +52132,12 @@ var define = $__System.amdDefine;
     DomSharedStylesHost.prototype.onStylesAdded = function(additions) {
       var _this = this;
       this._hostNodes.forEach(function(hostNode) {
-        _this._addStylesToHost(additions, hostNode);
+        return _this._addStylesToHost(additions, hostNode);
+      });
+    };
+    DomSharedStylesHost.prototype.ngOnDestroy = function() {
+      this._styleNodes.forEach(function(styleNode) {
+        return getDOM().remove(styleNode);
       });
     };
     DomSharedStylesHost.decorators = [{type: core.Injectable}];
@@ -52149,7 +52282,6 @@ var define = $__System.amdDefine;
       var nodesParent;
       if (this.componentProto.encapsulation === core.ViewEncapsulation.Native) {
         nodesParent = ((hostElement)).createShadowRoot();
-        this._rootRenderer.sharedStylesHost.addHost(nodesParent);
         for (var i = 0; i < this._styles.length; i++) {
           var styleEl = document.createElement('style');
           styleEl.textContent = this._styles[i];
@@ -53176,7 +53308,7 @@ var define = $__System.amdDefine;
     BROWSER_SANITIZATION_PROVIDERS: BROWSER_SANITIZATION_PROVIDERS,
     WebAnimationsDriver: WebAnimationsDriver
   };
-  var VERSION = new core.Version('2.4.4');
+  var VERSION = new core.Version('2.4.10');
   exports.BrowserModule = BrowserModule;
   exports.platformBrowser = platformBrowser;
   exports.Title = Title;
@@ -53199,8 +53331,7 @@ var define = $__System.amdDefine;
 $__System.registerDynamic("c2", ["89"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -53210,7 +53341,7 @@ $__System.registerDynamic("c2", ["89"], true, function ($__require, exports, mod
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Subscriber_1 = $__require("89");
-    /* tslint:disable:max-line-length */
+    /* tslint:enable:max-line-length */
     /**
      * Filter items emitted by the source Observable by only emitting those that
      * satisfy a specified predicate.
@@ -53295,15 +53426,15 @@ $__System.registerDynamic("c2", ["89"], true, function ($__require, exports, mod
         return FilterSubscriber;
     }(Subscriber_1.Subscriber);
     
-
-    return module.exports;
 });
 (function() {
 var define = $__System.amdDefine;
 (function(global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('rxjs/BehaviorSubject'), require('rxjs/Subject'), require('rxjs/observable/from'), require('rxjs/observable/of'), require('rxjs/operator/concatMap'), require('rxjs/operator/every'), require('rxjs/operator/first'), require('rxjs/operator/map'), require('rxjs/operator/mergeMap'), require('rxjs/operator/reduce'), require('rxjs/Observable'), require('rxjs/operator/catch'), require('rxjs/operator/concatAll'), require('rxjs/util/EmptyError'), require('rxjs/observable/fromPromise'), require('rxjs/operator/last'), require('rxjs/operator/mergeAll'), require('@angular/platform-browser'), require('rxjs/operator/filter')) : typeof define === 'function' && define.amd ? define("25", ["exports", "e", "a", "100", "10", "4f", "6d", "9e", "dd", "ca", "fb", "e9", "e3", "15", "178", "9c", "11c", "16", "d9", "e5", "c", "c2"], factory) : (factory((global.ng = global.ng || {}, global.ng.router = global.ng.router || {}), global.ng.common, global.ng.core, global.Rx, global.Rx, global.Rx.Observable, global.Rx.Observable, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx, global.Rx.Observable, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.ng.platformBrowser, global.Rx.Observable.prototype));
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('rxjs/BehaviorSubject'), require('rxjs/Subject'), require('rxjs/observable/from'), require('rxjs/observable/of'), require('rxjs/operator/concatMap'), require('rxjs/operator/every'), require('rxjs/operator/first'), require('rxjs/operator/map'), require('rxjs/operator/mergeMap'), require('rxjs/operator/reduce'), require('rxjs/Observable'), require('rxjs/operator/catch'), require('rxjs/operator/concatAll'), require('rxjs/util/EmptyError'), require('rxjs/observable/fromPromise'), require('rxjs/operator/last'), require('rxjs/operator/mergeAll'), require('@angular/platform-browser'), require('rxjs/operator/filter')) : typeof define === 'function' && define.amd ? define("25", ["exports", "e", "a", "100", "10", "4f", "6d", "9e", "dd", "ca", "fb", "e9", "e3", "15", "17c", "9c", "11e", "16", "d9", "e5", "c", "c2"], factory) : (factory((global.ng = global.ng || {}, global.ng.router = global.ng.router || {}), global.ng.common, global.ng.core, global.Rx, global.Rx, global.Rx.Observable, global.Rx.Observable, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.Rx, global.Rx.Observable, global.Rx.Observable.prototype, global.Rx.Observable.prototype, global.ng.platformBrowser, global.Rx.Observable.prototype));
 }(this, function(exports, _angular_common, _angular_core, rxjs_BehaviorSubject, rxjs_Subject, rxjs_observable_from, rxjs_observable_of, rxjs_operator_concatMap, rxjs_operator_every, rxjs_operator_first, rxjs_operator_map, rxjs_operator_mergeMap, rxjs_operator_reduce, rxjs_Observable, rxjs_operator_catch, rxjs_operator_concatAll, rxjs_util_EmptyError, rxjs_observable_fromPromise, l, rxjs_operator_mergeAll, _angular_platformBrowser, rxjs_operator_filter) {
   'use strict';
+  var isPromise = _angular_core.__core_private__.isPromise;
+  var isObservable = _angular_core.__core_private__.isObservable;
   var __extends = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
@@ -53447,10 +53578,10 @@ var define = $__System.amdDefine;
     });
   }
   function wrapIntoObservable(value) {
-    if (value instanceof rxjs_Observable.Observable) {
+    if (isObservable(value)) {
       return value;
     }
-    if (value instanceof Promise) {
+    if (isPromise(value)) {
       return rxjs_observable_fromPromise.fromPromise(value);
     }
     return rxjs_observable_of.of(value);
@@ -53484,9 +53615,12 @@ var define = $__System.amdDefine;
       if (typeof loadChildren === 'string') {
         return rxjs_observable_fromPromise.fromPromise(this.loader.load(loadChildren));
       } else {
-        var offlineMode_1 = this.compiler instanceof _angular_core.Compiler;
         return rxjs_operator_mergeMap.mergeMap.call(wrapIntoObservable(loadChildren()), function(t) {
-          return offlineMode_1 ? rxjs_observable_of.of((t)) : rxjs_observable_fromPromise.fromPromise(_this.compiler.compileModuleAsync(t));
+          if (t instanceof _angular_core.NgModuleFactory) {
+            return rxjs_observable_of.of(t);
+          } else {
+            return rxjs_observable_fromPromise.fromPromise(_this.compiler.compileModuleAsync(t));
+          }
         });
       }
     };
@@ -55389,6 +55523,9 @@ var define = $__System.amdDefine;
   function defaultErrorHandler(error) {
     throw error;
   }
+  function defaultRouterHook(snapshot) {
+    return rxjs_observable_of.of(null);
+  }
   var DefaultRouteReuseStrategy = (function() {
     function DefaultRouteReuseStrategy() {}
     DefaultRouteReuseStrategy.prototype.shouldDetach = function(route) {
@@ -55419,6 +55556,10 @@ var define = $__System.amdDefine;
       this.navigationId = 0;
       this.errorHandler = defaultErrorHandler;
       this.navigated = false;
+      this.hooks = {
+        beforePreactivation: defaultRouterHook,
+        afterPreactivation: defaultRouterHook
+      };
       this.urlHandlingStrategy = new DefaultUrlHandlingStrategy();
       this.routeReuseStrategy = new DefaultRouteReuseStrategy();
       this.resetConfig(config);
@@ -55434,7 +55575,9 @@ var define = $__System.amdDefine;
     };
     Router.prototype.initialNavigation = function() {
       this.setUpLocationChangeListener();
-      this.navigateByUrl(this.location.path(true), {replaceUrl: true});
+      if (this.navigationId === 0) {
+        this.navigateByUrl(this.location.path(true), {replaceUrl: true});
+      }
     };
     Router.prototype.setUpLocationChangeListener = function() {
       var _this = this;
@@ -55626,8 +55769,13 @@ var define = $__System.amdDefine;
             snapshot: precreatedState
           });
         }
+        var beforePreactivationDone$ = rxjs_operator_mergeMap.mergeMap.call(urlAndSnapshot$, function(p) {
+          return rxjs_operator_map.map.call(_this.hooks.beforePreactivation(p.snapshot), function() {
+            return p;
+          });
+        });
         var preActivation;
-        var preactivationTraverse$ = rxjs_operator_map.map.call(urlAndSnapshot$, function(_a) {
+        var preactivationTraverse$ = rxjs_operator_map.map.call(beforePreactivationDone$, function(_a) {
           var appliedUrl = _a.appliedUrl,
               snapshot = _a.snapshot;
           preActivation = new PreActivation(snapshot, _this.currentRouterState.snapshot, _this.injector);
@@ -55637,7 +55785,7 @@ var define = $__System.amdDefine;
             snapshot: snapshot
           };
         });
-        var preactivationCheckGuards = rxjs_operator_mergeMap.mergeMap.call(preactivationTraverse$, function(_a) {
+        var preactivationCheckGuards$ = rxjs_operator_mergeMap.mergeMap.call(preactivationTraverse$, function(_a) {
           var appliedUrl = _a.appliedUrl,
               snapshot = _a.snapshot;
           if (_this.navigationId !== id)
@@ -55650,7 +55798,7 @@ var define = $__System.amdDefine;
             };
           });
         });
-        var preactivationResolveData$ = rxjs_operator_mergeMap.mergeMap.call(preactivationCheckGuards, function(p) {
+        var preactivationResolveData$ = rxjs_operator_mergeMap.mergeMap.call(preactivationCheckGuards$, function(p) {
           if (_this.navigationId !== id)
             return rxjs_observable_of.of(false);
           if (p.shouldActivate) {
@@ -55661,7 +55809,12 @@ var define = $__System.amdDefine;
             return rxjs_observable_of.of(p);
           }
         });
-        var routerState$ = rxjs_operator_map.map.call(preactivationResolveData$, function(_a) {
+        var preactivationDone$ = rxjs_operator_mergeMap.mergeMap.call(preactivationResolveData$, function(p) {
+          return rxjs_operator_map.map.call(_this.hooks.afterPreactivation(p.snapshot), function() {
+            return p;
+          });
+        });
+        var routerState$ = rxjs_operator_map.map.call(preactivationDone$, function(_a) {
           var appliedUrl = _a.appliedUrl,
               snapshot = _a.snapshot,
               shouldActivate = _a.shouldActivate;
@@ -55705,8 +55858,8 @@ var define = $__System.amdDefine;
           new ActivateRoutes(_this.routeReuseStrategy, state, storedState).activate(_this.outletMap);
           navigationIsSuccessful = true;
         }).then(function() {
-          _this.navigated = true;
           if (navigationIsSuccessful) {
+            _this.navigated = true;
             _this.routerEvents.next(new NavigationEnd(id, _this.serializeUrl(url), _this.serializeUrl(_this.currentUrlTree)));
             resolvePromise(true);
           } else {
@@ -55895,7 +56048,7 @@ var define = $__System.amdDefine;
       });
       return andObservables(rxjs_operator_map.map.call(rxjs_observable_from.from(canActivateChildGuards), function(d) {
         var obs = rxjs_operator_map.map.call(rxjs_observable_from.from(d.guards), function(c) {
-          var guard = _this.getToken(c, c.node);
+          var guard = _this.getToken(c, d.node);
           var observable;
           if (guard.canActivateChild) {
             observable = wrapIntoObservable(guard.canActivateChild(future, _this.future));
@@ -56722,33 +56875,98 @@ var define = $__System.amdDefine;
   function rootRoute(router) {
     return router.routerState.root;
   }
-  function initialRouterNavigation(router, ref, preloader, opts) {
-    return function(bootstrappedComponentRef) {
+  var RouterInitializer = (function() {
+    function RouterInitializer(injector) {
+      this.injector = injector;
+      this.initNavigation = false;
+      this.resultOfPreactivationDone = new rxjs_Subject.Subject();
+    }
+    RouterInitializer.prototype.appInitializer = function() {
+      var _this = this;
+      var p = this.injector.get(_angular_common.LOCATION_INITIALIZED, Promise.resolve(null));
+      return p.then(function() {
+        var resolve = null;
+        var res = new Promise(function(r) {
+          return resolve = r;
+        });
+        var router = _this.injector.get(Router);
+        var opts = _this.injector.get(ROUTER_CONFIGURATION);
+        if (_this.isLegacyDisabled(opts) || _this.isLegacyEnabled(opts)) {
+          resolve(true);
+        } else if (opts.initialNavigation === 'disabled') {
+          router.setUpLocationChangeListener();
+          resolve(true);
+        } else if (opts.initialNavigation === 'enabled') {
+          router.hooks.afterPreactivation = function() {
+            if (!_this.initNavigation) {
+              _this.initNavigation = true;
+              resolve(true);
+              return _this.resultOfPreactivationDone;
+            } else {
+              return rxjs_observable_of.of(null);
+            }
+          };
+          router.initialNavigation();
+        } else {
+          throw new Error("Invalid initialNavigation options: '" + opts.initialNavigation + "'");
+        }
+        return res;
+      });
+    };
+    RouterInitializer.prototype.bootstrapListener = function(bootstrappedComponentRef) {
+      var opts = this.injector.get(ROUTER_CONFIGURATION);
+      var preloader = this.injector.get(RouterPreloader);
+      var router = this.injector.get(Router);
+      var ref = this.injector.get(_angular_core.ApplicationRef);
       if (bootstrappedComponentRef !== ref.components[0]) {
         return;
       }
-      router.resetRootComponentType(ref.componentTypes[0]);
-      preloader.setUpPreloading();
-      if (opts.initialNavigation === false) {
-        router.setUpLocationChangeListener();
-      } else {
+      if (this.isLegacyEnabled(opts)) {
         router.initialNavigation();
+      } else if (this.isLegacyDisabled(opts)) {
+        router.setUpLocationChangeListener();
       }
+      preloader.setUpPreloading();
+      router.resetRootComponentType(ref.componentTypes[0]);
+      this.resultOfPreactivationDone.next(null);
+      this.resultOfPreactivationDone.complete();
     };
+    RouterInitializer.prototype.isLegacyEnabled = function(opts) {
+      return opts.initialNavigation === 'legacy_enabled' || opts.initialNavigation === true || opts.initialNavigation === undefined;
+    };
+    RouterInitializer.prototype.isLegacyDisabled = function(opts) {
+      return opts.initialNavigation === 'legacy_disabled' || opts.initialNavigation === false;
+    };
+    RouterInitializer.decorators = [{type: _angular_core.Injectable}];
+    RouterInitializer.ctorParameters = function() {
+      return [{type: _angular_core.Injector}];
+    };
+    return RouterInitializer;
+  }());
+  function getAppInitializer(r) {
+    return r.appInitializer.bind(r);
+  }
+  function getBootstrapListener(r) {
+    return r.bootstrapListener.bind(r);
   }
   var ROUTER_INITIALIZER = new _angular_core.OpaqueToken('Router Initializer');
   function provideRouterInitializer() {
-    return [{
+    return [RouterInitializer, {
+      provide: _angular_core.APP_INITIALIZER,
+      multi: true,
+      useFactory: getAppInitializer,
+      deps: [RouterInitializer]
+    }, {
       provide: ROUTER_INITIALIZER,
-      useFactory: initialRouterNavigation,
-      deps: [Router, _angular_core.ApplicationRef, RouterPreloader, ROUTER_CONFIGURATION]
+      useFactory: getBootstrapListener,
+      deps: [RouterInitializer]
     }, {
       provide: _angular_core.APP_BOOTSTRAP_LISTENER,
       multi: true,
       useExisting: ROUTER_INITIALIZER
     }];
   }
-  var VERSION = new _angular_core.Version('3.4.4');
+  var VERSION = new _angular_core.Version('3.4.10');
   var __router_private__ = {
     ROUTER_PROVIDERS: ROUTER_PROVIDERS,
     ROUTES: ROUTES,
@@ -56794,7 +57012,7 @@ var define = $__System.amdDefine;
  *  Class to handle integration with the host environment.
  *
  */
-$__System.register("26", ["a", "25", "180"], function (exports_1, context_1) {
+$__System.register("26", ["a", "25", "185"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -56853,7 +57071,7 @@ $__System.register("26", ["a", "25", "180"], function (exports_1, context_1) {
     };
 });
 
-$__System.register("2f", ["a", "180"], function (exports_1, context_1) {
+$__System.register("2f", ["a", "185"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -56887,7 +57105,7 @@ $__System.register("2f", ["a", "180"], function (exports_1, context_1) {
     };
 });
 
-$__System.register("181", ["a", "c", "13", "25", "179", "d", "11", "12", "17", "18", "6", "1b", "24", "22", "29", "27", "2a", "1c", "1d", "1e", "1f", "20", "21", "23", "30", "19", "2d", "1a", "26", "2f"], function (exports_1, context_1) {
+$__System.register("186", ["a", "c", "13", "25", "17d", "d", "11", "12", "17", "18", "6", "1b", "24", "22", "29", "27", "2a", "1c", "1d", "1e", "1f", "20", "21", "23", "30", "19", "2d", "1a", "26", "2f"], function (exports_1, context_1) {
     "use strict";
 
     var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -56974,11 +57192,10 @@ $__System.register("181", ["a", "c", "13", "25", "179", "d", "11", "12", "17", "
     };
 });
 
-$__System.registerDynamic('15a', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('15e', [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -57008,14 +57225,11 @@ $__System.registerDynamic('15a', [], true, function ($__require, exports, module
     }(Error);
     exports.ObjectUnsubscribedError = ObjectUnsubscribedError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic("15b", ["52"], true, function ($__require, exports, module) {
+$__System.registerDynamic("15f", ["52"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -57058,14 +57272,11 @@ $__System.registerDynamic("15b", ["52"], true, function ($__require, exports, mo
     }(Subscription_1.Subscription);
     exports.SubjectSubscription = SubjectSubscription;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('10', ['15', '89', '52', '15a', '15b', '175'], true, function ($__require, exports, module) {
+$__System.registerDynamic('10', ['15', '89', '52', '15e', '15f', '179'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -57077,9 +57288,9 @@ $__System.registerDynamic('10', ['15', '89', '52', '15a', '15b', '175'], true, f
     var Observable_1 = $__require('15');
     var Subscriber_1 = $__require('89');
     var Subscription_1 = $__require('52');
-    var ObjectUnsubscribedError_1 = $__require('15a');
-    var SubjectSubscription_1 = $__require('15b');
-    var rxSubscriber_1 = $__require('175');
+    var ObjectUnsubscribedError_1 = $__require('15e');
+    var SubjectSubscription_1 = $__require('15f');
+    var rxSubscriber_1 = $__require('179');
     /**
      * @class SubjectSubscriber<T>
      */
@@ -57105,7 +57316,7 @@ $__System.registerDynamic('10', ['15', '89', '52', '15a', '15b', '175'], true, f
             this.hasError = false;
             this.thrownError = null;
         }
-        Subject.prototype[rxSubscriber_1.$$rxSubscriber] = function () {
+        Subject.prototype[rxSubscriber_1.rxSubscriber] = function () {
             return new SubjectSubscriber(this);
         };
         Subject.prototype.lift = function (operator) {
@@ -57158,6 +57369,13 @@ $__System.registerDynamic('10', ['15', '89', '52', '15a', '15b', '175'], true, f
             this.isStopped = true;
             this.closed = true;
             this.observers = null;
+        };
+        Subject.prototype._trySubscribe = function (subscriber) {
+            if (this.closed) {
+                throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
+            } else {
+                return _super.prototype._trySubscribe.call(this, subscriber);
+            }
         };
         Subject.prototype._subscribe = function (subscriber) {
             if (this.closed) {
@@ -57224,55 +57442,43 @@ $__System.registerDynamic('10', ['15', '89', '52', '15a', '15b', '175'], true, f
     }(Subject);
     exports.AnonymousSubject = AnonymousSubject;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("3c", [], true, function ($__require, exports, module) {
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   exports.isArray = Array.isArray || function (x) {
     return x && typeof x.length === 'number';
   };
   
-
-  return module.exports;
 });
-$__System.registerDynamic("17f", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("184", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function isObject(x) {
         return x != null && typeof x === 'object';
     }
     exports.isObject = isObject;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("51", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     function isFunction(x) {
         return typeof x === 'function';
     }
     exports.isFunction = isFunction;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("32", ["33"], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var errorObject_1 = $__require("33");
     var tryCatchTarget;
@@ -57291,26 +57497,20 @@ $__System.registerDynamic("32", ["33"], true, function ($__require, exports, mod
     exports.tryCatch = tryCatch;
     ;
     
-
-    return module.exports;
 });
 $__System.registerDynamic("33", [], true, function ($__require, exports, module) {
   "use strict";
   // typeof any so that it we don't have to cast when comparing a result to the error object
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   exports.errorObject = { e: {} };
   
-
-  return module.exports;
 });
-$__System.registerDynamic("174", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("178", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -57339,28 +57539,18 @@ $__System.registerDynamic("174", [], true, function ($__require, exports, module
     }(Error);
     exports.UnsubscriptionError = UnsubscriptionError;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, function ($__require, exports, module) {
+$__System.registerDynamic('52', ['3c', '184', '51', '32', '33', '178'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
-    var __extends = this && this.__extends || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
     var isArray_1 = $__require('3c');
-    var isObject_1 = $__require('17f');
+    var isObject_1 = $__require('184');
     var isFunction_1 = $__require('51');
     var tryCatch_1 = $__require('32');
     var errorObject_1 = $__require('33');
-    var UnsubscriptionError_1 = $__require('174');
+    var UnsubscriptionError_1 = $__require('178');
     /**
      * Represents a disposable resource, such as the execution of an Observable. A
      * Subscription has one important method, `unsubscribe`, that takes no argument
@@ -57384,6 +57574,9 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
              * @type {boolean}
              */
             this.closed = false;
+            this._parent = null;
+            this._parents = null;
+            this._subscriptions = null;
             if (unsubscribe) {
                 this._unsubscribe = unsubscribe;
             }
@@ -57400,11 +57593,27 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
             if (this.closed) {
                 return;
             }
-            this.closed = true;
             var _a = this,
+                _parent = _a._parent,
+                _parents = _a._parents,
                 _unsubscribe = _a._unsubscribe,
                 _subscriptions = _a._subscriptions;
+            this.closed = true;
+            this._parent = null;
+            this._parents = null;
+            // null out _subscriptions first so any child subscriptions that attempt
+            // to remove themselves from this subscription will noop
             this._subscriptions = null;
+            var index = -1;
+            var len = _parents ? _parents.length : 0;
+            // if this._parent is null, then so is this._parents, and we
+            // don't have to remove ourselves from any parent subscriptions.
+            while (_parent) {
+                _parent.remove(this);
+                // if this._parents is null or index >= len,
+                // then _parent is set to null, and the loop exits
+                _parent = ++index < len && _parents[index] || null;
+            }
             if (isFunction_1.isFunction(_unsubscribe)) {
                 var trial = tryCatch_1.tryCatch(_unsubscribe).call(this);
                 if (trial === errorObject_1.errorObject) {
@@ -57413,8 +57622,8 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
                 }
             }
             if (isArray_1.isArray(_subscriptions)) {
-                var index = -1;
-                var len = _subscriptions.length;
+                index = -1;
+                len = _subscriptions.length;
                 while (++index < len) {
                     var sub = _subscriptions[index];
                     if (isObject_1.isObject(sub)) {
@@ -57461,25 +57670,29 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
             if (teardown === this) {
                 return this;
             }
-            var sub = teardown;
+            var subscription = teardown;
             switch (typeof teardown) {
                 case 'function':
-                    sub = new Subscription(teardown);
+                    subscription = new Subscription(teardown);
                 case 'object':
-                    if (sub.closed || typeof sub.unsubscribe !== 'function') {
-                        return sub;
+                    if (subscription.closed || typeof subscription.unsubscribe !== 'function') {
+                        return subscription;
                     } else if (this.closed) {
-                        sub.unsubscribe();
-                        return sub;
-                    }
+                        subscription.unsubscribe();
+                        return subscription;
+                    } else if (typeof subscription._addParent !== 'function' /* quack quack */) {
+                            var tmp = subscription;
+                            subscription = new Subscription();
+                            subscription._subscriptions = [tmp];
+                        }
                     break;
                 default:
                     throw new Error('unrecognized teardown ' + teardown + ' added to Subscription.');
             }
-            var childSub = new ChildSubscription(sub, this);
-            this._subscriptions = this._subscriptions || [];
-            this._subscriptions.push(childSub);
-            return childSub;
+            var subscriptions = this._subscriptions || (this._subscriptions = []);
+            subscriptions.push(subscription);
+            subscription._addParent(this);
+            return subscription;
         };
         /**
          * Removes a Subscription from the internal list of subscriptions that will
@@ -57488,16 +57701,29 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
          * @return {void}
          */
         Subscription.prototype.remove = function (subscription) {
-            // HACK: This might be redundant because of the logic in `add()`
-            if (subscription == null || subscription === this || subscription === Subscription.EMPTY) {
-                return;
-            }
             var subscriptions = this._subscriptions;
             if (subscriptions) {
                 var subscriptionIndex = subscriptions.indexOf(subscription);
                 if (subscriptionIndex !== -1) {
                     subscriptions.splice(subscriptionIndex, 1);
                 }
+            }
+        };
+        Subscription.prototype._addParent = function (parent) {
+            var _a = this,
+                _parent = _a._parent,
+                _parents = _a._parents;
+            if (!_parent || _parent === parent) {
+                // If we don't have a parent, or the new parent is the same as the
+                // current parent, then set this._parent to the new parent.
+                this._parent = parent;
+            } else if (!_parents) {
+                // If there's already one parent, but not multiple, allocate an Array to
+                // store the rest of the parent Subscriptions.
+                this._parents = [parent];
+            } else if (_parents.indexOf(parent) === -1) {
+                // Only add the new parent to the _parents list if it's not already there.
+                _parents.push(parent);
             }
         };
         Subscription.EMPTY = function (empty) {
@@ -57507,37 +57733,17 @@ $__System.registerDynamic('52', ['3c', '17f', '51', '32', '33', '174'], true, fu
         return Subscription;
     }();
     exports.Subscription = Subscription;
-    var ChildSubscription = function (_super) {
-        __extends(ChildSubscription, _super);
-        function ChildSubscription(_innerSub, _parent) {
-            _super.call(this);
-            this._innerSub = _innerSub;
-            this._parent = _parent;
-        }
-        ChildSubscription.prototype._unsubscribe = function () {
-            var _a = this,
-                _innerSub = _a._innerSub,
-                _parent = _a._parent;
-            _parent.remove(this);
-            _innerSub.unsubscribe();
-        };
-        return ChildSubscription;
-    }(Subscription);
-    exports.ChildSubscription = ChildSubscription;
     function flattenUnsubscriptionErrors(errors) {
         return errors.reduce(function (errs, err) {
             return errs.concat(err instanceof UnsubscriptionError_1.UnsubscriptionError ? err.errors : err);
         }, []);
     }
     
-
-    return module.exports;
 });
-$__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__require, exports, module) {
+$__System.registerDynamic('89', ['51', '52', '187', '179'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var __extends = this && this.__extends || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -57548,8 +57754,8 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
     };
     var isFunction_1 = $__require('51');
     var Subscription_1 = $__require('52');
-    var Observer_1 = $__require('182');
-    var rxSubscriber_1 = $__require('175');
+    var Observer_1 = $__require('187');
+    var rxSubscriber_1 = $__require('179');
     /**
      * Implements the {@link Observer} interface and extends the
      * {@link Subscription} class. While the {@link Observer} is the public API for
@@ -57601,7 +57807,7 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
                     break;
             }
         }
-        Subscriber.prototype[rxSubscriber_1.$$rxSubscriber] = function () {
+        Subscriber.prototype[rxSubscriber_1.rxSubscriber] = function () {
             return this;
         };
         /**
@@ -57675,6 +57881,19 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
             this.destination.complete();
             this.unsubscribe();
         };
+        Subscriber.prototype._unsubscribeAndRecycle = function () {
+            var _a = this,
+                _parent = _a._parent,
+                _parents = _a._parents;
+            this._parent = null;
+            this._parents = null;
+            this.unsubscribe();
+            this.closed = false;
+            this.isStopped = false;
+            this._parent = _parent;
+            this._parents = _parents;
+            return this;
+        };
         return Subscriber;
     }(Subscription_1.Subscription);
     exports.Subscriber = Subscriber;
@@ -57685,22 +57904,24 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
      */
     var SafeSubscriber = function (_super) {
         __extends(SafeSubscriber, _super);
-        function SafeSubscriber(_parent, observerOrNext, error, complete) {
+        function SafeSubscriber(_parentSubscriber, observerOrNext, error, complete) {
             _super.call(this);
-            this._parent = _parent;
+            this._parentSubscriber = _parentSubscriber;
             var next;
             var context = this;
             if (isFunction_1.isFunction(observerOrNext)) {
                 next = observerOrNext;
             } else if (observerOrNext) {
-                context = observerOrNext;
                 next = observerOrNext.next;
                 error = observerOrNext.error;
                 complete = observerOrNext.complete;
-                if (isFunction_1.isFunction(context.unsubscribe)) {
-                    this.add(context.unsubscribe.bind(context));
+                if (observerOrNext !== Observer_1.empty) {
+                    context = Object.create(observerOrNext);
+                    if (isFunction_1.isFunction(context.unsubscribe)) {
+                        this.add(context.unsubscribe.bind(context));
+                    }
+                    context.unsubscribe = this.unsubscribe.bind(this);
                 }
-                context.unsubscribe = this.unsubscribe.bind(this);
             }
             this._context = context;
             this._next = next;
@@ -57709,44 +57930,48 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
         }
         SafeSubscriber.prototype.next = function (value) {
             if (!this.isStopped && this._next) {
-                var _parent = this._parent;
-                if (!_parent.syncErrorThrowable) {
+                var _parentSubscriber = this._parentSubscriber;
+                if (!_parentSubscriber.syncErrorThrowable) {
                     this.__tryOrUnsub(this._next, value);
-                } else if (this.__tryOrSetError(_parent, this._next, value)) {
+                } else if (this.__tryOrSetError(_parentSubscriber, this._next, value)) {
                     this.unsubscribe();
                 }
             }
         };
         SafeSubscriber.prototype.error = function (err) {
             if (!this.isStopped) {
-                var _parent = this._parent;
+                var _parentSubscriber = this._parentSubscriber;
                 if (this._error) {
-                    if (!_parent.syncErrorThrowable) {
+                    if (!_parentSubscriber.syncErrorThrowable) {
                         this.__tryOrUnsub(this._error, err);
                         this.unsubscribe();
                     } else {
-                        this.__tryOrSetError(_parent, this._error, err);
+                        this.__tryOrSetError(_parentSubscriber, this._error, err);
                         this.unsubscribe();
                     }
-                } else if (!_parent.syncErrorThrowable) {
+                } else if (!_parentSubscriber.syncErrorThrowable) {
                     this.unsubscribe();
                     throw err;
                 } else {
-                    _parent.syncErrorValue = err;
-                    _parent.syncErrorThrown = true;
+                    _parentSubscriber.syncErrorValue = err;
+                    _parentSubscriber.syncErrorThrown = true;
                     this.unsubscribe();
                 }
             }
         };
         SafeSubscriber.prototype.complete = function () {
+            var _this = this;
             if (!this.isStopped) {
-                var _parent = this._parent;
+                var _parentSubscriber = this._parentSubscriber;
                 if (this._complete) {
-                    if (!_parent.syncErrorThrowable) {
-                        this.__tryOrUnsub(this._complete);
+                    var wrappedComplete = function () {
+                        return _this._complete.call(_this._context);
+                    };
+                    if (!_parentSubscriber.syncErrorThrowable) {
+                        this.__tryOrUnsub(wrappedComplete);
                         this.unsubscribe();
                     } else {
-                        this.__tryOrSetError(_parent, this._complete);
+                        this.__tryOrSetError(_parentSubscriber, wrappedComplete);
                         this.unsubscribe();
                     }
                 } else {
@@ -57773,35 +57998,33 @@ $__System.registerDynamic('89', ['51', '52', '182', '175'], true, function ($__r
             return false;
         };
         SafeSubscriber.prototype._unsubscribe = function () {
-            var _parent = this._parent;
+            var _parentSubscriber = this._parentSubscriber;
             this._context = null;
-            this._parent = null;
-            _parent.unsubscribe();
+            this._parentSubscriber = null;
+            _parentSubscriber.unsubscribe();
         };
         return SafeSubscriber;
     }(Subscriber);
     
-
-    return module.exports;
 });
-$__System.registerDynamic('175', ['87'], true, function ($__require, exports, module) {
+$__System.registerDynamic('179', ['87'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  var root_1 = $__require('87');
+  var Symbol = root_1.root.Symbol;
+  exports.rxSubscriber = typeof Symbol === 'function' && typeof Symbol.for === 'function' ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
+  /**
+   * @deprecated use rxSubscriber instead
+   */
+  exports.$$rxSubscriber = exports.rxSubscriber;
+  
+});
+$__System.registerDynamic("187", [], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
-        GLOBAL = global;
-    var root_1 = $__require('87');
-    var Symbol = root_1.root.Symbol;
-    exports.$$rxSubscriber = typeof Symbol === 'function' && typeof Symbol.for === 'function' ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
-    
-
-    return module.exports;
-});
-$__System.registerDynamic("182", [], true, function ($__require, exports, module) {
-    "use strict";
-
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     exports.empty = {
         closed: true,
@@ -57812,25 +58035,22 @@ $__System.registerDynamic("182", [], true, function ($__require, exports, module
         complete: function () {}
     };
     
-
-    return module.exports;
 });
-$__System.registerDynamic('183', ['89', '175', '182'], true, function ($__require, exports, module) {
+$__System.registerDynamic('188', ['89', '179', '187'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var Subscriber_1 = $__require('89');
-    var rxSubscriber_1 = $__require('175');
-    var Observer_1 = $__require('182');
+    var rxSubscriber_1 = $__require('179');
+    var Observer_1 = $__require('187');
     function toSubscriber(nextOrObserver, error, complete) {
         if (nextOrObserver) {
             if (nextOrObserver instanceof Subscriber_1.Subscriber) {
                 return nextOrObserver;
             }
-            if (nextOrObserver[rxSubscriber_1.$$rxSubscriber]) {
-                return nextOrObserver[rxSubscriber_1.$$rxSubscriber]();
+            if (nextOrObserver[rxSubscriber_1.rxSubscriber]) {
+                return nextOrObserver[rxSubscriber_1.rxSubscriber]();
             }
         }
         if (!nextOrObserver && !error && !complete) {
@@ -57840,33 +58060,34 @@ $__System.registerDynamic('183', ['89', '175', '182'], true, function ($__requir
     }
     exports.toSubscriber = toSubscriber;
     
-
-    return module.exports;
 });
 $__System.registerDynamic('87', [], true, function ($__require, exports, module) {
     "use strict";
-    /**
-     * window: browser in DOM main thread
-     * self: browser in WebWorker
-     * global: Node.js/other
-     */
+    // CommonJS / Node have global context exposed as "global" variable.
+    // We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
+    // the global "global" var for now.
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
-    exports.root = typeof window == 'object' && window.window === window && window || typeof self == 'object' && self.self === self && self || typeof global == 'object' && global.global === global && global;
-    if (!exports.root) {
-        throw new Error('RxJS could not find any global context (window, self, global)');
-    }
+    var __window = typeof window !== 'undefined' && window;
+    var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope && self;
+    var __global = typeof global !== 'undefined' && global;
+    var _root = __window || __global || __self;
+    exports.root = _root;
+    // Workaround Closure Compiler restriction: The body of a goog.module cannot use throw.
+    // This is needed when used with angular/tsickle which inserts a goog.module statement.
+    // Wrap in IIFE
+    (function () {
+        if (!_root) {
+            throw new Error('RxJS could not find any global context (window, self, global)');
+        }
+    })();
     
-
-    return module.exports;
 });
-$__System.registerDynamic('176', ['87'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17a', ['87'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
     function getSymbolObservable(context) {
@@ -57885,20 +58106,21 @@ $__System.registerDynamic('176', ['87'], true, function ($__require, exports, mo
         return $$observable;
     }
     exports.getSymbolObservable = getSymbolObservable;
-    exports.$$observable = getSymbolObservable(root_1.root);
+    exports.observable = getSymbolObservable(root_1.root);
+    /**
+     * @deprecated use observable instead
+     */
+    exports.$$observable = exports.observable;
     
-
-    return module.exports;
 });
-$__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15', ['87', '188', '17a'], true, function ($__require, exports, module) {
     "use strict";
 
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     var root_1 = $__require('87');
-    var toSubscriber_1 = $__require('183');
-    var observable_1 = $__require('176');
+    var toSubscriber_1 = $__require('188');
+    var observable_1 = $__require('17a');
     /**
      * A representation of any set of values over any amount of time. This the most basic building block
      * of RxJS.
@@ -57938,7 +58160,7 @@ $__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require
             if (operator) {
                 operator.call(sink, this.source);
             } else {
-                sink.add(this._subscribe(sink));
+                sink.add(this._trySubscribe(sink));
             }
             if (sink.syncErrorThrowable) {
                 sink.syncErrorThrowable = false;
@@ -57947,6 +58169,15 @@ $__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require
                 }
             }
             return sink;
+        };
+        Observable.prototype._trySubscribe = function (sink) {
+            try {
+                return this._subscribe(sink);
+            } catch (err) {
+                sink.syncErrorThrown = true;
+                sink.syncErrorValue = err;
+                sink.error(err);
+            }
         };
         /**
          * @method forEach
@@ -57968,7 +58199,10 @@ $__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require
                 throw new Error('no Promise impl found');
             }
             return new PromiseCtor(function (resolve, reject) {
-                var subscription = _this.subscribe(function (value) {
+                // Must be declared in a separate statement to avoid a RefernceError when
+                // accessing subscription below in the closure due to Temporal Dead Zone.
+                var subscription;
+                subscription = _this.subscribe(function (value) {
                     if (subscription) {
                         // if there is a subscription, then we can surmise
                         // the next handling is asynchronous. Any errors thrown
@@ -58000,7 +58234,7 @@ $__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require
          * @method Symbol.observable
          * @return {Observable} this instance of the observable
          */
-        Observable.prototype[observable_1.$$observable] = function () {
+        Observable.prototype[observable_1.observable] = function () {
             return this;
         };
         // HACK: Since TypeScript inherits static properties too, we have to
@@ -58020,14 +58254,12 @@ $__System.registerDynamic('15', ['87', '183', '176'], true, function ($__require
     }();
     exports.Observable = Observable;
     
-
-    return module.exports;
 });
 (function() {
 var define = $__System.amdDefine;
 (function(global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/Subject'), require('rxjs/Observable')) : typeof define === 'function' && define.amd ? define("a", ["exports", "10", "15"], factory) : (factory((global.ng = global.ng || {}, global.ng.core = global.ng.core || {}), global.Rx, global.Rx));
-}(this, function(exports, rxjs_Subject, rxjs_Observable) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/symbol/observable'), require('rxjs/Subject'), require('rxjs/Observable')) : typeof define === 'function' && define.amd ? define("a", ["exports", "17a", "10", "15"], factory) : (factory((global.ng = global.ng || {}, global.ng.core = global.ng.core || {}), global.rxjs_symbol_observable, global.Rx, global.Rx));
+}(this, function(exports, rxjs_symbol_observable, rxjs_Subject, rxjs_Observable) {
   'use strict';
   var globalScope;
   if (typeof window === 'undefined') {
@@ -58523,7 +58755,7 @@ var define = $__System.amdDefine;
     });
     return Version;
   }());
-  var VERSION = new Version('2.4.4');
+  var VERSION = new Version('2.4.10');
   function forwardRef(forwardRefFn) {
     ((forwardRefFn)).__forward_ref__ = forwardRef;
     ((forwardRefFn)).toString = function() {
@@ -58538,7 +58770,29 @@ var define = $__System.amdDefine;
       return type;
     }
   }
-  var __extends = (this && this.__extends) || function(d, b) {
+  var _THROW_IF_NOT_FOUND = new Object();
+  var THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
+  var _NullInjector = (function() {
+    function _NullInjector() {}
+    _NullInjector.prototype.get = function(token, notFoundValue) {
+      if (notFoundValue === void 0) {
+        notFoundValue = _THROW_IF_NOT_FOUND;
+      }
+      if (notFoundValue === _THROW_IF_NOT_FOUND) {
+        throw new Error("No provider for " + stringify(token) + "!");
+      }
+      return notFoundValue;
+    };
+    return _NullInjector;
+  }());
+  var Injector = (function() {
+    function Injector() {}
+    Injector.prototype.get = function(token, notFoundValue) {};
+    Injector.THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
+    Injector.NULL = new _NullInjector();
+    return Injector;
+  }());
+  var __extends$1 = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -58547,11 +58801,8 @@ var define = $__System.amdDefine;
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  function unimplemented() {
-    throw new Error('unimplemented');
-  }
   var BaseError = (function(_super) {
-    __extends(BaseError, _super);
+    __extends$1(BaseError, _super);
     function BaseError(message) {
       _super.call(this, message);
       var nativeError = new Error(message);
@@ -58590,7 +58841,7 @@ var define = $__System.amdDefine;
     return BaseError;
   }(Error));
   var WrappedError = (function(_super) {
-    __extends(WrappedError, _super);
+    __extends$1(WrappedError, _super);
     function WrappedError(message, error) {
       _super.call(this, message + " caused by: " + (error instanceof Error ? error.message : error));
       this.originalError = error;
@@ -58604,31 +58855,7 @@ var define = $__System.amdDefine;
     });
     return WrappedError;
   }(BaseError));
-  var _THROW_IF_NOT_FOUND = new Object();
-  var THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
-  var _NullInjector = (function() {
-    function _NullInjector() {}
-    _NullInjector.prototype.get = function(token, notFoundValue) {
-      if (notFoundValue === void 0) {
-        notFoundValue = _THROW_IF_NOT_FOUND;
-      }
-      if (notFoundValue === _THROW_IF_NOT_FOUND) {
-        throw new Error("No provider for " + stringify(token) + "!");
-      }
-      return notFoundValue;
-    };
-    return _NullInjector;
-  }());
-  var Injector = (function() {
-    function Injector() {}
-    Injector.prototype.get = function(token, notFoundValue) {
-      return unimplemented();
-    };
-    Injector.THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
-    Injector.NULL = new _NullInjector();
-    return Injector;
-  }());
-  var __extends$1 = (this && this.__extends) || function(d, b) {
+  var __extends = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
         d[p] = b[p];
@@ -58659,7 +58886,7 @@ var define = $__System.amdDefine;
     return '';
   }
   var AbstractProviderError = (function(_super) {
-    __extends$1(AbstractProviderError, _super);
+    __extends(AbstractProviderError, _super);
     function AbstractProviderError(injector, key, constructResolvingMessage) {
       _super.call(this, 'DI Error');
       this.keys = [key];
@@ -58675,7 +58902,7 @@ var define = $__System.amdDefine;
     return AbstractProviderError;
   }(BaseError));
   var NoProviderError = (function(_super) {
-    __extends$1(NoProviderError, _super);
+    __extends(NoProviderError, _super);
     function NoProviderError(injector, key) {
       _super.call(this, injector, key, function(keys) {
         var first = stringify(keys[0].token);
@@ -58685,7 +58912,7 @@ var define = $__System.amdDefine;
     return NoProviderError;
   }(AbstractProviderError));
   var CyclicDependencyError = (function(_super) {
-    __extends$1(CyclicDependencyError, _super);
+    __extends(CyclicDependencyError, _super);
     function CyclicDependencyError(injector, key) {
       _super.call(this, injector, key, function(keys) {
         return "Cannot instantiate cyclic dependency!" + constructResolvingPath(keys);
@@ -58694,7 +58921,7 @@ var define = $__System.amdDefine;
     return CyclicDependencyError;
   }(AbstractProviderError));
   var InstantiationError = (function(_super) {
-    __extends$1(InstantiationError, _super);
+    __extends(InstantiationError, _super);
     function InstantiationError(injector, originalException, originalStack, key) {
       _super.call(this, 'DI Error', originalException);
       this.keys = [key];
@@ -58722,14 +58949,14 @@ var define = $__System.amdDefine;
     return InstantiationError;
   }(WrappedError));
   var InvalidProviderError = (function(_super) {
-    __extends$1(InvalidProviderError, _super);
+    __extends(InvalidProviderError, _super);
     function InvalidProviderError(provider) {
       _super.call(this, "Invalid provider - only instances of Provider and Type are allowed, got: " + provider);
     }
     return InvalidProviderError;
   }(BaseError));
   var NoAnnotationError = (function(_super) {
-    __extends$1(NoAnnotationError, _super);
+    __extends(NoAnnotationError, _super);
     function NoAnnotationError(typeOrFunc, params) {
       _super.call(this, NoAnnotationError._genMessage(typeOrFunc, params));
     }
@@ -58749,14 +58976,14 @@ var define = $__System.amdDefine;
     return NoAnnotationError;
   }(BaseError));
   var OutOfBoundsError = (function(_super) {
-    __extends$1(OutOfBoundsError, _super);
+    __extends(OutOfBoundsError, _super);
     function OutOfBoundsError(index) {
       _super.call(this, "Index " + index + " is out-of-bounds.");
     }
     return OutOfBoundsError;
   }(BaseError));
   var MixingMultiProvidersWithRegularProvidersError = (function(_super) {
-    __extends$1(MixingMultiProvidersWithRegularProvidersError, _super);
+    __extends(MixingMultiProvidersWithRegularProvidersError, _super);
     function MixingMultiProvidersWithRegularProvidersError(provider1, provider2) {
       _super.call(this, 'Cannot mix multi providers and regular providers, got: ' + provider1.toString() + ' ' + provider2.toString());
     }
@@ -59070,15 +59297,13 @@ var define = $__System.amdDefine;
   }(ReflectorReader));
   var reflector = new Reflector(new ReflectionCapabilities());
   var ReflectiveDependency = (function() {
-    function ReflectiveDependency(key, optional, lowerBoundVisibility, upperBoundVisibility, properties) {
+    function ReflectiveDependency(key, optional, visibility) {
       this.key = key;
       this.optional = optional;
-      this.lowerBoundVisibility = lowerBoundVisibility;
-      this.upperBoundVisibility = upperBoundVisibility;
-      this.properties = properties;
+      this.visibility = visibility;
     }
     ReflectiveDependency.fromKey = function(key) {
-      return new ReflectiveDependency(key, false, null, null, []);
+      return new ReflectiveDependency(key, false, null);
     };
     return ReflectiveDependency;
   }());
@@ -59207,18 +59432,16 @@ var define = $__System.amdDefine;
     });
   }
   function _extractToken(typeOrFunc, metadata, params) {
-    var depProps = [];
     var token = null;
     var optional = false;
     if (!Array.isArray(metadata)) {
       if (metadata instanceof Inject) {
-        return _createDependency(metadata.token, optional, null, null, depProps);
+        return _createDependency(metadata.token, optional, null);
       } else {
-        return _createDependency(metadata, optional, null, null, depProps);
+        return _createDependency(metadata, optional, null);
       }
     }
-    var lowerBoundVisibility = null;
-    var upperBoundVisibility = null;
+    var visibility = null;
     for (var i = 0; i < metadata.length; ++i) {
       var paramMetadata = metadata[i];
       if (paramMetadata instanceof Type) {
@@ -59227,300 +59450,21 @@ var define = $__System.amdDefine;
         token = paramMetadata.token;
       } else if (paramMetadata instanceof Optional) {
         optional = true;
-      } else if (paramMetadata instanceof Self) {
-        upperBoundVisibility = paramMetadata;
-      } else if (paramMetadata instanceof Host) {
-        upperBoundVisibility = paramMetadata;
-      } else if (paramMetadata instanceof SkipSelf) {
-        lowerBoundVisibility = paramMetadata;
+      } else if (paramMetadata instanceof Self || paramMetadata instanceof SkipSelf) {
+        visibility = paramMetadata;
       }
     }
     token = resolveForwardRef(token);
     if (token != null) {
-      return _createDependency(token, optional, lowerBoundVisibility, upperBoundVisibility, depProps);
+      return _createDependency(token, optional, visibility);
     } else {
       throw new NoAnnotationError(typeOrFunc, params);
     }
   }
-  function _createDependency(token, optional, lowerBoundVisibility, upperBoundVisibility, depProps) {
-    return new ReflectiveDependency(ReflectiveKey.get(token), optional, lowerBoundVisibility, upperBoundVisibility, depProps);
+  function _createDependency(token, optional, visibility) {
+    return new ReflectiveDependency(ReflectiveKey.get(token), optional, visibility);
   }
-  var _MAX_CONSTRUCTION_COUNTER = 10;
   var UNDEFINED = new Object();
-  var ReflectiveProtoInjectorInlineStrategy = (function() {
-    function ReflectiveProtoInjectorInlineStrategy(protoEI, providers) {
-      this.provider0 = null;
-      this.provider1 = null;
-      this.provider2 = null;
-      this.provider3 = null;
-      this.provider4 = null;
-      this.provider5 = null;
-      this.provider6 = null;
-      this.provider7 = null;
-      this.provider8 = null;
-      this.provider9 = null;
-      this.keyId0 = null;
-      this.keyId1 = null;
-      this.keyId2 = null;
-      this.keyId3 = null;
-      this.keyId4 = null;
-      this.keyId5 = null;
-      this.keyId6 = null;
-      this.keyId7 = null;
-      this.keyId8 = null;
-      this.keyId9 = null;
-      var length = providers.length;
-      if (length > 0) {
-        this.provider0 = providers[0];
-        this.keyId0 = providers[0].key.id;
-      }
-      if (length > 1) {
-        this.provider1 = providers[1];
-        this.keyId1 = providers[1].key.id;
-      }
-      if (length > 2) {
-        this.provider2 = providers[2];
-        this.keyId2 = providers[2].key.id;
-      }
-      if (length > 3) {
-        this.provider3 = providers[3];
-        this.keyId3 = providers[3].key.id;
-      }
-      if (length > 4) {
-        this.provider4 = providers[4];
-        this.keyId4 = providers[4].key.id;
-      }
-      if (length > 5) {
-        this.provider5 = providers[5];
-        this.keyId5 = providers[5].key.id;
-      }
-      if (length > 6) {
-        this.provider6 = providers[6];
-        this.keyId6 = providers[6].key.id;
-      }
-      if (length > 7) {
-        this.provider7 = providers[7];
-        this.keyId7 = providers[7].key.id;
-      }
-      if (length > 8) {
-        this.provider8 = providers[8];
-        this.keyId8 = providers[8].key.id;
-      }
-      if (length > 9) {
-        this.provider9 = providers[9];
-        this.keyId9 = providers[9].key.id;
-      }
-    }
-    ReflectiveProtoInjectorInlineStrategy.prototype.getProviderAtIndex = function(index) {
-      if (index == 0)
-        return this.provider0;
-      if (index == 1)
-        return this.provider1;
-      if (index == 2)
-        return this.provider2;
-      if (index == 3)
-        return this.provider3;
-      if (index == 4)
-        return this.provider4;
-      if (index == 5)
-        return this.provider5;
-      if (index == 6)
-        return this.provider6;
-      if (index == 7)
-        return this.provider7;
-      if (index == 8)
-        return this.provider8;
-      if (index == 9)
-        return this.provider9;
-      throw new OutOfBoundsError(index);
-    };
-    ReflectiveProtoInjectorInlineStrategy.prototype.createInjectorStrategy = function(injector) {
-      return new ReflectiveInjectorInlineStrategy(injector, this);
-    };
-    return ReflectiveProtoInjectorInlineStrategy;
-  }());
-  var ReflectiveProtoInjectorDynamicStrategy = (function() {
-    function ReflectiveProtoInjectorDynamicStrategy(protoInj, providers) {
-      this.providers = providers;
-      var len = providers.length;
-      this.keyIds = new Array(len);
-      for (var i = 0; i < len; i++) {
-        this.keyIds[i] = providers[i].key.id;
-      }
-    }
-    ReflectiveProtoInjectorDynamicStrategy.prototype.getProviderAtIndex = function(index) {
-      if (index < 0 || index >= this.providers.length) {
-        throw new OutOfBoundsError(index);
-      }
-      return this.providers[index];
-    };
-    ReflectiveProtoInjectorDynamicStrategy.prototype.createInjectorStrategy = function(ei) {
-      return new ReflectiveInjectorDynamicStrategy(this, ei);
-    };
-    return ReflectiveProtoInjectorDynamicStrategy;
-  }());
-  var ReflectiveProtoInjector = (function() {
-    function ReflectiveProtoInjector(providers) {
-      this.numberOfProviders = providers.length;
-      this._strategy = providers.length > _MAX_CONSTRUCTION_COUNTER ? new ReflectiveProtoInjectorDynamicStrategy(this, providers) : new ReflectiveProtoInjectorInlineStrategy(this, providers);
-    }
-    ReflectiveProtoInjector.fromResolvedProviders = function(providers) {
-      return new ReflectiveProtoInjector(providers);
-    };
-    ReflectiveProtoInjector.prototype.getProviderAtIndex = function(index) {
-      return this._strategy.getProviderAtIndex(index);
-    };
-    return ReflectiveProtoInjector;
-  }());
-  var ReflectiveInjectorInlineStrategy = (function() {
-    function ReflectiveInjectorInlineStrategy(injector, protoStrategy) {
-      this.injector = injector;
-      this.protoStrategy = protoStrategy;
-      this.obj0 = UNDEFINED;
-      this.obj1 = UNDEFINED;
-      this.obj2 = UNDEFINED;
-      this.obj3 = UNDEFINED;
-      this.obj4 = UNDEFINED;
-      this.obj5 = UNDEFINED;
-      this.obj6 = UNDEFINED;
-      this.obj7 = UNDEFINED;
-      this.obj8 = UNDEFINED;
-      this.obj9 = UNDEFINED;
-    }
-    ReflectiveInjectorInlineStrategy.prototype.resetConstructionCounter = function() {
-      this.injector._constructionCounter = 0;
-    };
-    ReflectiveInjectorInlineStrategy.prototype.instantiateProvider = function(provider) {
-      return this.injector._new(provider);
-    };
-    ReflectiveInjectorInlineStrategy.prototype.getObjByKeyId = function(keyId) {
-      var p = this.protoStrategy;
-      var inj = this.injector;
-      if (p.keyId0 === keyId) {
-        if (this.obj0 === UNDEFINED) {
-          this.obj0 = inj._new(p.provider0);
-        }
-        return this.obj0;
-      }
-      if (p.keyId1 === keyId) {
-        if (this.obj1 === UNDEFINED) {
-          this.obj1 = inj._new(p.provider1);
-        }
-        return this.obj1;
-      }
-      if (p.keyId2 === keyId) {
-        if (this.obj2 === UNDEFINED) {
-          this.obj2 = inj._new(p.provider2);
-        }
-        return this.obj2;
-      }
-      if (p.keyId3 === keyId) {
-        if (this.obj3 === UNDEFINED) {
-          this.obj3 = inj._new(p.provider3);
-        }
-        return this.obj3;
-      }
-      if (p.keyId4 === keyId) {
-        if (this.obj4 === UNDEFINED) {
-          this.obj4 = inj._new(p.provider4);
-        }
-        return this.obj4;
-      }
-      if (p.keyId5 === keyId) {
-        if (this.obj5 === UNDEFINED) {
-          this.obj5 = inj._new(p.provider5);
-        }
-        return this.obj5;
-      }
-      if (p.keyId6 === keyId) {
-        if (this.obj6 === UNDEFINED) {
-          this.obj6 = inj._new(p.provider6);
-        }
-        return this.obj6;
-      }
-      if (p.keyId7 === keyId) {
-        if (this.obj7 === UNDEFINED) {
-          this.obj7 = inj._new(p.provider7);
-        }
-        return this.obj7;
-      }
-      if (p.keyId8 === keyId) {
-        if (this.obj8 === UNDEFINED) {
-          this.obj8 = inj._new(p.provider8);
-        }
-        return this.obj8;
-      }
-      if (p.keyId9 === keyId) {
-        if (this.obj9 === UNDEFINED) {
-          this.obj9 = inj._new(p.provider9);
-        }
-        return this.obj9;
-      }
-      return UNDEFINED;
-    };
-    ReflectiveInjectorInlineStrategy.prototype.getObjAtIndex = function(index) {
-      if (index == 0)
-        return this.obj0;
-      if (index == 1)
-        return this.obj1;
-      if (index == 2)
-        return this.obj2;
-      if (index == 3)
-        return this.obj3;
-      if (index == 4)
-        return this.obj4;
-      if (index == 5)
-        return this.obj5;
-      if (index == 6)
-        return this.obj6;
-      if (index == 7)
-        return this.obj7;
-      if (index == 8)
-        return this.obj8;
-      if (index == 9)
-        return this.obj9;
-      throw new OutOfBoundsError(index);
-    };
-    ReflectiveInjectorInlineStrategy.prototype.getMaxNumberOfObjects = function() {
-      return _MAX_CONSTRUCTION_COUNTER;
-    };
-    return ReflectiveInjectorInlineStrategy;
-  }());
-  var ReflectiveInjectorDynamicStrategy = (function() {
-    function ReflectiveInjectorDynamicStrategy(protoStrategy, injector) {
-      this.protoStrategy = protoStrategy;
-      this.injector = injector;
-      this.objs = new Array(protoStrategy.providers.length).fill(UNDEFINED);
-    }
-    ReflectiveInjectorDynamicStrategy.prototype.resetConstructionCounter = function() {
-      this.injector._constructionCounter = 0;
-    };
-    ReflectiveInjectorDynamicStrategy.prototype.instantiateProvider = function(provider) {
-      return this.injector._new(provider);
-    };
-    ReflectiveInjectorDynamicStrategy.prototype.getObjByKeyId = function(keyId) {
-      var p = this.protoStrategy;
-      for (var i = 0; i < p.keyIds.length; i++) {
-        if (p.keyIds[i] === keyId) {
-          if (this.objs[i] === UNDEFINED) {
-            this.objs[i] = this.injector._new(p.providers[i]);
-          }
-          return this.objs[i];
-        }
-      }
-      return UNDEFINED;
-    };
-    ReflectiveInjectorDynamicStrategy.prototype.getObjAtIndex = function(index) {
-      if (index < 0 || index >= this.objs.length) {
-        throw new OutOfBoundsError(index);
-      }
-      return this.objs[index];
-    };
-    ReflectiveInjectorDynamicStrategy.prototype.getMaxNumberOfObjects = function() {
-      return this.objs.length;
-    };
-    return ReflectiveInjectorDynamicStrategy;
-  }());
   var ReflectiveInjector = (function() {
     function ReflectiveInjector() {}
     ReflectiveInjector.resolve = function(providers) {
@@ -59537,59 +59481,41 @@ var define = $__System.amdDefine;
       if (parent === void 0) {
         parent = null;
       }
-      return new ReflectiveInjector_(ReflectiveProtoInjector.fromResolvedProviders(providers), parent);
+      return new ReflectiveInjector_(providers, parent);
     };
-    Object.defineProperty(ReflectiveInjector.prototype, "parent", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ReflectiveInjector.prototype.resolveAndCreateChild = function(providers) {
-      return unimplemented();
-    };
-    ReflectiveInjector.prototype.createChildFromResolved = function(providers) {
-      return unimplemented();
-    };
-    ReflectiveInjector.prototype.resolveAndInstantiate = function(provider) {
-      return unimplemented();
-    };
-    ReflectiveInjector.prototype.instantiateResolved = function(provider) {
-      return unimplemented();
-    };
+    ReflectiveInjector.prototype.parent = function() {};
+    ReflectiveInjector.prototype.resolveAndCreateChild = function(providers) {};
+    ReflectiveInjector.prototype.createChildFromResolved = function(providers) {};
+    ReflectiveInjector.prototype.resolveAndInstantiate = function(provider) {};
+    ReflectiveInjector.prototype.instantiateResolved = function(provider) {};
     ReflectiveInjector.prototype.get = function(token, notFoundValue) {};
     return ReflectiveInjector;
   }());
   var ReflectiveInjector_ = (function() {
-    function ReflectiveInjector_(_proto, _parent) {
+    function ReflectiveInjector_(_providers, _parent) {
       if (_parent === void 0) {
         _parent = null;
       }
       this._constructionCounter = 0;
-      this._proto = _proto;
+      this._providers = _providers;
       this._parent = _parent;
-      this._strategy = _proto._strategy.createInjectorStrategy(this);
+      var len = _providers.length;
+      this.keyIds = new Array(len);
+      this.objs = new Array(len);
+      for (var i = 0; i < len; i++) {
+        this.keyIds[i] = _providers[i].key.id;
+        this.objs[i] = UNDEFINED;
+      }
     }
     ReflectiveInjector_.prototype.get = function(token, notFoundValue) {
       if (notFoundValue === void 0) {
         notFoundValue = THROW_IF_NOT_FOUND;
       }
-      return this._getByKey(ReflectiveKey.get(token), null, null, notFoundValue);
-    };
-    ReflectiveInjector_.prototype.getAt = function(index) {
-      return this._strategy.getObjAtIndex(index);
+      return this._getByKey(ReflectiveKey.get(token), null, notFoundValue);
     };
     Object.defineProperty(ReflectiveInjector_.prototype, "parent", {
       get: function() {
         return this._parent;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ReflectiveInjector_.prototype, "internalStrategy", {
-      get: function() {
-        return this._strategy;
       },
       enumerable: true,
       configurable: true
@@ -59599,8 +59525,7 @@ var define = $__System.amdDefine;
       return this.createChildFromResolved(ResolvedReflectiveProviders);
     };
     ReflectiveInjector_.prototype.createChildFromResolved = function(providers) {
-      var proto = new ReflectiveProtoInjector(providers);
-      var inj = new ReflectiveInjector_(proto);
+      var inj = new ReflectiveInjector_(providers);
       inj._parent = this;
       return inj;
     };
@@ -59610,11 +59535,20 @@ var define = $__System.amdDefine;
     ReflectiveInjector_.prototype.instantiateResolved = function(provider) {
       return this._instantiateProvider(provider);
     };
+    ReflectiveInjector_.prototype.getProviderAtIndex = function(index) {
+      if (index < 0 || index >= this._providers.length) {
+        throw new OutOfBoundsError(index);
+      }
+      return this._providers[index];
+    };
     ReflectiveInjector_.prototype._new = function(provider) {
-      if (this._constructionCounter++ > this._strategy.getMaxNumberOfObjects()) {
+      if (this._constructionCounter++ > this._getMaxNumberOfObjects()) {
         throw new CyclicDependencyError(this, provider.key);
       }
       return this._instantiateProvider(provider);
+    };
+    ReflectiveInjector_.prototype._getMaxNumberOfObjects = function() {
+      return this.objs.length;
     };
     ReflectiveInjector_.prototype._instantiateProvider = function(provider) {
       if (provider.multiProvider) {
@@ -59628,50 +59562,13 @@ var define = $__System.amdDefine;
       }
     };
     ReflectiveInjector_.prototype._instantiate = function(provider, ResolvedReflectiveFactory) {
+      var _this = this;
       var factory = ResolvedReflectiveFactory.factory;
-      var deps = ResolvedReflectiveFactory.dependencies;
-      var length = deps.length;
-      var d0;
-      var d1;
-      var d2;
-      var d3;
-      var d4;
-      var d5;
-      var d6;
-      var d7;
-      var d8;
-      var d9;
-      var d10;
-      var d11;
-      var d12;
-      var d13;
-      var d14;
-      var d15;
-      var d16;
-      var d17;
-      var d18;
-      var d19;
+      var deps;
       try {
-        d0 = length > 0 ? this._getByReflectiveDependency(provider, deps[0]) : null;
-        d1 = length > 1 ? this._getByReflectiveDependency(provider, deps[1]) : null;
-        d2 = length > 2 ? this._getByReflectiveDependency(provider, deps[2]) : null;
-        d3 = length > 3 ? this._getByReflectiveDependency(provider, deps[3]) : null;
-        d4 = length > 4 ? this._getByReflectiveDependency(provider, deps[4]) : null;
-        d5 = length > 5 ? this._getByReflectiveDependency(provider, deps[5]) : null;
-        d6 = length > 6 ? this._getByReflectiveDependency(provider, deps[6]) : null;
-        d7 = length > 7 ? this._getByReflectiveDependency(provider, deps[7]) : null;
-        d8 = length > 8 ? this._getByReflectiveDependency(provider, deps[8]) : null;
-        d9 = length > 9 ? this._getByReflectiveDependency(provider, deps[9]) : null;
-        d10 = length > 10 ? this._getByReflectiveDependency(provider, deps[10]) : null;
-        d11 = length > 11 ? this._getByReflectiveDependency(provider, deps[11]) : null;
-        d12 = length > 12 ? this._getByReflectiveDependency(provider, deps[12]) : null;
-        d13 = length > 13 ? this._getByReflectiveDependency(provider, deps[13]) : null;
-        d14 = length > 14 ? this._getByReflectiveDependency(provider, deps[14]) : null;
-        d15 = length > 15 ? this._getByReflectiveDependency(provider, deps[15]) : null;
-        d16 = length > 16 ? this._getByReflectiveDependency(provider, deps[16]) : null;
-        d17 = length > 17 ? this._getByReflectiveDependency(provider, deps[17]) : null;
-        d18 = length > 18 ? this._getByReflectiveDependency(provider, deps[18]) : null;
-        d19 = length > 19 ? this._getByReflectiveDependency(provider, deps[19]) : null;
+        deps = ResolvedReflectiveFactory.dependencies.map(function(dep) {
+          return _this._getByReflectiveDependency(dep);
+        });
       } catch (e) {
         if (e instanceof AbstractProviderError || e instanceof InstantiationError) {
           e.addKey(this, provider.key);
@@ -59680,90 +59577,35 @@ var define = $__System.amdDefine;
       }
       var obj;
       try {
-        switch (length) {
-          case 0:
-            obj = factory();
-            break;
-          case 1:
-            obj = factory(d0);
-            break;
-          case 2:
-            obj = factory(d0, d1);
-            break;
-          case 3:
-            obj = factory(d0, d1, d2);
-            break;
-          case 4:
-            obj = factory(d0, d1, d2, d3);
-            break;
-          case 5:
-            obj = factory(d0, d1, d2, d3, d4);
-            break;
-          case 6:
-            obj = factory(d0, d1, d2, d3, d4, d5);
-            break;
-          case 7:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6);
-            break;
-          case 8:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7);
-            break;
-          case 9:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8);
-            break;
-          case 10:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9);
-            break;
-          case 11:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10);
-            break;
-          case 12:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11);
-            break;
-          case 13:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12);
-            break;
-          case 14:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13);
-            break;
-          case 15:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14);
-            break;
-          case 16:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15);
-            break;
-          case 17:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16);
-            break;
-          case 18:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17);
-            break;
-          case 19:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18);
-            break;
-          case 20:
-            obj = factory(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19);
-            break;
-          default:
-            throw new Error("Cannot instantiate '" + provider.key.displayName + "' because it has more than 20 dependencies");
-        }
+        obj = factory.apply(void 0, deps);
       } catch (e) {
         throw new InstantiationError(this, e, e.stack, provider.key);
       }
       return obj;
     };
-    ReflectiveInjector_.prototype._getByReflectiveDependency = function(provider, dep) {
-      return this._getByKey(dep.key, dep.lowerBoundVisibility, dep.upperBoundVisibility, dep.optional ? null : THROW_IF_NOT_FOUND);
+    ReflectiveInjector_.prototype._getByReflectiveDependency = function(dep) {
+      return this._getByKey(dep.key, dep.visibility, dep.optional ? null : THROW_IF_NOT_FOUND);
     };
-    ReflectiveInjector_.prototype._getByKey = function(key, lowerBoundVisibility, upperBoundVisibility, notFoundValue) {
+    ReflectiveInjector_.prototype._getByKey = function(key, visibility, notFoundValue) {
       if (key === INJECTOR_KEY) {
         return this;
       }
-      if (upperBoundVisibility instanceof Self) {
+      if (visibility instanceof Self) {
         return this._getByKeySelf(key, notFoundValue);
       } else {
-        return this._getByKeyDefault(key, notFoundValue, lowerBoundVisibility);
+        return this._getByKeyDefault(key, notFoundValue, visibility);
       }
+    };
+    ReflectiveInjector_.prototype._getObjByKeyId = function(keyId) {
+      for (var i = 0; i < this.keyIds.length; i++) {
+        if (this.keyIds[i] === keyId) {
+          if (this.objs[i] === UNDEFINED) {
+            this.objs[i] = this._new(this._providers[i]);
+          }
+          return this.objs[i];
+        }
+      }
+      return UNDEFINED;
     };
     ReflectiveInjector_.prototype._throwOrNull = function(key, notFoundValue) {
       if (notFoundValue !== THROW_IF_NOT_FOUND) {
@@ -59773,19 +59615,19 @@ var define = $__System.amdDefine;
       }
     };
     ReflectiveInjector_.prototype._getByKeySelf = function(key, notFoundValue) {
-      var obj = this._strategy.getObjByKeyId(key.id);
+      var obj = this._getObjByKeyId(key.id);
       return (obj !== UNDEFINED) ? obj : this._throwOrNull(key, notFoundValue);
     };
-    ReflectiveInjector_.prototype._getByKeyDefault = function(key, notFoundValue, lowerBoundVisibility) {
+    ReflectiveInjector_.prototype._getByKeyDefault = function(key, notFoundValue, visibility) {
       var inj;
-      if (lowerBoundVisibility instanceof SkipSelf) {
+      if (visibility instanceof SkipSelf) {
         inj = this._parent;
       } else {
         inj = this;
       }
       while (inj instanceof ReflectiveInjector_) {
         var inj_ = (inj);
-        var obj = inj_._strategy.getObjByKeyId(key.id);
+        var obj = inj_._getObjByKeyId(key.id);
         if (obj !== UNDEFINED)
           return obj;
         inj = inj_._parent;
@@ -59813,9 +59655,9 @@ var define = $__System.amdDefine;
   }());
   var INJECTOR_KEY = ReflectiveKey.get(Injector);
   function _mapProviders(injector, fn) {
-    var res = new Array(injector._proto.numberOfProviders);
-    for (var i = 0; i < injector._proto.numberOfProviders; ++i) {
-      res[i] = fn(injector._proto.getProviderAtIndex(i));
+    var res = new Array(injector._providers.length);
+    for (var i = 0; i < injector._providers.length; ++i) {
+      res[i] = fn(injector.getProviderAtIndex(i));
     }
     return res;
   }
@@ -59986,6 +59828,9 @@ var define = $__System.amdDefine;
   }
   function isPromise(obj) {
     return !!obj && typeof obj.then === 'function';
+  }
+  function isObservable(obj) {
+    return !!(obj && obj[rxjs_symbol_observable.$$observable]);
   }
   var APP_INITIALIZER = new OpaqueToken('Application Initializer');
   var ApplicationInitStatus = (function() {
@@ -61362,48 +61207,12 @@ var define = $__System.amdDefine;
   }());
   var RenderDebugInfo = (function() {
     function RenderDebugInfo() {}
-    Object.defineProperty(RenderDebugInfo.prototype, "injector", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderDebugInfo.prototype, "component", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderDebugInfo.prototype, "providerTokens", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderDebugInfo.prototype, "references", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderDebugInfo.prototype, "context", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(RenderDebugInfo.prototype, "source", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    RenderDebugInfo.prototype.injector = function() {};
+    RenderDebugInfo.prototype.component = function() {};
+    RenderDebugInfo.prototype.providerTokens = function() {};
+    RenderDebugInfo.prototype.references = function() {};
+    RenderDebugInfo.prototype.context = function() {};
+    RenderDebugInfo.prototype.source = function() {};
     return RenderDebugInfo;
   }());
   var Renderer = (function() {
@@ -62159,50 +61968,12 @@ var define = $__System.amdDefine;
   };
   var ComponentRef = (function() {
     function ComponentRef() {}
-    Object.defineProperty(ComponentRef.prototype, "location", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ComponentRef.prototype, "injector", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ComponentRef.prototype, "instance", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
-    Object.defineProperty(ComponentRef.prototype, "hostView", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
-    Object.defineProperty(ComponentRef.prototype, "changeDetectorRef", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ComponentRef.prototype, "componentType", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    ComponentRef.prototype.location = function() {};
+    ComponentRef.prototype.injector = function() {};
+    ComponentRef.prototype.instance = function() {};
+    ComponentRef.prototype.hostView = function() {};
+    ComponentRef.prototype.changeDetectorRef = function() {};
+    ComponentRef.prototype.componentType = function() {};
     ComponentRef.prototype.destroy = function() {};
     ComponentRef.prototype.onDestroy = function(callback) {};
     return ComponentRef;
@@ -62591,32 +62362,12 @@ var define = $__System.amdDefine;
   }
   var PlatformRef = (function() {
     function PlatformRef() {}
-    PlatformRef.prototype.bootstrapModuleFactory = function(moduleFactory) {
-      throw unimplemented();
-    };
-    PlatformRef.prototype.bootstrapModule = function(moduleType, compilerOptions) {
-      if (compilerOptions === void 0) {
-        compilerOptions = [];
-      }
-      throw unimplemented();
-    };
+    PlatformRef.prototype.bootstrapModuleFactory = function(moduleFactory) {};
+    PlatformRef.prototype.bootstrapModule = function(moduleType, compilerOptions) {};
     PlatformRef.prototype.onDestroy = function(callback) {};
-    Object.defineProperty(PlatformRef.prototype, "injector", {
-      get: function() {
-        throw unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
+    PlatformRef.prototype.injector = function() {};
     PlatformRef.prototype.destroy = function() {};
-    Object.defineProperty(PlatformRef.prototype, "destroyed", {
-      get: function() {
-        throw unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    PlatformRef.prototype.destroyed = function() {};
     return PlatformRef;
   }());
   function _callAndReportToErrorHandler(errorHandler, callback) {
@@ -62740,6 +62491,7 @@ var define = $__System.amdDefine;
       } else {
         throw new Error(("The module " + stringify(moduleRef.instance.constructor) + " was bootstrapped, but it does not declare \"@NgModule.bootstrap\" components nor a \"ngDoBootstrap\" method. ") + "Please define one of these.");
       }
+      this._modules.push(moduleRef);
     };
     PlatformRef_.decorators = [{type: Injectable}];
     PlatformRef_.ctorParameters = function() {
@@ -62751,35 +62503,11 @@ var define = $__System.amdDefine;
     function ApplicationRef() {}
     ApplicationRef.prototype.bootstrap = function(componentFactory) {};
     ApplicationRef.prototype.tick = function() {};
-    Object.defineProperty(ApplicationRef.prototype, "componentTypes", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
-    Object.defineProperty(ApplicationRef.prototype, "components", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
-    ApplicationRef.prototype.attachView = function(view) {
-      unimplemented();
-    };
-    ApplicationRef.prototype.detachView = function(view) {
-      unimplemented();
-    };
-    Object.defineProperty(ApplicationRef.prototype, "viewCount", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    ApplicationRef.prototype.componentTypes = function() {};
+    ApplicationRef.prototype.components = function() {};
+    ApplicationRef.prototype.attachView = function(view) {};
+    ApplicationRef.prototype.detachView = function(view) {};
+    ApplicationRef.prototype.viewCount = function() {};
     return ApplicationRef;
   }());
   var ApplicationRef_ = (function(_super) {
@@ -62927,27 +62655,9 @@ var define = $__System.amdDefine;
   };
   var NgModuleRef = (function() {
     function NgModuleRef() {}
-    Object.defineProperty(NgModuleRef.prototype, "injector", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(NgModuleRef.prototype, "componentFactoryResolver", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(NgModuleRef.prototype, "instance", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
+    NgModuleRef.prototype.injector = function() {};
+    NgModuleRef.prototype.componentFactoryResolver = function() {};
+    NgModuleRef.prototype.instance = function() {};
     NgModuleRef.prototype.destroy = function() {};
     NgModuleRef.prototype.onDestroy = function(callback) {};
     return NgModuleRef;
@@ -63204,13 +62914,7 @@ var define = $__System.amdDefine;
   };
   var TemplateRef = (function() {
     function TemplateRef() {}
-    Object.defineProperty(TemplateRef.prototype, "elementRef", {
-      get: function() {
-        return null;
-      },
-      enumerable: true,
-      configurable: true
-    });
+    TemplateRef.prototype.elementRef = function() {};
     TemplateRef.prototype.createEmbeddedView = function(context) {};
     return TemplateRef;
   }());
@@ -63238,37 +62942,12 @@ var define = $__System.amdDefine;
   }(TemplateRef));
   var ViewContainerRef = (function() {
     function ViewContainerRef() {}
-    Object.defineProperty(ViewContainerRef.prototype, "element", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ViewContainerRef.prototype, "injector", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(ViewContainerRef.prototype, "parentInjector", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
+    ViewContainerRef.prototype.element = function() {};
+    ViewContainerRef.prototype.injector = function() {};
+    ViewContainerRef.prototype.parentInjector = function() {};
     ViewContainerRef.prototype.clear = function() {};
     ViewContainerRef.prototype.get = function(index) {};
-    Object.defineProperty(ViewContainerRef.prototype, "length", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
+    ViewContainerRef.prototype.length = function() {};
     ViewContainerRef.prototype.createEmbeddedView = function(templateRef, context, index) {};
     ViewContainerRef.prototype.createComponent = function(componentFactory, index, injector, projectableNodes) {};
     ViewContainerRef.prototype.insert = function(viewRef, index) {};
@@ -63365,7 +63044,7 @@ var define = $__System.amdDefine;
       return wtfLeave(s, viewRef_);
     };
     ViewContainerRef_.prototype.indexOf = function(viewRef) {
-      return this._element.nestedViews.indexOf(((viewRef)).internalView);
+      return this.length ? this._element.nestedViews.indexOf(((viewRef)).internalView) : -1;
     };
     ViewContainerRef_.prototype.remove = function(index) {
       if (index === void 0) {
@@ -63410,13 +63089,7 @@ var define = $__System.amdDefine;
       _super.apply(this, arguments);
     }
     ViewRef.prototype.destroy = function() {};
-    Object.defineProperty(ViewRef.prototype, "destroyed", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
+    ViewRef.prototype.destroyed = function() {};
     ViewRef.prototype.onDestroy = function(callback) {};
     return ViewRef;
   }(ChangeDetectorRef));
@@ -63425,21 +63098,8 @@ var define = $__System.amdDefine;
     function EmbeddedViewRef() {
       _super.apply(this, arguments);
     }
-    Object.defineProperty(EmbeddedViewRef.prototype, "context", {
-      get: function() {
-        return unimplemented();
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(EmbeddedViewRef.prototype, "rootNodes", {
-      get: function() {
-        return (unimplemented());
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ;
+    EmbeddedViewRef.prototype.context = function() {};
+    EmbeddedViewRef.prototype.rootNodes = function() {};
     return EmbeddedViewRef;
   }(ViewRef));
   var ViewRef_ = (function() {
@@ -65319,6 +64979,7 @@ var define = $__System.amdDefine;
     FILL_STYLE_FLAG: FILL_STYLE_FLAG,
     ComponentStillLoadingError: ComponentStillLoadingError,
     isPromise: isPromise,
+    isObservable: isObservable,
     AnimationTransition: AnimationTransition
   };
   exports.createPlatform = createPlatform;
@@ -65357,6 +65018,8 @@ var define = $__System.amdDefine;
   exports.ErrorHandler = ErrorHandler;
   exports.AnimationTransitionEvent = AnimationTransitionEvent;
   exports.AnimationPlayer = AnimationPlayer;
+  exports.AnimationStyles = AnimationStyles;
+  exports.AnimationKeyframe = AnimationKeyframe;
   exports.Sanitizer = Sanitizer;
   exports.SecurityContext = SecurityContext;
   exports.ANALYZE_FOR_ENTRY_COMPONENTS = ANALYZE_FOR_ENTRY_COMPONENTS;
@@ -65458,7 +65121,7 @@ var define = $__System.amdDefine;
 }));
 
 })();
-$__System.register("184", ["b", "181", "a"], function (exports_1, context_1) {
+$__System.register("189", ["b", "186", "a"], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;
@@ -65483,7 +65146,7 @@ $__System.register("184", ["b", "181", "a"], function (exports_1, context_1) {
     };
 });
 
-$__System.register("180", ["7", "8", "184"], function (exports_1, context_1) {
+$__System.register("185", ["7", "8", "189"], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;
@@ -65573,7 +65236,7 @@ $__System.register("180", ["7", "8", "184"], function (exports_1, context_1) {
 });
 
 // import from '../app/vendor';
-$__System.register("5", ["180"], function (exports_1, context_1) {
+$__System.register("5", ["185"], function (exports_1, context_1) {
     "use strict";
 
     var __moduleName = context_1 && context_1.id;

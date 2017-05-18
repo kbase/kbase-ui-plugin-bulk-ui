@@ -12,11 +12,7 @@ define([
 
     var t = html.tag,
         div = t('div'),
-        iframe = t('iframe'),
-        table = t('table'),
-        tr = t('tr'),
-        th = t('th'),
-        td = t('td');
+        iframe = t('iframe');
 
     function factory(config) {
         var container,
@@ -51,9 +47,8 @@ define([
                 iframeIndex = '/modules/plugins/bulk-ui/iframe_root/dist/index.html',
                 iframeUrl = iframeOrigin + iframeIndex,
                 content = div({
-                    class: 'container-fluid',
                     style: {
-                        border: '0px blue dotted'
+                        padding: '10px'
                     }
                 }, [
                     // div({dataElement: 'stats'}),
