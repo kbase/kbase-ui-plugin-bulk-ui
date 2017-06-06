@@ -28,5 +28,5 @@ install:
             name: bulk-ui
             definition:
                 path: bulk-ui
-                label: Bulk Import (Beta Preview)
+                label: Bulk Import (Experimental)
                 icon: database
